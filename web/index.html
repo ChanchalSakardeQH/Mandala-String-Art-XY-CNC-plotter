@@ -1,0 +1,2903 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<title>Mandala String Art – woodyouloveit</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f2a91e'/%3E%3Cg stroke='%231d211f' stroke-width='2.4' fill='none'%3E%3Cpath d='M32 8L53 44H11z'/%3E%3Cpath d='M32 56L11 20h42z'/%3E%3C/g%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #ecebe4; --grid: rgba(60, 58, 45, .08); --grid-strong: rgba(60, 58, 45, .15);
+  --panel: #f3f2ee; --panel-2: #e8e6df; --card: #ffffff; --head: #ffffff;
+  --ink: #1d211f; --muted: #6b6e68; --line: #dcd9d0;
+  --accent: #f2a91e; --accent-deep: #c98400; --accent-ink: #2e2000; --accent-soft: #fdf1d6;
+  --danger: #c2391b; --ok: #2f8a4d; --shadow: 0 14px 34px rgba(40, 36, 20, .14);
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, "Noto Sans", sans-serif;
+}
+[data-theme="dark"] {
+  --bg: #1a1c1b; --grid: rgba(255, 255, 255, .05); --grid-strong: rgba(255, 255, 255, .09);
+  --panel: #222524; --panel-2: #2c302e; --card: #f7f6f2; --head: #1f2221;
+  --ink: #ecebe4; --muted: #a3a69f; --line: #3a3e3c;
+  --accent-soft: #3b3220; --shadow: 0 14px 34px rgba(0, 0, 0, .45);
+}
+[data-theme="walnut"] {
+  --bg: #e9dfd2; --grid: rgba(90, 58, 34, .08); --grid-strong: rgba(90, 58, 34, .16);
+  --panel: #f4ece2; --panel-2: #e7dacb; --card: #fffaf4; --head: #fffaf4;
+  --ink: #2e2119; --muted: #7a6656; --line: #dbcbb8;
+  --accent: #b5652b; --accent-deep: #8c4a1b; --accent-ink: #ffffff; --accent-soft: #f4e1cf;
+}
+[data-theme="ocean"] {
+  --bg: #e3edf3; --grid: rgba(30, 80, 120, .08); --grid-strong: rgba(30, 80, 120, .16);
+  --panel: #eef4f8; --panel-2: #dbe7ef; --card: #ffffff; --head: #ffffff;
+  --ink: #142a3a; --muted: #557083; --line: #c9d9e4;
+  --accent: #1f8bc4; --accent-deep: #156c9a; --accent-ink: #ffffff; --accent-soft: #d8ecf7;
+}
+[data-theme="forest"] {
+  --bg: #e4ebe2; --grid: rgba(40, 80, 50, .08); --grid-strong: rgba(40, 80, 50, .16);
+  --panel: #eef3ec; --panel-2: #dce6d9; --card: #ffffff; --head: #ffffff;
+  --ink: #18291d; --muted: #5a6f5e; --line: #cbd9c8;
+  --accent: #3f8f4f; --accent-deep: #2d6d3b; --accent-ink: #ffffff; --accent-soft: #dcefdf;
+}
+[data-theme="rose"] {
+  --bg: #f3e6ea; --grid: rgba(130, 40, 70, .07); --grid-strong: rgba(130, 40, 70, .14);
+  --panel: #f8eef1; --panel-2: #ecdbe1; --card: #ffffff; --head: #ffffff;
+  --ink: #33161f; --muted: #7d5a65; --line: #e2cbd3;
+  --accent: #d0466f; --accent-deep: #a83256; --accent-ink: #ffffff; --accent-soft: #f8dde5;
+}
+[data-theme="contrast"] {
+  --bg: #ffffff; --grid: rgba(0, 0, 0, .10); --grid-strong: rgba(0, 0, 0, .22);
+  --panel: #ffffff; --panel-2: #e6e6e6; --card: #ffffff; --head: #ffffff;
+  --ink: #000000; --muted: #2b2b2b; --line: #000000;
+  --accent: #ffd400; --accent-deep: #000000; --accent-ink: #000000; --accent-soft: #fff3a6;
+  --shadow: none;
+}
+[data-theme="contrast"] .card, [data-theme="contrast"] .btn, [data-theme="contrast"] select, [data-theme="contrast"] input { border-width: 2px; }
+* { box-sizing: border-box; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+html, body { margin: 0; height: 100%; }
+body { font-family: var(--font); color: var(--ink); background: var(--bg); font-size: 14.5px; line-height: 1.45; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+[hidden] { display: none !important; }
+
+/* ---------- header ---------- */
+.top { height: 62px; display: flex; align-items: center; gap: 16px; padding: 0 20px; background: var(--head); border-bottom: 1px solid var(--line); }
+.wordmark { font-weight: 800; font-size: 25px; letter-spacing: -.02em; white-space: nowrap; }
+.wordmark .heart { color: #e0263f; font-size: .9em; margin: 0 1px; }
+.divider { width: 1px; height: 28px; background: var(--line); }
+.top h1 { font-size: 20px; font-weight: 750; margin: 0; white-space: nowrap; }
+.top .spacer { flex: 1; }
+.sites { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.pill-btn { display: inline-flex; align-items: center; gap: 7px; border: 0; background: var(--panel-2); border-radius: 999px; padding: 6px 13px; cursor: pointer; font-size: 13.5px; font-weight: 600; }
+.pill-btn .dot { width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--accent); }
+.theme-wrap { position: relative; }
+.theme-menu { position: absolute; right: 0; top: calc(100% + 6px); z-index: 30; background: var(--card); color: #1d211f; border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow), 0 4px 14px rgba(0,0,0,.12); padding: 6px; min-width: 190px; }
+.theme-menu button { display: flex; align-items: center; gap: 10px; width: 100%; border: 0; background: none; padding: 8px 10px; border-radius: 8px; cursor: pointer; font-size: 14px; text-align: left; color: #1d211f; }
+.theme-menu button:hover { background: #f0eee8; }
+.theme-menu button[aria-checked="true"] { font-weight: 700; }
+.theme-menu button[aria-checked="true"]::after { content: "✓"; margin-left: auto; }
+.theme-chip { width: 22px; height: 22px; border-radius: 50%; flex: none; border: 1px solid rgba(0,0,0,.15); }
+.units { display: flex; align-items: center; gap: 8px; font-size: 13.5px; font-weight: 600; }
+.seg { display: inline-flex; background: var(--panel-2); border-radius: 9px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: none; border-radius: 7px; padding: 5px 11px; cursor: pointer; font-size: 13px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--head); }
+
+/* ---------- layout ---------- */
+.layout { display: grid; grid-template-columns: 320px minmax(0, 1fr); height: calc(100vh - 62px); }
+.side { background: var(--panel); border-right: 1px solid var(--line); display: flex; flex-direction: column; min-height: 0; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); border-bottom: 1px solid var(--line); background: var(--panel); }
+.step { border: 0; background: none; padding: 10px 2px 9px; cursor: pointer; display: grid; justify-items: center; gap: 4px; font-size: 13px; font-weight: 650; color: var(--muted); border-bottom: 3px solid transparent; }
+.step .num { width: 24px; height: 24px; border-radius: 50%; border: 1.6px solid currentColor; display: grid; place-items: center; font-size: 12.5px; }
+.step[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
+.step[aria-selected="true"] .num { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.side-scroll { flex: 1; overflow: auto; padding: 4px 20px 20px; }
+.side-foot { display: flex; gap: 10px; padding: 14px 20px; border-top: 1px solid var(--line); background: var(--panel); }
+.side-foot .btn { flex: 1; white-space: normal; line-height: 1.2; padding-left: 8px; padding-right: 8px; }
+
+.panel section { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.panel section:last-child { border-bottom: 0; }
+.panel h2 { font-size: 17px; font-weight: 750; margin: 0 0 10px; }
+.hint { color: var(--muted); font-size: 12.8px; margin: -4px 0 10px; }
+.field { margin: 0 0 13px; }
+.field:last-child { margin-bottom: 0; }
+.field-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.field label, .field .label { font-size: 13.5px; color: var(--muted); font-weight: 600; }
+.field output { font-variant-numeric: tabular-nums; font-weight: 650; font-size: 13.5px; }
+.field small { display: block; color: var(--muted); font-size: 12px; margin-top: 2px; }
+input[type="range"] { width: 100%; accent-color: var(--accent); margin: 4px 0 0; }
+select, input[type="number"], input[type="text"], input[type="url"] { width: 100%; padding: 8px 10px; border: 1px solid var(--line); border-radius: 9px; background: var(--card); color: #1d211f; }
+.row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.seg.wide { display: flex; }
+.seg.wide button { flex: 1; }
+.check { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 5px 0; font-size: 13.8px; }
+.check input { width: 19px; height: 19px; accent-color: var(--accent-deep); }
+
+.presets { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+.preset { display: grid; justify-items: center; gap: 3px; padding: 5px 2px 6px; border-radius: 10px; border: 1.5px solid transparent; background: none; cursor: pointer; font-size: 11px; line-height: 1.2; color: var(--muted); }
+.preset:hover { background: var(--panel-2); color: var(--ink); }
+.preset[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--ink); }
+.preset svg { width: 54px; height: 54px; }
+.subhead { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin: 4px 0 6px; }
+.subhead + .presets { margin-bottom: 10px; }
+.jobs-area { width: min(100% - 32px, 1060px); margin: 14px auto 0; display: grid; gap: 10px; justify-items: center; }
+.cards { width: 100%; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.cardx { background: rgba(120, 118, 105, .14); border: 1px solid rgba(120, 118, 105, .22); border-radius: 10px; padding: 10px 13px; min-width: 0; }
+.cardx.hl { background: var(--accent-soft); border-color: var(--accent); }
+.cardx .k { font-size: 12.5px; color: var(--muted); }
+.cardx .v { font-size: 21px; font-weight: 800; margin: 2px 0; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cardx .s { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.player { display: flex; gap: 10px; align-items: center; width: min(100%, 720px); }
+.player .play { padding: 9px 16px; }
+.player select { width: auto; padding: 7px 8px; }
+.player input[type="range"] { flex: 1; margin: 0; min-width: 80px; }
+.player .time { font-variant-numeric: tabular-nums; font-size: 13px; color: var(--muted); white-space: nowrap; }
+.player .guide { display: flex; gap: 5px; align-items: center; font-size: 12.5px; color: var(--muted); white-space: nowrap; }
+.jobs-area .now { font-size: 13.3px; color: var(--muted); min-height: 1.4em; text-align: center; }
+.jobs-area .now.wait { color: var(--danger); font-weight: 600; }
+.sim-stats { text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 6px; font-variant-numeric: tabular-nums; }
+.sim-stats:empty { display: none; }
+@media (max-width: 1100px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.card-art canvas { width: 100%; height: 100%; display: block; }
+.canvas.sim-view .card { width: min(100%, 620px, calc(100vh - 430px)); min-width: min(100%, 300px); }
+.canvas.sim-view .stage { padding-top: 12px; }
+
+.colors { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.swatch { width: 27px; height: 27px; border-radius: 50%; border: 2px solid var(--card); box-shadow: 0 0 0 1px var(--line); cursor: pointer; padding: 0; }
+.swatch[aria-pressed="true"] { box-shadow: 0 0 0 2.5px var(--accent-deep); }
+input[type="color"] { width: 40px; height: 30px; padding: 0; border: 1px solid var(--line); border-radius: 8px; background: var(--card); cursor: pointer; }
+
+.btn { border: 1.5px solid var(--line); background: var(--card); color: #1d211f; border-radius: 10px; padding: 9px 13px; cursor: pointer; font-weight: 650; font-size: 14px; white-space: nowrap; }
+.btn:hover:not(:disabled) { border-color: var(--muted); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover:not(:disabled) { background: #f6b737; border-color: #f6b737; }
+.btn.danger { color: var(--danger); border-color: var(--danger); }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.btn.sm { padding: 5px 10px; font-size: 13px; border-radius: 8px; }
+
+.exports { display: grid; gap: 8px; }
+.export { display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; align-items: center; padding: 10px 11px; border: 1px solid var(--line); border-radius: 11px; background: var(--card); color: #1d211f; }
+.export strong { font-size: 13.8px; }
+.export p { margin: 0; color: #6b6e68; font-size: 12px; }
+.export .actions { grid-column: 2; grid-row: 1 / span 2; display: flex; gap: 5px; }
+
+.result { border: 1px solid var(--line); background: var(--card); color: #1d211f; border-radius: 12px; padding: 12px 13px; font-size: 13.5px; }
+.result dl { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; margin: 0 0 10px; }
+.result dt { color: #6b6e68; }
+.result dd { margin: 0; font-weight: 650; font-variant-numeric: tabular-nums; }
+.result .actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.warnline { color: var(--danger); font-size: 12.8px; margin: 0 0 8px; }
+.progress { height: 8px; border-radius: 99px; background: var(--panel-2); overflow: hidden; margin: 8px 0; }
+.progress > div { height: 100%; width: 0; background: var(--accent); transition: width .3s; }
+
+/* machine */
+.status-card { border-radius: 14px; background: var(--card); color: #1d211f; border: 1px solid var(--line); padding: 13px 14px; }
+.status-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.state { font-size: 22px; font-weight: 800; }
+.badge { font-size: 12px; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: #eceae3; color: #555; }
+.badge.ok { background: #dff3e5; color: #1f6b39; }
+.badge.warn { background: #fde4dc; color: #a12d12; }
+.pos { font-variant-numeric: tabular-nums; color: #6b6e68; margin-top: 2px; font-size: 13px; }
+.msgbox { margin-top: 10px; padding: 9px 11px; border-radius: 10px; background: var(--accent-soft); color: #3a2a00; font-weight: 600; display: flex; gap: 10px; align-items: center; justify-content: space-between; }
+[data-theme="dark"] .msgbox { color: #f6dfa8; }
+.grid-btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
+.grid-btns .btn { min-width: 0; padding: 6px 4px; overflow: hidden; text-overflow: ellipsis; }
+.jog { display: grid; grid-template-columns: repeat(3, 52px) 18px 52px; grid-template-rows: repeat(3, 44px); gap: 6px; justify-content: center; margin-top: 8px; }
+.jog .btn { padding: 0; display: grid; place-items: center; font-size: 13px; }
+.chips { display: flex; gap: 5px; flex-wrap: wrap; }
+.chip { border: 1.5px solid var(--line); background: var(--card); color: #1d211f; border-radius: 99px; padding: 3px 11px; cursor: pointer; font-size: 12.8px; font-weight: 650; }
+.chip[aria-pressed="true"] { border-color: var(--accent-deep); background: var(--accent-soft); }
+[data-theme="dark"] .chip[aria-pressed="true"] { color: #1d211f; background: #fbe6b6; }
+.files { display: grid; gap: 5px; }
+.file { display: grid; grid-template-columns: 1fr auto; gap: 6px; align-items: center; background: var(--card); color: #1d211f; border: 1px solid var(--line); border-radius: 9px; padding: 6px 6px 6px 10px; font-size: 13px; }
+.file span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file small { color: #6b6e68; }
+.settings { display: grid; gap: 4px; max-height: 340px; overflow: auto; }
+.setting { display: grid; grid-template-columns: 1fr 104px auto; gap: 5px; align-items: center; font-size: 12.5px; }
+.setting code { overflow: hidden; text-overflow: ellipsis; }
+.setting input { padding: 4px 6px; font-size: 12.5px; border-radius: 6px; }
+.setup-group { background: var(--card); color: #1d211f; border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; margin-bottom: 8px; }
+.setup-group h3 { font-size: 14px; margin: 0 0 8px; }
+.setup-group .field label, .setup-group .label { color: #6b6e68; }
+.setup-group .check { padding: 4px 0; font-size: 13.5px; }
+.setup-group .seg { background: #eceae3; }
+.setup-group .seg button { color: #6b6e68; }
+.setup-group .seg button[aria-pressed="true"] { background: #1d211f; color: #fff; }
+.setup-group small { color: #6b6e68; }
+.inline { display: flex; align-items: center; gap: 6px; }
+.inline .check { flex: 1; }
+.setup-actions { display: flex; gap: 6px; flex-wrap: wrap; margin: 4px 0 8px; }
+details.adv summary { cursor: pointer; font-weight: 650; font-size: 13.5px; padding: 6px 0; }
+.console { height: 160px; overflow: auto; background: #151716; color: #d9dcd5; border-radius: 10px; padding: 8px 10px; font: 12px/1.45 ui-monospace, Consolas, monospace; white-space: pre-wrap; }
+.console .in { color: #f2c35a; }
+.console .err { color: #ff8e72; }
+
+/* ---------- canvas ---------- */
+.canvas {
+  position: relative; display: flex; flex-direction: column; min-height: 0; overflow: auto;
+  background-color: var(--bg);
+  background-image: linear-gradient(var(--grid-strong) 1px, transparent 1px), linear-gradient(90deg, var(--grid-strong) 1px, transparent 1px),
+    linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
+}
+.ruler { position: sticky; top: 0; height: 10px; flex: none; z-index: 2;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 1px, transparent 1px 10px) bottom / 100% 5px no-repeat,
+              repeating-linear-gradient(90deg, var(--accent) 0 1.5px, transparent 1.5px 50px) bottom / 100% 10px no-repeat; opacity: .8; }
+.toolbar { display: flex; align-items: center; justify-content: center; padding: 14px 18px 0; position: relative; }
+.views { display: inline-flex; background: rgba(120, 118, 105, .22); border-radius: 999px; padding: 4px; gap: 2px; }
+.views button { border: 0; background: none; border-radius: 999px; padding: 7px 16px; cursor: pointer; font-weight: 650; color: var(--muted); }
+.views button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.views button:disabled { opacity: .4; cursor: not-allowed; }
+.machine-pill { position: absolute; right: 18px; top: 16px; display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 650; background: var(--card); color: #1d211f; border: 1px solid var(--line); border-radius: 99px; padding: 5px 12px; cursor: pointer; }
+.machine-pill .led { width: 9px; height: 9px; border-radius: 50%; background: #b9b6ab; }
+.machine-pill.on .led { background: #36b25b; box-shadow: 0 0 0 3px rgba(54, 178, 91, .2); }
+.machine-pill.alarm .led { background: var(--danger); }
+.stage { flex: none; display: flex; justify-content: center; padding: 18px 24px 4px; }
+.card { width: min(100%, 620px, calc(100vh - 300px)); min-width: min(100%, 320px); background: var(--card); border-radius: 6px; box-shadow: var(--shadow); overflow: hidden; }
+.card-art { aspect-ratio: 1 / 1; display: grid; place-items: center; padding: 14px; background: #f6f5f0; }
+.card-art svg { width: 100%; height: 100%; }
+.card-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 16px; color: #1d211f; }
+.card-foot .wordmark { font-size: 19px; }
+.card-foot .small { text-align: right; font-size: 11px; color: #6b6e68; line-height: 1.35; }
+.card-foot .small b { color: #1d211f; font-size: 11.5px; }
+.below { width: min(100%, 680px); margin: 12px auto 26px; padding: 0 16px; }
+.facts { text-align: center; font-size: 14px; }
+.notes { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.notes li { display: flex; gap: 10px; align-items: flex-start; background: var(--card); color: #1d211f; border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; font-size: 13.3px; }
+.notes li::before { content: ""; flex: none; width: 9px; height: 9px; margin-top: 5px; border-radius: 50%; background: #b9b6ab; }
+.notes li.warn::before { background: #e9693f; }
+.notes li.good::before { background: #36b25b; }
+.notes li span { flex: 1; }
+.note-btn { flex: none; align-self: center; border: 1px solid var(--line); background: none; border-radius: 99px; padding: 2px 10px; font-size: 12px; cursor: pointer; color: #1d211f; }
+
+dialog { border: 0; border-radius: 16px; padding: 0; max-width: min(560px, 92vw); width: 100%; box-shadow: 0 20px 60px rgba(0, 0, 0, .35); background: var(--card); color: #1d211f; }
+dialog::backdrop { background: rgba(20, 20, 15, .5); }
+.dlg { padding: 22px 24px; }
+.dlg h2 { margin: 0 0 8px; font-size: 20px; }
+.dlg ul { padding-left: 18px; margin: 6px 0 14px; }
+.dlg .ver { font-weight: 750; margin-top: 12px; }
+.dlg .date { color: #6b6e68; font-weight: 400; }
+.dlg-actions { display: flex; gap: 8px; justify-content: flex-end; flex-wrap: wrap; margin-top: 14px; }
+.changes { max-height: 60vh; overflow: auto; }
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(20px); opacity: 0; background: #1d211f; color: #fff; padding: 10px 16px; border-radius: 10px; font-size: 14px; transition: opacity .2s, transform .2s; pointer-events: none; z-index: 20; max-width: 90vw; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 1100px) { .sites { display: none; } }
+@media (max-width: 860px) {
+  .top { height: auto; flex-wrap: wrap; padding: 10px 14px; gap: 10px; }
+  .top h1 { font-size: 16px; }
+  .wordmark { font-size: 21px; }
+  .layout { display: flex; flex-direction: column; height: auto; }
+  .canvas { order: 1; overflow: visible; }
+  .side { order: 2; border-right: 0; }
+  .steps { position: sticky; top: 0; z-index: 5; }
+  .side-foot { position: sticky; bottom: 0; z-index: 5; }
+  .stage { padding: 12px; }
+  .card { width: 100%; }
+  .machine-pill { position: static; margin-left: 10px; }
+  .toolbar { flex-wrap: wrap; gap: 8px; }
+  .views button { padding: 6px 10px; font-size: 13px; white-space: nowrap; }
+}
+@media (prefers-reduced-motion: reduce) { .toast, .progress > div { transition: none; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wordmark" aria-label="woodyouloveit">wood<span class="heart">&#9829;</span>it</div>
+  <div class="divider"></div>
+  <h1>Mandala String Art</h1>
+  <div class="spacer"></div>
+  <div class="sites">woodyouloveit.com · wooduloveit.com</div>
+  <div class="theme-wrap">
+    <button class="pill-btn" id="themeBtn" type="button" aria-haspopup="menu" aria-expanded="false"><span class="dot"></span>Theme</button>
+    <div class="theme-menu" id="themeMenu" role="menu" hidden></div>
+  </div>
+  <div class="units">Units <div class="seg" id="units"><button type="button" data-v="mm">mm</button><button type="button" data-v="cm">cm</button><button type="button" data-v="in">inch</button></div></div>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <nav class="steps" role="tablist" aria-label="Steps">
+      <button class="step" role="tab" data-tab="design" aria-selected="true"><span class="num">1</span>Design</button>
+      <button class="step" role="tab" data-tab="template"><span class="num">2</span>Template</button>
+      <button class="step" role="tab" data-tab="plotter"><span class="num">3</span>Plotter</button>
+      <button class="step" role="tab" data-tab="machine"><span class="num">4</span>Machine</button>
+    </nav>
+    <div class="side-scroll panel">
+
+      <!-- 1 DESIGN -->
+      <div data-panel="design">
+        <section>
+          <h2>Choose a design</h2>
+          <p class="hint">Each design starts with its best settings. Adjust it below.</p>
+          <div class="subhead">Rings</div>
+          <div class="presets" id="galleryRings"></div>
+          <div class="subhead">Shapes</div>
+          <div class="presets" id="galleryShapes"></div>
+        </section>
+        <section>
+          <h2 id="adjustTitle">Adjust</h2>
+          <div class="field" id="frameField">
+            <span class="label">Board shape</span>
+            <div class="seg wide" id="frame" role="group" aria-label="Board shape">
+              <button type="button" data-v="circle">Circle</button><button type="button" data-v="square">Square</button><button type="button" data-v="portrait">Portrait</button>
+            </div>
+          </div>
+          <div id="sliders"></div>
+        </section>
+        <section>
+          <h2>Colours</h2>
+          <div class="field"><span class="label">Thread</span><div class="colors" id="threadColors"></div></div>
+          <div class="field"><span class="label">Board</span><div class="colors" id="boardColors"></div></div>
+          <div class="field"><div class="field-head"><label for="threadMm">Thread thickness</label><output id="threadMmOut"></output></div>
+            <input type="range" id="threadMm" min="0.1" max="1.2" step="0.05"><small>Sewing thread is about 0.2–0.5 mm. Shows how dark the finished board will look.</small></div>
+        </section>
+        <section>
+          <h2>Show</h2>
+          <label class="check">Nails <input type="checkbox" id="showNails"></label>
+          <label class="check">Nail numbers <input type="checkbox" id="showNumbers"></label>
+          <label class="check">Ring guides <input type="checkbox" id="showGuides"></label>
+          <label class="check">Mark strings the machine can't wind <input type="checkbox" id="showBlocked"></label>
+        </section>
+      </div>
+
+      <!-- 2 TEMPLATE -->
+      <div data-panel="template" hidden>
+        <section>
+          <h2>Print template</h2>
+          <div class="field"><label for="designName">Design name</label><input type="text" id="designName" maxlength="40" placeholder="e.g. Saffron lotus for Priya"></div>
+          <div class="row">
+            <div class="field"><label for="paper">Print on</label>
+              <select id="paper"><option value="sheet">One sheet, board size</option><option value="a4">A4 pages</option><option value="a3">A3 pages</option><option value="letter">Letter pages</option></select></div>
+            <div class="field"><label for="numbers">Nail numbers</label>
+              <select id="numbers"><option value="all">Every nail</option><option value="five">Every 5th nail</option><option value="off">None</option></select></div>
+          </div>
+          <p class="hint" id="paperNote"></p>
+        </section>
+        <section>
+          <h2>Download and share</h2>
+          <div class="exports">
+            <div class="export"><strong>Template – PDF</strong><p>Real size, numbered nails. Best for print and WhatsApp.</p><div class="actions"><button class="btn sm" data-export="pdf" data-mode="download">Save</button><button class="btn sm primary" data-export="pdf" data-mode="share">Share</button></div></div>
+            <div class="export"><strong>Template – SVG</strong><p>One file, or a ZIP of pages.</p><div class="actions"><button class="btn sm" data-export="svg" data-mode="download">Save</button><button class="btn sm" data-export="svg" data-mode="share">Share</button></div></div>
+            <div class="export"><strong>Picture – PNG</strong><p>Coloured preview for customers.</p><div class="actions"><button class="btn sm" data-export="png" data-mode="download">Save</button><button class="btn sm" data-export="png" data-mode="share">Share</button></div></div>
+            <div class="export"><strong>Picture – SVG</strong><p>Sharp at any size.</p><div class="actions"><button class="btn sm" data-export="art" data-mode="download">Save</button><button class="btn sm" data-export="art" data-mode="share">Share</button></div></div>
+            <div class="export"><strong>Nail list – CSV</strong><p>Number and position of every nail.</p><div class="actions"><button class="btn sm" data-export="csv" data-mode="download">Save</button><button class="btn sm" data-export="csv" data-mode="share">Share</button></div></div>
+            <div class="export"><strong>Design file</strong><p>Save these settings, open them later.</p><div class="actions"><button class="btn sm" data-export="json" data-mode="download">Save</button><button class="btn sm" id="openDesign">Open</button></div></div>
+          </div>
+          <input type="file" id="designFile" accept=".json,application/json" hidden>
+        </section>
+      </div>
+
+      <!-- 3 PLOTTER -->
+      <div data-panel="plotter" hidden>
+        <section>
+          <h2>Plotter jobs</h2>
+          <p class="hint" style="margin:0">G-code for your XY plotter. <b>Job 1</b> marks every nail position on the board. <b>Job 2</b> winds the thread nail by nail and stops for you to tie on and tie off.</p>
+        </section>
+        <section>
+          <h2>Needle and nails</h2>
+          <div class="row">
+            <div class="field"><label for="p-needle">Needle Ø (mm)</label><input type="number" id="p-needle" step="0.1" min="0.3" max="5"></div>
+            <div class="field"><label for="p-wrap">Wrap radius (mm)</label><input type="number" id="p-wrap" step="0.1" min="0.5" max="10"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="p-clear">Clearance (mm)</label><input type="number" id="p-clear" step="0.1" min="0" max="3"></div>
+            <div class="field"><label>Nail Ø</label><input type="text" id="p-nail" disabled></div>
+          </div>
+        </section>
+        <section>
+          <h2>Board on the machine</h2>
+          <div class="row">
+            <div class="field"><label for="p-workw">Machine width (mm)</label><input type="number" id="p-workw" step="10" min="50"></div>
+            <div class="field"><label for="p-workh">Machine depth (mm)</label><input type="number" id="p-workh" step="10" min="50"></div>
+          </div>
+          <label class="check">Centre the board on the machine <input type="checkbox" id="p-center"></label>
+          <p class="hint" id="p-centerhint" style="margin-top:2px"></p>
+          <div class="row" id="p-offsets">
+            <div class="field"><label for="p-offx">Offset X (mm)</label><input type="number" id="p-offx" step="1"></div>
+            <div class="field"><label for="p-offy">Offset Y (mm)</label><input type="number" id="p-offy" step="1"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="p-zup">Z up</label><input type="number" id="p-zup" step="0.5"></div>
+            <div class="field"><label for="p-zdown">Z wind</label><input type="number" id="p-zdown" step="0.5"></div>
+            <div class="field"><label for="p-zmark">Z mark</label><input type="number" id="p-zmark" step="0.5"></div>
+          </div>
+          <div class="row3">
+            <div class="field"><label for="p-feed">Feed mm/min</label><input type="number" id="p-feed" step="100" min="100"></div>
+            <div class="field"><label for="p-turns">Anchor turns</label><input type="number" id="p-turns" step="1" min="0" max="5"></div>
+            <div class="field"><label for="p-dwell">Mark dwell s</label><input type="number" id="p-dwell" step="0.1" min="0" max="5"></div>
+          </div>
+          <label class="check">Pause to tie on and tie off <input type="checkbox" id="p-pause"></label>
+          <label class="check">Leave out strings that can't be wound <input type="checkbox" id="p-fix"></label>
+          <div class="field" style="margin-top:6px"><div class="field-head"><label for="p-conn">Join loose ends up to</label><output id="p-conn-out"></output></div>
+            <input type="range" id="p-conn" min="0" max="30" step="1"><small>Adds short strings between nearby nails so fewer threads need tying. 0 = off.</small></div>
+        </section>
+        <section>
+          <h2>Result</h2>
+          <div class="result" id="jobResult"><p class="hint" style="margin:0">Press <b>Generate job</b>.</p></div>
+        </section>
+      </div>
+
+      <!-- 4 MACHINE -->
+      <div data-panel="machine" hidden>
+        <section>
+          <h2>Plotter</h2>
+          <div class="field"><label for="m-addr">Address</label>
+            <div style="display:flex;gap:6px"><input type="text" id="m-addr" placeholder="192.168.4.1"><button class="btn sm" id="m-connect">Connect</button></div>
+            <small id="m-connhint"></small></div>
+          <div class="status-card" id="m-card">
+            <div class="status-top"><div class="state" id="m-state">Offline</div><span class="badge" id="m-homed">–</span></div>
+            <div class="pos" id="m-pos">X – Y – Z –</div>
+            <div id="m-job" hidden><div class="progress"><div id="m-bar"></div></div><div class="pos" id="m-jobtext"></div></div>
+            <div class="msgbox" id="m-msg" hidden><span id="m-msgtext"></span><button class="btn sm primary" id="m-msgbtn" type="button">Continue</button></div>
+          </div>
+        </section>
+        <section>
+          <h2>Control</h2>
+          <div class="grid-btns">
+            <button class="btn sm" data-cmd="$H">Home</button>
+            <button class="btn sm" data-rt="hold">Pause</button>
+            <button class="btn sm" data-rt="resume">Continue</button>
+            <button class="btn sm" data-cmd="$X">Unlock</button>
+            <button class="btn sm" id="m-resume" title="Continue the last stopped job from its saved nail">Resume</button>
+            <button class="btn sm danger" data-rt="stop">Stop</button>
+          </div>
+          <p class="hint" id="m-saved" style="margin:8px 0 0"></p>
+        </section>
+        <section>
+          <h2>Move</h2>
+          <div class="field-head"><span class="label">Step</span><div class="chips" id="m-step"><button class="chip" data-v="0.1">0.1</button><button class="chip" data-v="1">1</button><button class="chip" data-v="10">10</button><button class="chip" data-v="50">50 mm</button></div></div>
+          <div class="jog">
+            <span></span><button class="btn" data-jog="0,1" aria-label="Y plus">Y+</button><span></span><span></span><button class="btn" data-z="up">Z ↑</button>
+            <button class="btn" data-jog="-1,0" aria-label="X minus">X−</button><button class="btn" id="m-corner" title="Go to the board's corner">⌖</button><button class="btn" data-jog="1,0" aria-label="X plus">X+</button><span></span><span></span>
+            <span></span><button class="btn" data-jog="0,-1" aria-label="Y minus">Y−</button><span></span><span></span><button class="btn" data-z="down">Z ↓</button>
+          </div>
+        </section>
+        <section>
+          <div class="field-head"><h2>Jobs on the plotter</h2><button class="btn sm" id="m-files-refresh">Refresh</button></div>
+          <div class="files" id="m-files"><p class="hint">Connect to see stored jobs.</p></div>
+          <p class="hint" id="m-fs" style="margin-top:6px"></p>
+        </section>
+        <section>
+          <div class="field-head"><h2>Machine setup</h2><button class="btn sm" id="m-setup-load">Reload</button></div>
+          <p class="hint">Plain settings for your machine, saved on the plotter.</p>
+          <div id="m-setup"><p class="hint">Connect to the plotter to see its setup.</p></div>
+          <div class="setup-actions">
+            <button class="btn sm primary" id="m-setup-save" hidden>Save changes</button>
+            <button class="btn sm" id="m-reboot" hidden>Restart plotter to apply</button>
+          </div>
+          <details class="adv">
+            <summary>Advanced: every setting</summary>
+            <p class="hint" style="margin-top:8px">For experts. Each value is saved on its own.</p>
+            <div class="settings" id="m-settings"></div>
+            <button class="btn sm danger" id="m-factory" style="margin-top:8px">Factory reset</button>
+          </details>
+        </section>
+        <section>
+          <h2>Console</h2>
+          <div class="console" id="m-log" aria-live="polite"></div>
+          <div style="display:flex;gap:6px;margin-top:6px"><input type="text" id="m-line" placeholder="$$, G0 X10 Y10, …" autocomplete="off"><button class="btn sm" id="m-send">Send</button></div>
+        </section>
+      </div>
+
+      <p class="hint" style="margin-top:18px">Works offline. Your design is kept in this browser.
+        <button type="button" class="note-btn" id="changesBtn">What's new</button></p>
+    </div>
+    <div class="side-foot" id="foot"></div>
+  </aside>
+
+  <main class="canvas">
+    <div class="ruler" aria-hidden="true"></div>
+    <div class="toolbar">
+      <div class="views" id="views" role="group" aria-label="Preview">
+        <button type="button" data-v="design">Design</button><button type="button" data-v="template">Template</button><button type="button" data-v="path">Thread path</button><button type="button" data-v="sim">Simulation</button>
+      </div>
+      <button class="machine-pill" id="machinePill" type="button"><span class="led"></span><span id="machinePillText">Plotter offline</span></button>
+    </div>
+    <div class="jobs-area" id="jobsArea" hidden>
+      <div class="cards" id="jobCards"></div>
+      <div class="views" id="jobToggle" role="group" aria-label="Job"><button type="button" data-v="mark">Job 1: nails</button><button type="button" data-v="wind">Job 2: winding</button></div>
+      <div class="player" id="player" hidden>
+        <button class="btn primary play" id="simPlay" type="button">▶ Simulate</button>
+        <select id="simSpeed" aria-label="Simulation speed"></select>
+        <input type="range" id="simSeek" min="0" max="1000" value="0" aria-label="Simulation position">
+        <span class="time" id="simTime">0:00 / 0:00</span>
+        <label class="guide"><input type="checkbox" id="simGuide"> Guide path</label>
+      </div>
+      <div class="now" id="simNow" aria-live="polite"></div>
+    </div>
+    <div class="stage">
+      <div class="card">
+        <div class="card-art" id="board" role="img" aria-label="Preview"></div>
+        <div class="card-foot">
+          <div class="wordmark">wood<span class="heart">&#9829;</span>it</div>
+          <div class="small"><b>woodyouloveit.com · wooduloveit.com</b><br>© 2026 Chanchal Sakarde</div>
+        </div>
+      </div>
+    </div>
+    <div class="below">
+      <div class="sim-stats" id="simStats"></div>
+      <div class="facts" id="facts"></div>
+      <ul class="notes" id="notes" aria-live="polite"></ul>
+    </div>
+  </main>
+</div>
+
+<dialog id="changesDlg" aria-labelledby="changesTitle"><div class="dlg"><h2 id="changesTitle">What's new</h2><div class="changes" id="changesList"></div><div class="dlg-actions"><button class="btn" data-close>Close</button></div></div></dialog>
+<dialog id="shareDlg" aria-labelledby="shareTitle"><div class="dlg"><h2 id="shareTitle">File downloaded</h2><p id="shareText"></p>
+  <div class="dlg-actions"><a class="btn" id="waLink" target="_blank" rel="noopener">Open WhatsApp</a><a class="btn" id="mailLink">Write email</a><button class="btn" data-close>Done</button></div></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+<script>
+"use strict";
+/* =====================================================================
+   Mandala String Art – woodyouloveit
+   One page: design, print template, plotter jobs, machine control.
+   Served by the plotter at http://192.168.4.1 and also works as a local file.
+   Geometry, routing and G-code are 1:1 ports of stringart-core (Kotlin),
+   so nail numbers and jobs match the Android app exactly.
+   ===================================================================== */
+const APP = { name: "Mandala String Art", version: "2.3.0" };
+
+const CHANGELOG = [
+  { v: "2.3.0", date: "2026-10-09", items: [
+    "Plotter step makes both jobs at once – Job 1 marks the nails, Job 2 winds the thread – with summary cards: time for each job, total machine time, pauses, and thread to buy (15% spare).",
+    "New simulation: the whole machine bed with the board on it, the X rail and carriage moving with the needle, home axes, a pause bubble at every tie-on/tie-off, an optional guide path, speeds up to 1000×, and 'String 105 of 419' progress with the travel range.",
+    "Board is centred on a 400 × 400 mm machine by default (taken from the plotter when connected).",
+    "Thread thickness setting shows how dark the finished board will look.",
+    "woodyouloveit brand mark on every PDF page, SVG, PNG, CSV, design file, ZIP and G-code.",
+    "Machine setup: the hotspot has no password until you set one; the BOOT button resets a forgotten one (firmware 1.3.0).",
+  ] },
+  { v: "2.2.0", date: "2026-10-09", items: [
+    "Machine setup in step 4: work area, motor drive and direction (with test moves), pen/needle lift (with a test), limit switches, speed presets, Wi-Fi and Bluetooth – in plain words, saved on the plotter. Every raw setting is still under Advanced.",
+    "Without limit switches the plotter shows Ready instead of a homing alarm (firmware 1.2.1).",
+  ] },
+  { v: "2.1.0", date: "2026-10-09", items: [
+    "Design step simplified: one gallery of all 16 designs (Rings and Shapes) – each loads its best settings – followed by Adjust. The separate pattern list is gone.",
+    "Guided flow: every step ends with a Next button (Design → Template → Plotter → Machine).",
+    "Simulation: play the plotter job before running it – needle, thread and tie-on stops – with speed ×1 to ×250 and a position slider. The Plotter step asks for it before sending.",
+    "Seven themes (Woody, Night, Walnut, Ocean, Forest, Rose, High contrast). Your choice is kept in the browser and on the plotter, so it returns after a restart.",
+    "Opens automatically: joining the plotter's Wi-Fi now shows the dashboard (firmware 1.2.0).",
+    "Brand text cleaned up.",
+  ] },
+  { v: "2.0.1", date: "2026-10-08", items: [
+    "Shows the plotter's new safe-mode alarm (12) with what to do.",
+  ] },
+  { v: "2.0.0", date: "2026-10-08", items: [
+    "New dashboard layout in four steps: Design, Template, Plotter, Machine – in the woodyouloveit style, with light/dark theme and mm/cm/inch.",
+    "Served by the plotter itself: join its Wi-Fi and open http://192.168.4.1 (firmware 1.1.0 or newer).",
+    "Plotter step: makes the winding job (thread runs, wrap directions, collision checks, optional joining of loose ends) and a nail-marking job, then sends it to the plotter.",
+    "Thread path preview with each thread in its own colour, plus the live position of the plotter head.",
+    "Machine step: connection, status, home/pause/continue/stop, resume after power cut, jog, stored jobs, settings and a console.",
+    "Template preview on the canvas.",
+  ] },
+  { v: "1.0.0", date: "2026-10-08", items: [
+    "First offline template designer: 16 patterns, machine check, real-size PDF/SVG templates, PNG/SVG pictures, CSV nail list, design files, WhatsApp/email sharing.",
+  ] },
+];
+
+/* ---------------- patterns ---------------- */
+const PATTERNS = [
+  ["classic", "Classic Wheel", false], ["spiral", "Spiral Flow", false], ["star", "Starburst", false],
+  ["petal", "Petal Bloom", false], ["lace", "Lace Flower", false], ["crown", "Sharp Crown", false],
+  ["weave", "Woven Mandala", false], ["vortex", "Vortex", false], ["lotus", "Lotus", false],
+  ["galaxy", "Galaxy Web", false], ["verticalDiamond", "Vertical Diamond", true], ["hexFlower", "Hex Flower", true],
+  ["layeredStar", "Layered Star", true], ["trianglePortal", "Triangle Portal", true], ["squareWeave", "Square Weave", true],
+  ["heartWeb", "Heart Web", true],
+];
+const LABEL = Object.fromEntries(PATTERNS.map(p => [p[0], p[1]]));
+const STRUCTURED = Object.fromEntries(PATTERNS.map(p => [p[0], p[2]]));
+
+const DEFAULTS = {
+  diameter: 300, nails: 120, rings: 4, ringGap: 18, step: 7, rotation: 0, pattern: "verticalDiamond",
+  frame: "portrait", innerWeave: 2, moduleCount: 3, nailSize: 1.6, stringColor: "#12c7d8", boardColor: "#17191e",
+};
+
+const PRESETS = [
+  ["Vertical Diamond", { frame: "portrait", pattern: "verticalDiamond", nails: 96, rings: 4, ringGap: 18, step: 8, moduleCount: 3, stringColor: "#12c7d8", innerWeave: 2 }],
+  ["Hex Flower", { frame: "square", pattern: "hexFlower", nails: 144, rings: 4, ringGap: 16, step: 9, moduleCount: 6, stringColor: "#70d34b", innerWeave: 2 }],
+  ["Layered Star", { frame: "square", pattern: "layeredStar", nails: 120, rings: 5, ringGap: 13, step: 11, moduleCount: 3, stringColor: "#2fd0d7", innerWeave: 2 }],
+  ["Triangle Portal", { frame: "circle", pattern: "trianglePortal", nails: 180, rings: 3, ringGap: 18, step: 12, moduleCount: 3, stringColor: "#f1f1ea", innerWeave: 2 }],
+  ["Square Weave", { frame: "square", pattern: "squareWeave", nails: 120, rings: 3, ringGap: 20, step: 7, moduleCount: 4, stringColor: "#f2b134", innerWeave: 2 }],
+  ["Heart Web", { frame: "circle", pattern: "heartWeb", nails: 180, rings: 3, ringGap: 14, step: 9, moduleCount: 1, stringColor: "#f5f5f5", innerWeave: 2 }],
+  ["Orange Petal", { nails: 120, rings: 4, ringGap: 17, step: 7, pattern: "petal", stringColor: "#d97706", innerWeave: 1 }],
+  ["Blue Weave", { nails: 72, rings: 4, ringGap: 25, step: 11, pattern: "weave", stringColor: "#0891b2", innerWeave: 2 }],
+  ["Purple Lace", { nails: 144, rings: 5, ringGap: 14, step: 9, pattern: "lace", stringColor: "#9333ea", innerWeave: 2 }],
+  ["Red Crown", { nails: 120, rings: 4, ringGap: 19, step: 8, pattern: "crown", stringColor: "#b91c1c", innerWeave: 1 }],
+  ["Rainbow Galaxy", { nails: 168, rings: 5, ringGap: 13, step: 13, pattern: "galaxy", stringColor: "#7c3aed", innerWeave: 3 }],
+  ["Lotus Bloom", { nails: 96, rings: 5, ringGap: 16, step: 6, pattern: "lotus", stringColor: "#db2777", innerWeave: 1 }],
+  ["Golden Star", { nails: 120, rings: 3, ringGap: 25, step: 17, pattern: "star", stringColor: "#eab308", innerWeave: 1 }],
+  ["Teal Vortex", { nails: 144, rings: 6, ringGap: 11, step: 5, pattern: "vortex", stringColor: "#0f766e", innerWeave: 2 }],
+];
+
+const TAU = Math.PI * 2;
+const polar = (cx, cy, r, a) => ({ x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) });
+const lerp = (a, b, t) => ({ x: a.x + (b.x - a.x) * t, y: a.y + (b.y - a.y) * t });
+// sqrt of squares (not Math.hypot): bit-identical with the Kotlin core, so both pick the same on ties.
+const dist = (a, b) => { const dx = a.x - b.x, dy = a.y - b.y; return Math.sqrt(dx * dx + dy * dy); };
+const mod = (a, n) => ((a % n) + n) % n;
+const idiv = (a, b) => Math.trunc(a / b);
+const regularPolygon = (cx, cy, r, sides, rot = -Math.PI / 2) =>
+  Array.from({ length: sides }, (_, i) => polar(cx, cy, r, rot + i * TAU / sides));
+const edgePoints = (a, b, count, reverse = false) =>
+  Array.from({ length: count }, (_, i) => { const t = i / (count - 1); return lerp(a, b, reverse ? 1 - t : t); });
+
+class Builder {
+  constructor(w, h, tol = 0.01) { this.w = w; this.h = h; this.tol = tol; this.nails = []; this.grid = new Map(); this.set = new Set(); this.chords = []; this.dups = 0; }
+  nail(p, group = 0) {
+    const ix = Math.floor(p.x / this.tol), iy = Math.floor(p.y / this.tol);
+    for (let dx = -1; dx <= 1; dx++) for (let dy = -1; dy <= 1; dy++) {
+      const list = this.grid.get((ix + dx) + "," + (iy + dy));
+      if (list) for (const idx of list) if (dist(this.nails[idx], p) <= this.tol) return idx;
+    }
+    this.nails.push({ x: p.x, y: p.y, g: group });
+    const idx = this.nails.length - 1, k = ix + "," + iy;
+    if (!this.grid.has(k)) this.grid.set(k, []);
+    this.grid.get(k).push(idx);
+    return idx;
+  }
+  chord(pa, pb, ga = 0, gb = ga) {
+    if (dist(pa, pb) <= 0.1) return;
+    const ia = this.nail(pa, ga), ib = this.nail(pb, gb);
+    if (ia === ib) return;
+    const a = Math.min(ia, ib), b = Math.max(ia, ib), k = a + "," + b;
+    if (this.set.has(k)) { this.dups++; return; }
+    this.set.add(k); this.chords.push([a, b]);
+  }
+}
+
+function generate(c) {
+  return STRUCTURED[c.pattern] ? genStructured(c) : genRings(c);
+}
+
+function genRings(c) {
+  const w = c.diameter, cx = w / 2, cy = w / 2, n = c.nails;
+  const maxR = w / 2 - c.nailSize * 2;
+  const radii = [];
+  for (let i = 0; i < c.rings; i++) { const r = maxR - i * c.ringGap; if (r > 5) radii.push(r); }
+  const rot = c.rotation * Math.PI / 180;
+  const b = new Builder(w, w);
+  const pts = radii.map(r => Array.from({ length: n }, (_, i) => polar(cx, cy, r, i / n * TAU + rot)));
+  pts.forEach((ring, ri) => ring.forEach(p => b.nail(p, ri)));
+  const waveDiv = Math.max(1, Math.round(n / 24));
+  for (let ri = 0; ri < radii.length; ri++) {
+    const p = pts[ri];
+    const s = c.step + (ri % 2 === 1 ? idiv(c.step, 2) : 0);
+    for (let i = 0; i < n; i++) {
+      const wave = idiv(i, waveDiv);
+      let t;
+      switch (c.pattern) {
+        case "spiral": t = i + s + ri * 3; break;
+        case "star": t = i + (i % 2 === 1 ? s : s * 2 + ri); break;
+        case "petal": t = i + s + (ri % 2 === 1 ? idiv(n, 2) : 0); break;
+        case "lace": t = i + s + (i % 3 === 0 ? s * 2 : 0); break;
+        case "crown": t = i + (i % 2 === 1 ? s : -s); break;
+        case "weave": t = i + (i % 2 === 1 ? s : -s * 2); break;
+        case "vortex": t = i + s + idiv(i, 12) + ri; break;
+        case "lotus": t = i + s + (ri % 3 === 0 ? idiv(n, 3) : 0); break;
+        case "galaxy": t = i + s + wave * (ri % 2 === 1 ? 1 : -1) + ri * 2; break;
+        default: t = i + s;
+      }
+      b.chord(p[i], p[mod(t, n)], ri);
+      const weaves = c.pattern === "lace" || c.pattern === "lotus" || c.pattern === "galaxy";
+      if (c.innerWeave > 0 && weaves && i % c.innerWeave === 0) {
+        b.chord(p[i], p[mod(i - s * (c.pattern === "galaxy" ? 1 : 2), n)], ri);
+      }
+    }
+  }
+  for (let ri = 0; ri < radii.length - 1; ri++) {
+    const offset = c.step + ri * 2;
+    for (let i = 0; i < n; i += (c.pattern === "weave" ? 1 : 2)) {
+      const target = (c.pattern === "crown" && ri % 2 === 1) ? mod(i - offset, n) : mod(i + offset, n);
+      b.chord(pts[ri][i], pts[ri + 1][target], ri, ri + 1);
+    }
+  }
+  if ((c.pattern === "lotus" || c.pattern === "petal") && radii.length) {
+    const inner = pts[pts.length - 1], rc = Math.max(3, radii[radii.length - 1] * 0.22);
+    for (let i = 0; i < n; i += 2) b.chord(inner[i], polar(cx, cy, rc, i / n * TAU + rot), radii.length - 1, radii.length);
+  }
+  return { w, h: w, nails: b.nails, chords: b.chords, dups: b.dups, shape: "circle", radii, cx, cy };
+}
+
+function genStructured(c) {
+  const w = c.diameter, h = c.frame === "portrait" ? w * 1.42 : w;
+  const cx = w / 2, cy = h / 2, sc = w / 300, n = Math.max(24, c.nails);
+  const b = new Builder(w, h);
+  const chain = (a, bb, reverse = false) => {
+    const count = Math.min(a.length, bb.length);
+    for (let i = 0; i < count; i++) b.chord(a[i], bb[reverse ? count - 1 - i : i]);
+  };
+  switch (c.pattern) {
+    case "verticalDiamond": {
+      const modules = Math.max(1, c.moduleCount), moduleH = (h - 60 * sc) / modules, count = Math.max(18, idiv(n, 4));
+      for (let m = 0; m < modules; m++) {
+        const y0 = 30 * sc + m * moduleH, y1 = y0 + moduleH;
+        const tl = { x: cx, y: y0 }, tr = { x: w - 35 * sc, y: y0 + moduleH * .42 };
+        const br = { x: cx, y: y1 }, bl = { x: 35 * sc, y: y0 + moduleH * .42 };
+        const A = edgePoints(tl, bl, count), B = edgePoints(tl, tr, count), C = edgePoints(br, tr, count), D = edgePoints(br, bl, count);
+        chain(A, D); chain(B, C); chain(A, C, true); chain(B, D, true);
+        for (let i = 0; i < count; i += 2) b.chord(A[i], B[(i + c.step) % count]);
+      }
+      break;
+    }
+    case "hexFlower": {
+      const hex = regularPolygon(cx, cy, w * .43, 6), count = Math.max(18, idiv(n, 6));
+      for (let s = 0; s < 6; s++) {
+        const a = hex[s], bb = hex[(s + 1) % 6], prev = hex[(s + 5) % 6];
+        const side = edgePoints(a, bb, count), other = edgePoints(a, prev, count, true);
+        chain(side, other, true);
+        chain(side, edgePoints(bb, prev, count));
+        for (let i = 0; i < count; i += 2) b.chord(side[i], other[(i + c.step) % count]);
+      }
+      for (let s = 0; s < 6; s++) {
+        const p = polar(cx, cy, w * .17, -Math.PI / 2 + s * Math.PI / 3);
+        const outer = edgePoints(hex[s], hex[(s + 1) % 6], count);
+        for (let i = 0; i < outer.length; i += 3) b.chord(p, outer[i]);
+      }
+      break;
+    }
+    case "layeredStar": {
+      const outer = regularPolygon(cx, cy, w * .43, 6), inner = regularPolygon(cx, cy, w * .21, 6, -Math.PI / 2 + Math.PI / 6);
+      const count = Math.max(20, idiv(n, 6));
+      for (let s = 0; s < 6; s++) {
+        const o1 = edgePoints(outer[s], outer[(s + 1) % 6], count), i1 = edgePoints(inner[s], inner[(s + 1) % 6], count);
+        chain(o1, i1); chain(o1, i1, true);
+        chain(edgePoints(outer[(s + 5) % 6], outer[s], count), i1);
+      }
+      break;
+    }
+    case "trianglePortal": {
+      const outer = regularPolygon(cx, cy, w * .45, n), tri = regularPolygon(cx, cy, w * .18, 3);
+      for (let i = 0; i < outer.length; i++) {
+        const f = i / outer.length * 3, sector = Math.trunc(f), next = (sector + 1) % 3;
+        b.chord(outer[i], lerp(tri[sector], tri[next], f - sector));
+        if (i % Math.max(1, c.innerWeave) === 0) b.chord(outer[i], tri[(sector + 2) % 3]);
+      }
+      break;
+    }
+    case "squareWeave": {
+      const m = 30 * sc, count = Math.max(20, idiv(n, 4));
+      const corners = [{ x: m, y: m }, { x: w - m, y: m }, { x: w - m, y: h - m }, { x: m, y: h - m }];
+      const sides = corners.map((p, i) => edgePoints(p, corners[(i + 1) % 4], count));
+      for (let s = 0; s < 4; s++) { chain(sides[s], sides[(s + 1) % 4]); chain(sides[s], sides[(s + 2) % 4], true); }
+      break;
+    }
+    case "heartWeb": {
+      const outer = regularPolygon(cx, cy, w * .45, n);
+      const heart = Array.from({ length: 180 }, (_, i) => {
+        const t = i / 180 * TAU;
+        const x = 16 * Math.pow(Math.sin(t), 3);
+        const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+        return { x: cx + x * w / 42, y: cy + y * w / 42 };
+      });
+      for (let i = 0; i < outer.length; i++) {
+        b.chord(outer[i], heart[(i * 7 + idiv(i, 9) * c.step) % heart.length]);
+        if (i % 2 === 0) b.chord(outer[i], heart[(i * 11 + 35) % heart.length]);
+      }
+      break;
+    }
+  }
+  return { w, h, nails: b.nails, chords: b.chords, dups: b.dups, shape: c.frame === "circle" ? "circle" : "rect", radii: [], cx, cy };
+}
+
+/* ---------------- machine check ---------------- */
+function segDist(p, a, b) {
+  const abx = b.x - a.x, aby = b.y - a.y, l2 = abx * abx + aby * aby;
+  if (l2 === 0) return dist(p, a);
+  const t = Math.max(0, Math.min(1, ((p.x - a.x) * abx + (p.y - a.y) * aby) / l2));
+  const dx = a.x + abx * t - p.x, dy = a.y + aby * t - p.y;
+  return Math.sqrt(dx * dx + dy * dy);
+}
+
+function analyse(d, nailSize, needle, clearance) {
+  const N = d.nails, n = N.length;
+  const pass = nailSize + needle;
+  let minCenter = Infinity, tooClose = 0;
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+    const dd = Math.hypot(N[i].x - N[j].x, N[i].y - N[j].y);
+    if (dd < minCenter) minCenter = dd;
+    if (dd < pass) tooClose++;
+  }
+  const used = new Uint8Array(n);
+  let length = 0;
+  const thr = nailSize / 2 + clearance;
+  const blocked = [];
+  for (const [a, b] of d.chords) {
+    used[a] = used[b] = 1;
+    const A = N[a], B = N[b];
+    length += dist(A, B);
+    const minX = Math.min(A.x, B.x) - thr, maxX = Math.max(A.x, B.x) + thr;
+    const minY = Math.min(A.y, B.y) - thr, maxY = Math.max(A.y, B.y) + thr;
+    for (let k = 0; k < n; k++) {
+      if (k === a || k === b) continue;
+      const P = N[k];
+      if (P.x < minX || P.x > maxX || P.y < minY || P.y > maxY) continue;
+      if (segDist(P, A, B) < thr) { blocked.push([a, b]); break; }
+    }
+  }
+  let unused = 0;
+  for (let i = 0; i < n; i++) if (!used[i]) unused++;
+  return { minCenter: n > 1 ? minCenter : 0, tooClose, blocked, unused, threadM: length / 1000, pass };
+}
+
+const RING_WEAVE = ["lace", "lotus", "galaxy"];
+const USES = {
+  verticalDiamond: ["nails", "step", "moduleCount"], hexFlower: ["nails", "step"], layeredStar: ["nails"],
+  trianglePortal: ["nails", "innerWeave"], squareWeave: ["nails"], heartWeb: ["nails", "step"],
+};
+function uses(key, c) {
+  if (key === "diameter" || key === "nailSize") return true;
+  if (STRUCTURED[c.pattern]) return USES[c.pattern].includes(key);
+  if (key === "moduleCount") return false;
+  if (key === "innerWeave") return RING_WEAVE.includes(c.pattern);
+  return true;
+}
+const SLIDERS = [
+  { key: "diameter", min: 100, max: 800, step: 10, unit: "mm", label: c => STRUCTURED[c.pattern] ? "Board width" : "Board diameter" },
+  { key: "nails", min: 24, max: 360, step: 6, unit: "", label: c => STRUCTURED[c.pattern] ? "Points around the shape" : "Nails per ring" },
+  { key: "rings", min: 1, max: 8, step: 1, unit: "", label: () => "Rings" },
+  { key: "ringGap", min: 6, max: 60, step: 1, unit: "mm", label: () => "Gap between rings" },
+  { key: "step", min: 1, max: 40, step: 1, unit: "", label: () => "String skip", help: "How many nails each string jumps over." },
+  { key: "rotation", min: -180, max: 180, step: 1, unit: "°", label: () => "Rotation" },
+  { key: "innerWeave", min: 0, max: 6, step: 1, unit: "", label: () => "Inner weave", help: "Extra strings; lower numbers weave more densely." },
+  { key: "moduleCount", min: 1, max: 6, step: 1, unit: "", label: () => "Diamonds stacked" },
+  { key: "nailSize", min: 0.8, max: 3, step: 0.1, unit: "mm", label: () => "Nail diameter" },
+];
+
+/* ---------------- preview ---------------- */
+function luminance(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); });
+  return .2126 * r + .7152 * g + .0722 * b;
+}
+const f2 = v => Math.round(v * 100) / 100;
+
+function chordPath(d, list) {
+  let s = "";
+  for (const [a, b] of list) { const A = d.nails[a], B = d.nails[b]; s += `M${f2(A.x)} ${f2(A.y)}L${f2(B.x)} ${f2(B.y)}`; }
+  return s;
+}
+function nailPath(d, r) {
+  let s = "";
+  for (const p of d.nails) s += `M${f2(p.x - r)} ${f2(p.y)}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
+  return s;
+}
+function boardShape(d, fill, stroke, sw) {
+  if (d.shape === "circle") return `<circle cx="${f2(d.w / 2)}" cy="${f2(d.h / 2)}" r="${f2(Math.max(d.w, d.h) / 2)}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+  return `<rect x="0" y="0" width="${f2(d.w)}" height="${f2(d.h)}" rx="${f2(d.w * .012)}" fill="${fill}" stroke="${stroke}" stroke-width="${sw}"/>`;
+}
+
+function artSvg(d, c, opt) {
+  const pad = d.w * .035;
+  const dark = luminance(c.boardColor) < .35;
+  const nailFill = dark ? "#d8d2c4" : "#3d3d3d";
+  // thread drawn at its real thickness (Colours → Thread thickness), never thinner than a hair on screen
+  const sw = opt.size && opt.size < 120 ? Math.max(0.3, d.w / 700) : Math.max(d.w / 2500, threadMm());
+  const strip = opt.brand ? d.w * .09 : 0;   // white band under the board for the brand mark
+  const vbH = d.h + 2 * pad + strip;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${f2(-pad)} ${f2(-pad)} ${f2(d.w + 2 * pad)} ${f2(vbH)}"${opt.size ? ` width="${opt.size}" height="${Math.round(opt.size * vbH / (d.w + 2 * pad))}"` : ""}>`;
+  if (opt.brand) {
+    s += `<rect x="${f2(-pad)}" y="${f2(-pad)}" width="${f2(d.w + 2 * pad)}" height="${f2(vbH)}" fill="#ffffff"/>`;
+    const bs = d.w * .042, by = d.h + pad + strip * .62;
+    s += brandSvgGroup(d.w - brandWidth(bs, true), by, bs, true);
+  }
+  s += boardShape(d, c.boardColor, dark ? "#3a3d44" : "#c9c3b5", d.w / 300);
+  if (opt.guides) {
+    for (const r of d.radii) s += `<circle cx="${f2(d.cx)}" cy="${f2(d.cy)}" r="${f2(r)}" fill="none" stroke="${dark ? "#ffffff" : "#000000"}" stroke-opacity=".12" stroke-width="${f2(d.w / 600)}" stroke-dasharray="${f2(d.w / 150)} ${f2(d.w / 150)}"/>`;
+  }
+  s += `<path d="${chordPath(d, d.chords)}" fill="none" stroke="${c.stringColor}" stroke-width="${f2(sw)}" stroke-opacity=".88" stroke-linecap="round"/>`;
+  if (opt.blocked && opt.blocked.length) s += `<path d="${chordPath(d, opt.blocked)}" fill="none" stroke="#ff3b1f" stroke-width="${f2(sw * 2.2)}" stroke-linecap="round"/>`;
+  if (opt.nails) s += `<path d="${nailPath(d, f2(Math.max(c.nailSize / 2, d.w / 500)))}" fill="${nailFill}"/>`;
+  if (opt.numbers) {
+    const fs = f2(Math.max(1.2, Math.min(3.2, (opt.minCenter || 4) * .5)));
+    s += `<g font-family="Arial, sans-serif" font-size="${fs}" fill="${nailFill}" text-anchor="middle">`;
+    d.nails.forEach((p, i) => { const q = labelPos(d, p, c.nailSize / 2, fs); s += `<text x="${f2(q.x)}" y="${f2(q.y)}">${i}</text>`; });
+    s += `</g>`;
+  }
+  return s + "</svg>";
+}
+
+function labelPos(d, p, nailR, fs) {
+  let dx = p.x - d.cx, dy = p.y - d.cy;
+  const len = Math.hypot(dx, dy);
+  if (len < 1) { dx = 0; dy = -1; } else { dx /= len; dy /= len; }
+  const off = nailR + 0.6 + fs * .65;
+  return { x: p.x + dx * off, y: p.y + dy * off + fs * .35 };
+}
+
+/* ---------------- plotter jobs: 1:1 port of stringart-core (Kotlin) ---------------- */
+// RoutePlanner, Tangents, CollisionProbe, Validator.checkJob, StringArtPipeline and GcodeWriter.
+// Coordinates: design = preview frame (mm, Y down); machine = Y up, origin at the board's bottom-left.
+
+function machineSpec(p) {
+  const nailR = p.nailDiameter / 2, needleR = p.needleDiameter / 2;
+  return { ...p, nailR, needleR, needleClear: nailR + needleR + p.clearance, threadClear: nailR + p.clearance };
+}
+const toMachine = (p, h) => ({ x: p.x, y: h - p.y });
+const vrot = (v, a) => { const c = Math.cos(a), s = Math.sin(a); return { x: v.x * c - v.y * s, y: v.x * s + v.y * c }; };
+const normAng = a => { let r = a % TAU; if (r < 0) r += TAU; return r; };
+
+const Tangents = {
+  between(a, sa, b, sb, r) {
+    const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy);
+    if (d < 1e-9) return null;
+    const u = { x: dx / d, y: dy / d };
+    let phi = 0;
+    if (sa !== sb) { const k = 2 * r / d; if (k >= 1) return null; phi = sa * Math.asin(k); }
+    const t = vrot(u, phi);
+    const na = vrot(t, -sa * Math.PI / 2), nb = vrot(t, -sb * Math.PI / 2);
+    return [{ x: a.x + na.x * r, y: a.y + na.y * r }, { x: b.x + nb.x * r, y: b.y + nb.y * r }];
+  },
+  sweep(c, from, to, s) {
+    const a0 = Math.atan2(from.y - c.y, from.x - c.x), a1 = Math.atan2(to.y - c.y, to.x - c.x);
+    const d = s > 0 ? normAng(a1 - a0) : normAng(a0 - a1);
+    return d < 1e-9 ? TAU : d;
+  },
+};
+
+class CollisionProbe {
+  constructor(nails, spec) {
+    this.nails = nails; this.spec = spec;
+    const reach = spec.wrapRadius + spec.needleClear;
+    this.near = nails.map((ni, i) => {
+      const out = [];
+      for (let j = 0; j < nails.length; j++) if (j !== i && dist(ni, nails[j]) < reach) out.push(j);
+      return out;
+    });
+  }
+  lineHits(p, q, limit, skipA, skipB, out) {
+    const minX = Math.min(p.x, q.x) - limit, maxX = Math.max(p.x, q.x) + limit;
+    const minY = Math.min(p.y, q.y) - limit, maxY = Math.max(p.y, q.y) + limit;
+    let hits = 0;
+    const N = this.nails;
+    for (let k = 0; k < N.length; k++) {
+      if (k === skipA || k === skipB) continue;
+      const n = N[k];
+      if (n.x < minX || n.x > maxX || n.y < minY || n.y > maxY) continue;
+      if (segDist(n, p, q) < limit) { hits++; if (out) out.push(k); }
+    }
+    return hits;
+  }
+  arcHits(i, from, to, s) {
+    const near = this.near[i];
+    if (!near.length) return 0;
+    const c = this.nails[i], sp = this.spec;
+    const sweep = Tangents.sweep(c, from, to, s);
+    const start = Math.atan2(from.y - c.y, from.x - c.x);
+    const steps = Math.max(4, Math.ceil(sweep * sp.wrapRadius / 0.25));
+    let hits = 0;
+    for (const k of near) {
+      for (let j = 0; j <= steps; j++) {
+        const a = start + s * sweep * j / steps;
+        const pt = polar(c.x, c.y, sp.wrapRadius, a);
+        if (dist(pt, this.nails[k]) < sp.needleClear) { hits++; break; }
+      }
+    }
+    return hits;
+  }
+}
+
+const chordKey = (a, b) => a < b ? a + "," + b : b + "," + a;
+const EPS = 1e-7; // costs/distances closer than this count as equal; the first candidate wins (as in Kotlin)
+
+function planRoutes(d, spec, connectorMaxLength) {
+  const n = d.nails.length, pos = d.nails;
+  const ea = [], eb = [], virt = [];
+  const addEdge = (a, b, v) => { ea.push(a); eb.push(b); virt.push(v); };
+  for (const [a, b] of d.chords) addEdge(a, b, false);
+  const degree = new Int32Array(n);
+  for (const [a, b] of d.chords) { degree[a]++; degree[b]++; }
+  const machine = d.nails.map(p => toMachine(p, d.h));
+
+  const connectors = [];
+  if (connectorMaxLength > 0) {
+    const probe = new CollisionProbe(machine, spec);
+    const existing = new Set(d.chords.map(([a, b]) => chordKey(a, b)));
+    const odd = [];
+    for (let v = 0; v < n; v++) if (degree[v] % 2 === 1) odd.push(v);
+    const cand = [];
+    for (let x = 0; x < odd.length; x++) for (let y = x + 1; y < odd.length; y++) {
+      const dd = dist(pos[odd[x]], pos[odd[y]]);
+      if (dd <= connectorMaxLength) cand.push([dd, odd[x], odd[y]]);
+    }
+    cand.sort((p, q) => Math.round(p[0] * 1e6) - Math.round(q[0] * 1e6));
+    for (const [, a, b] of cand) {
+      if (degree[a] % 2 === 0 || degree[b] % 2 === 0) continue;
+      const k = chordKey(a, b);
+      if (existing.has(k)) continue;
+      if (probe.lineHits(machine[a], machine[b], spec.threadClear, a, b) > 0) continue;
+      addEdge(a, b, false); connectors.push([Math.min(a, b), Math.max(a, b)]); existing.add(k);
+      degree[a]++; degree[b]++;
+    }
+  }
+
+  const parent = Int32Array.from({ length: n }, (_, i) => i);
+  const find = x => { let r = x; while (parent[r] !== r) { parent[r] = parent[parent[r]]; r = parent[r]; } return r; };
+  for (let e = 0; e < ea.length; e++) { const ra = find(ea[e]), rb = find(eb[e]); if (ra !== rb) parent[ra] = rb; }
+  const comps = new Map();
+  for (let v = 0; v < n; v++) if (degree[v] > 0) { const r = find(v); if (!comps.has(r)) comps.set(r, []); comps.get(r).push(v); }
+
+  for (const nodes of comps.values()) {
+    const odd = nodes.filter(v => degree[v] % 2 === 1);
+    while (odd.length) {
+      const a = odd.shift();
+      let best = 0;
+      for (let k = 1; k < odd.length; k++) if (dist(pos[a], pos[odd[k]]) < dist(pos[a], pos[odd[best]]) - EPS) best = k;
+      addEdge(a, odd.splice(best, 1)[0], true);
+    }
+  }
+
+  const adj = Array.from({ length: n }, () => []);
+  for (let e = 0; e < ea.length; e++) { adj[ea[e]].push(e); adj[eb[e]].push(e); }
+  const used = new Uint8Array(ea.length), ptr = new Int32Array(n);
+  const trails = [];
+  for (const nodes of comps.values()) {
+    const sv = [nodes[0]], se = [-1], pv = [], pe = [];
+    while (sv.length) {
+      const v = sv[sv.length - 1], list = adj[v];
+      while (ptr[v] < list.length && used[list[ptr[v]]]) ptr[v]++;
+      if (ptr[v] < list.length) {
+        const e = list[ptr[v]]; used[e] = 1;
+        sv.push(ea[e] === v ? eb[e] : ea[e]); se.push(e);
+      } else { pv.push(sv.pop()); pe.push(se.pop()); }
+    }
+    const verts = pv.slice().reverse();
+    const edges = pe.slice(0, pe.length - 1).reverse();
+    const m = edges.length;
+    const fv = edges.findIndex(e => virt[e]);
+    if (fv < 0) { trails.push(verts); continue; }
+    let cur = [verts[(fv + 1) % m]];
+    for (let k = fv + 1; k <= fv + m; k++) {
+      const idx = k % m, next = verts[idx + 1];
+      if (virt[edges[idx]]) { if (cur.length > 1) trails.push(cur); cur = [next]; }
+      else cur.push(next);
+    }
+  }
+
+  const probe = new CollisionProbe(machine, spec);
+  const runs = trails.map(t => {
+    const dirs = chooseDirections(t, machine, probe, spec);
+    return { color: d.color || "#000000", steps: t.map((nail, i) => ({ nail, dir: dirs[i] })) };
+  });
+  return { runs, connectors };
+}
+
+function chooseDirections(trail, m, probe, spec) {
+  const INF = 1e15, HIT = 1e6, len = trail.length, signs = [-1, 1];
+  const segCache = new Map();
+  const segCost = (i, sa, sb) => {
+    const key = i * 4 + (sa > 0 ? 2 : 0) + (sb > 0 ? 1 : 0);
+    let v = segCache.get(key);
+    if (v !== undefined) return v;
+    const a = trail[i], b = trail[i + 1];
+    const needle = Tangents.between(m[a], sa, m[b], sb, spec.wrapRadius);
+    const thread = Tangents.between(m[a], sa, m[b], sb, spec.nailR);
+    v = (!needle || !thread) ? INF : HIT * (probe.lineHits(needle[0], needle[1], spec.needleClear, a, b) + probe.lineHits(thread[0], thread[1], spec.threadClear, a, b));
+    segCache.set(key, v);
+    return v;
+  };
+  const arcCost = (i, sp, s, sn) => {
+    const inL = Tangents.between(m[trail[i - 1]], sp, m[trail[i]], s, spec.wrapRadius);
+    if (!inL) return INF;
+    const outL = Tangents.between(m[trail[i]], s, m[trail[i + 1]], sn, spec.wrapRadius);
+    if (!outL) return INF;
+    const sweep = Tangents.sweep(m[trail[i]], inL[1], outL[0], s);
+    return HIT * probe.arcHits(trail[i], inL[1], outL[0], s) + sweep * spec.wrapRadius;
+  };
+  let dp = [0, 1].map(a => [0, 1].map(b => segCost(0, signs[a], signs[b])));
+  const back = [];
+  for (let i = 1; i < len - 1; i++) {
+    const next = [[Number.MAX_VALUE, Number.MAX_VALUE], [Number.MAX_VALUE, Number.MAX_VALUE]];
+    const choice = [[0, 0], [0, 0]];
+    for (let b = 0; b <= 1; b++) for (let c = 0; c <= 1; c++) {
+      const seg = segCost(i, signs[b], signs[c]);
+      for (let a = 0; a <= 1; a++) {
+        const v = dp[a][b] + arcCost(i, signs[a], signs[b], signs[c]) + seg;
+        if (v < next[b][c] - EPS) { next[b][c] = v; choice[b][c] = a; }
+      }
+    }
+    back.push(choice); dp = next;
+  }
+  let bestA = 0, bestB = 0;
+  for (let a = 0; a <= 1; a++) for (let b = 0; b <= 1; b++) if (dp[a][b] < dp[bestA][bestB] - EPS) { bestA = a; bestB = b; }
+  const out = new Array(len);
+  out[len - 1] = signs[bestB]; out[len - 2] = signs[bestA];
+  let b = bestA, c = bestB;
+  for (let i = len - 3; i >= 0; i--) { const a = back[i][b][c]; out[i] = signs[a]; c = b; b = a; }
+  return out;
+}
+
+function jobStats(nailsMachine, runs, nailDiameter) {
+  const r = nailDiameter / 2, m = nailsMachine;
+  let length = 0;
+  for (const run of runs) {
+    const st = run.steps;
+    let arrival = null;
+    for (let i = 0; i < st.length - 1; i++) {
+      const a = st[i], b = st[i + 1];
+      const t = Tangents.between(m[a.nail], a.dir, m[b.nail], b.dir, r);
+      if (!t) { length += dist(m[a.nail], m[b.nail]); arrival = null; continue; }
+      length += arrival === null ? TAU * r : Tangents.sweep(m[a.nail], arrival, t[0], a.dir) * r;
+      length += dist(t[0], t[1]);
+      arrival = t[1];
+    }
+    if (st.length >= 2) length += TAU * r;
+  }
+  return { runs: runs.length, wraps: runs.reduce((s, x) => s + x.steps.length, 0), chords: runs.reduce((s, x) => s + Math.max(0, x.steps.length - 1), 0), threadLengthM: length / 1000 };
+}
+
+function checkJob(job, spec) {
+  const m = job.nails.map(p => toMachine(p, job.height));
+  const probe = new CollisionProbe(m, spec);
+  const counts = {}, add = code => { counts[code] = (counts[code] || 0) + 1; };
+  const blocked = [];
+  job.runs.forEach(run => {
+    const st = run.steps;
+    if (st.length < 2) return;
+    let arrival = null;
+    for (let i = 0; i < st.length - 1; i++) {
+      const a = st[i], b = st[i + 1];
+      const needle = Tangents.between(m[a.nail], a.dir, m[b.nail], b.dir, spec.wrapRadius);
+      const thread = Tangents.between(m[a.nail], a.dir, m[b.nail], b.dir, spec.nailR);
+      if (!needle || !thread) { add("IMPOSSIBLE_CROSSING"); blocked.push(chordKey(a.nail, b.nail)); arrival = null; continue; }
+      let bad = false;
+      if (probe.lineHits(needle[0], needle[1], spec.needleClear, a.nail, b.nail) > 0) { add("NEEDLE_HITS_NAIL"); bad = true; }
+      if (probe.lineHits(thread[0], thread[1], spec.threadClear, a.nail, b.nail) > 0) { add("THREAD_HITS_NAIL"); bad = true; }
+      if (bad) blocked.push(chordKey(a.nail, b.nail));
+      const from = arrival || needle[0];
+      if (probe.arcHits(a.nail, from, needle[0], a.dir) > 0) add("WRAP_HITS_NAIL");
+      arrival = needle[1];
+    }
+    const last = st[st.length - 1];
+    if (arrival && probe.arcHits(last.nail, arrival, arrival, last.dir) > 0) add("WRAP_HITS_NAIL");
+  });
+  const errors = Object.values(counts).reduce((s, x) => s + x, 0);
+  return { counts, errors, blocked: new Set(blocked) };
+}
+
+// design -> routed, checked job (StringArtPipeline.build)
+function buildWindJob(d, spec, opt) {
+  // Same loop as StringArtPipeline.build: up to 4 rounds of removing blocked strings and re-planning.
+  let cur = { ...d, chords: d.chords.slice() };
+  const removed = [];
+  let round = 0;
+  for (;;) {
+    const plan = planRoutes(cur, spec, opt.connectorMaxLength);
+    const job = { name: opt.name, width: cur.w, height: cur.h, nailDiameter: spec.nailDiameter, nails: cur.nails.map(p => ({ x: p.x, y: p.y })), runs: plan.runs };
+    job.stats = jobStats(job.nails.map(p => toMachine(p, job.height)), job.runs, spec.nailDiameter);
+    const check = checkJob(job, spec);
+    if (!(opt.autoFix && round < 4 && check.blocked.size)) return { job, check, removed, connectors: plan.connectors, design: cur };
+    const inDesign = new Set(cur.chords.map(([a, b]) => chordKey(a, b)));
+    for (const k of check.blocked) if (inDesign.has(k)) removed.push(k.split(",").map(Number));
+    cur = { ...cur, chords: cur.chords.filter(([a, b]) => !check.blocked.has(chordKey(a, b))) };
+    round++;
+  }
+}
+
+// GcodeWriter.write
+function rint(x) { const f = Math.floor(x), d = x - f; if (d < .5) return f; if (d > .5) return f + 1; return f % 2 === 0 ? f : f + 1; }
+function gf(v) { const s = v.toFixed(3); return s === "-0.000" ? "0.000" : s; }
+
+function windGcode(job, spec, cfg, startRun = 0, startStep = 0) {
+  const m = job.nails.map(p => { const q = toMachine(p, job.height); return { x: q.x + cfg.offsetX, y: q.y + cfg.offsetY }; });
+  const r = spec.wrapRadius, out = [];
+  let cut = 0, rapid = 0, pos = null;
+  const q = v => ({ x: rint(v.x * 1000) / 1000, y: rint(v.y * 1000) / 1000 });
+  const emit = l => out.push(l);
+  const moveTo = (p, isRapid) => {
+    const t = q(p);
+    if (pos) { if (isRapid) rapid += dist(pos, t); else cut += dist(pos, t); }
+    emit(isRapid ? `G0 X${gf(t.x)} Y${gf(t.y)}` : `G1 X${gf(t.x)} Y${gf(t.y)} F${gf(cfg.feed)}`);
+    pos = t;
+  };
+  const arc = (center, to, dir) => {
+    const from = pos, t = q(to);
+    emit(`${dir < 0 ? "G2" : "G3"} X${gf(t.x)} Y${gf(t.y)} I${gf(center.x - from.x)} J${gf(center.y - from.y)} F${gf(cfg.feed)}`);
+    cut += Tangents.sweep(center, from, t, dir) * r;
+    pos = t;
+  };
+  const fullTurns = (c, dir, turns) => { for (let i = 0; i < turns; i++) arc(c, pos, dir); };
+  const zUp = () => { if (cfg.zUp !== null) emit(`G0 Z${gf(cfg.zUp)}`); };
+  const zDown = () => { if (cfg.zDown !== null) emit(`G1 Z${gf(cfg.zDown)} F${gf(cfg.zFeed)}`); };
+
+  emit("; woodyouloveit.com - Mandala String Art");
+  emit(`; ${job.name.replace(/\n/g, " ")} - mandala string art job v1`);
+  emit(`; runs=${job.stats.runs} wraps=${job.stats.wraps} thread=${gf(job.stats.threadLengthM)} m`);
+  if (startRun > 0 || startStep > 0) emit(`; RESUME from run=${startRun} step=${startStep} - home the machine before starting`);
+  emit("G21 G90 G17 G94");
+  zUp();
+  for (let ri = startRun; ri < job.runs.length; ri++) {
+    const all = job.runs[ri].steps, first = ri === startRun ? startStep : 0, steps = all.slice(first);
+    if (steps.length < 2) { emit(`; run ${ri} has nothing left to wind`); continue; }
+    emit(`; RUN ${ri} color=${job.runs[ri].color} steps=${all.length}`);
+    const segs = [];
+    for (let i = 0; i < steps.length - 1; i++) {
+      const a = steps[i], b = steps[i + 1];
+      const t = Tangents.between(m[a.nail], a.dir, m[b.nail], b.dir, r);
+      if (!t) throw new Error(`Run ${ri} step ${first + i + 1}: nails ${a.nail} and ${b.nail} are too close for opposite wraps`);
+      segs.push(t);
+    }
+    emit(`; STEP run=${ri} step=${first} nail=${steps[0].nail}`);
+    moveTo(segs[0][0], true);
+    zDown();
+    if (cfg.pauseBetweenRuns) emit(`M0 ; tie thread on at nail ${steps[0].nail}`);
+    fullTurns(m[steps[0].nail], steps[0].dir, cfg.anchorTurns);
+    for (let i = 1; i < steps.length; i++) {
+      const s = steps[i];
+      emit(`; STEP run=${ri} step=${first + i} nail=${s.nail}`);
+      moveTo(segs[i - 1][1], false);
+      if (i < steps.length - 1) arc(m[s.nail], segs[i][0], s.dir);
+      else fullTurns(m[s.nail], s.dir, cfg.anchorTurns);
+    }
+    zUp();
+    if (cfg.pauseBetweenRuns) emit(`M0 ; tie off and cut at nail ${steps[steps.length - 1].nail}`);
+  }
+  emit("M2");
+  const text = out.join("\n") + "\n";
+  return { text, lineCount: out.length, pathLengthMm: cut + rapid, estMinutes: cut / cfg.feed + rapid / cfg.rapidFeedForEstimate };
+}
+
+// Nail marking job: lift, travel, dot, lift - nearest-neighbour order to save travel.
+function markGcode(d, cfg, name) {
+  const m = d.nails.map(p => { const q = toMachine(p, d.h); return { x: q.x + cfg.offsetX, y: q.y + cfg.offsetY }; });
+  const left = new Set(m.map((_, i) => i)), order = [];
+  let cur = { x: cfg.offsetX, y: cfg.offsetY };
+  while (left.size) {
+    let best = -1, bd = Infinity;
+    for (const i of left) { const dd = dist(cur, m[i]); if (dd < bd) { bd = dd; best = i; } }
+    order.push(best); left.delete(best); cur = m[best];
+  }
+  const out = ["; woodyouloveit.com - Mandala String Art", `; ${name} - nail marking job v1`, `; nails=${m.length}`, "G21 G90 G17 G94", `G0 Z${gf(cfg.zUp)}`];
+  let travel = 0, prev = { x: cfg.offsetX, y: cfg.offsetY };
+  order.forEach((i, k) => {
+    out.push(`; STEP run=0 step=${k} nail=${i}`);
+    out.push(`G0 X${gf(m[i].x)} Y${gf(m[i].y)}`);
+    out.push(`G1 Z${gf(cfg.zMark)} F${gf(cfg.zFeed)}`);
+    out.push(`G4 P${cfg.markDwell}`);
+    out.push(`G0 Z${gf(cfg.zUp)}`);
+    travel += dist(prev, m[i]); prev = m[i];
+  });
+  out.push("M2");
+  const zTime = m.length * (2 * Math.abs(cfg.zUp - cfg.zMark) / cfg.zFeed + cfg.markDwell / 60 + 0.5 / 60);
+  return { text: out.join("\n") + "\n", lineCount: out.length, estMinutes: travel / cfg.rapidFeedForEstimate + zTime, order };
+}
+/* ---------------- brand mark: "wood♥it" + woodyouloveit.com on every export ---------------- */
+// Drawn as text + a vector heart so it looks the same in PDF, SVG and PNG.
+// To use the real logo later, replace brandOps / brandSvgGroup / drawBrandCanvas.
+const BRAND = { site: "woodyouloveit.com", sites: "woodyouloveit.com · wooduloveit.com", heart: "#e0263f", ink: "#1d211f" };
+const HELV_BOLD = { w: .778, o: .611, d: .611, i: .278, t: .333 };
+const boldWidth = s => [...s].reduce((a, ch) => a + (HELV_BOLD[ch] || .6), 0);
+// Heart in a 1×1 box (top-left origin), as cubic curves
+const HEART = [[.5, .92], [.1, .64, 0, .4, .12, .22], [.24, .05, .45, .07, .5, .24], [.55, .07, .76, .05, .88, .22], [1, .4, .9, .64, .5, .92]];
+
+// size = cap height-ish font size in drawing units; (x, y) = left end of the baseline
+function brandLayout(size) {
+  const wWood = boldWidth("wood") * size, hs = size * .78, gap = size * .06;
+  return { wWood, hs, gap, wIt: boldWidth("it") * size, total: wWood + gap + hs + gap + boldWidth("it") * size };
+}
+function brandOps(x, y, size, withSite) {
+  const L = brandLayout(size), ops = [];
+  ops.push({ t: "text", x, y, s: size, str: "wood", bold: true, c: BRAND.ink });
+  ops.push({ t: "heart", x: x + L.wWood + L.gap, y: y - L.hs * .92, s: L.hs, c: BRAND.heart });
+  ops.push({ t: "text", x: x + L.wWood + 2 * L.gap + L.hs, y, s: size, str: "it", bold: true, c: BRAND.ink });
+  if (withSite) ops.push({ t: "text", x: x + L.total + size * .5, y, s: size * .55, str: BRAND.site, c: "#444444" });
+  return ops;
+}
+function brandWidth(size, withSite) { const L = brandLayout(size); return L.total + (withSite ? size * .5 + textWidth(BRAND.site, size * .55) : 0); }
+function heartPath(x, y, s) {
+  const P = (u, v) => `${n3(x + u * s)} ${n3(y + v * s)}`;
+  let d = `M${P(HEART[0][0], HEART[0][1])}`;
+  for (let i = 1; i < HEART.length; i++) { const c = HEART[i]; d += `C${P(c[0], c[1])} ${P(c[2], c[3])} ${P(c[4], c[5])}`; }
+  return d + "Z";
+}
+function brandSvgGroup(x, y, size, withSite) {
+  return `<g font-family="Helvetica, Arial, sans-serif">${opsToSvg(brandOps(x, y, size, withSite))}</g>`;
+}
+function drawBrandCanvas(g, x, y, size, withSite) {
+  const L = brandLayout(size);
+  g.save();
+  g.fillStyle = BRAND.ink; g.textBaseline = "alphabetic";
+  g.font = `bold ${size}px Helvetica, Arial, sans-serif`;
+  g.fillText("wood", x, y);
+  const hx = x + g.measureText("wood").width + L.gap, hy = y - L.hs * .92;
+  g.fillStyle = BRAND.heart;
+  g.beginPath();
+  g.moveTo(hx + HEART[0][0] * L.hs, hy + HEART[0][1] * L.hs);
+  for (let i = 1; i < HEART.length; i++) { const c = HEART[i]; g.bezierCurveTo(hx + c[0] * L.hs, hy + c[1] * L.hs, hx + c[2] * L.hs, hy + c[3] * L.hs, hx + c[4] * L.hs, hy + c[5] * L.hs); }
+  g.fill();
+  g.fillStyle = BRAND.ink;
+  const itX = hx + L.hs + L.gap;
+  g.fillText("it", itX, y);
+  if (withSite) { g.fillStyle = "#444"; g.font = `${size * .55}px Helvetica, Arial, sans-serif`; g.fillText(BRAND.site, itX + g.measureText("it").width + size * .5, y); }
+  g.restore();
+}
+/* ---------------- print template (shared by PDF and SVG) ---------------- */
+const BOTTOM = 36, MARGIN = 12;
+function templateOps(d, c, numbers, minCenter) {
+  const ops = [];
+  const W = d.w, H = d.h, ox = MARGIN, oy = MARGIN;
+  const TW = W + 2 * MARGIN, TH = H + 2 * MARGIN + BOTTOM;
+  const nailR = c.nailSize / 2;
+  const P = p => ({ x: ox + p.x, y: oy + p.y });
+  // board outline
+  if (d.shape === "circle") ops.push({ t: "circle", x: ox + W / 2, y: oy + H / 2, r: Math.max(W, H) / 2, w: .3, c: "#888888" });
+  else ops.push({ t: "rect", x: ox, y: oy, w: W, h: H, lw: .3, c: "#888888" });
+  // ring guides + centre
+  for (const r of d.radii) ops.push({ t: "circle", x: ox + d.cx, y: oy + d.cy, r, w: .1, c: "#bbbbbb", dash: [1.2, 1.2] });
+  const cc = { x: ox + d.cx, y: oy + d.cy };
+  ops.push({ t: "line", x1: cc.x - 3, y1: cc.y, x2: cc.x + 3, y2: cc.y, w: .12, c: "#999999" });
+  ops.push({ t: "line", x1: cc.x, y1: cc.y - 3, x2: cc.x, y2: cc.y + 3, w: .12, c: "#999999" });
+  // nails
+  const arm = nailR + 1;
+  for (const n of d.nails) {
+    const p = P(n);
+    ops.push({ t: "circle", x: p.x, y: p.y, r: Math.max(nailR, .4), w: .16, c: "#000000" });
+    ops.push({ t: "line", x1: p.x - arm, y1: p.y, x2: p.x + arm, y2: p.y, w: .08, c: "#000000" });
+    ops.push({ t: "line", x1: p.x, y1: p.y - arm, x2: p.x, y2: p.y + arm, w: .08, c: "#000000" });
+  }
+  if (numbers !== "off") {
+    const fs = Math.max(1.2, Math.min(2.8, (minCenter || 4) * .5));
+    d.nails.forEach((n, i) => {
+      if (numbers === "five" && i % 5 !== 0) return;
+      const q = labelPos(d, n, nailR, fs);
+      ops.push({ t: "text", x: ox + q.x, y: oy + q.y, s: fs, str: String(i), anchor: "middle", c: "#333333" });
+    });
+  }
+  // title block
+  const yb = oy + H + MARGIN;
+  const title = (c.name || LABEL[c.pattern]) + " - nail template";
+  ops.push({ t: "text", x: ox, y: yb + 5, s: 4, str: title, bold: true, c: "#000000" });
+  // brand mark in the empty top margin, right side (on the first page of a tiled print)
+  for (const o of brandOps(TW - MARGIN - brandWidth(4.2, true), 8.6, 4.2, true)) ops.push(o);
+  ops.push({ t: "text", x: ox, y: yb + 10, s: 2.5, str: `${LABEL[c.pattern]} | ${d.nails.length} nails | ${d.chords.length} strings | board ${fmt(W)} x ${fmt(Math.round(H))} mm`, c: "#333333" });
+  ops.push({ t: "text", x: ox, y: yb + 14, s: 2.5, str: `Nail ${c.nailSize} mm | ${new Date().toISOString().slice(0, 10)} | woodyouloveit.com | v${APP.version}`, c: "#333333" });
+  ops.push({ t: "text", x: ox, y: yb + 18.5, s: 2.5, str: "Print at 100% (Actual size). Check that the bar below measures exactly its length.", c: "#333333" });
+  const L = TW - 2 * MARGIN >= 100 ? 100 : 50;
+  const by = yb + 25;
+  ops.push({ t: "line", x1: ox, y1: by, x2: ox + L, y2: by, w: .3, c: "#000000" });
+  for (let k = 0; k <= L; k += 10) {
+    const tall = k % 50 === 0;
+    ops.push({ t: "line", x1: ox + k, y1: by, x2: ox + k, y2: by - (tall ? 3 : 1.6), w: .2, c: "#000000" });
+  }
+  ops.push({ t: "text", x: ox, y: by + 4, s: 2.4, str: "0", anchor: "middle", c: "#000000" });
+  ops.push({ t: "text", x: ox + L, y: by + 4, s: 2.4, str: `${L} mm`, anchor: "middle", c: "#000000" });
+  return { ops, TW, TH };
+}
+
+const PAPERS = { a4: [210, 297, "A4"], a3: [297, 420, "A3"], letter: [215.9, 279.4, "Letter"] };
+const PM = { top: 11, right: 7, bottom: 8, left: 7 }, OVERLAP = 12;
+
+function layoutPages(TW, TH, paper) {
+  if (paper === "sheet") return { sheet: true, count: 1, pw: TW, ph: TH };
+  const [w, h, label] = PAPERS[paper];
+  const fit = (pw, ph) => {
+    const iw = pw - PM.left - PM.right, ih = ph - PM.top - PM.bottom;
+    const cols = TW <= iw ? 1 : Math.ceil((TW - OVERLAP) / (iw - OVERLAP));
+    const rows = TH <= ih ? 1 : Math.ceil((TH - OVERLAP) / (ih - OVERLAP));
+    return { pw, ph, iw, ih, cols, rows, count: cols * rows, label, landscape: pw > ph };
+  };
+  const a = fit(w, h), b = fit(h, w);
+  return b.count < a.count ? b : a;
+}
+
+function seamOps(L, TW, TH, nails) {
+  const ops = [];
+  // keep alignment marks clear of nail marks: slide along the seam until nothing is within 5 mm
+  const clear = (x, y) => nails.every(p => Math.hypot(p.x - x, p.y - y) > 5);
+  const mark = (x0, y0, alongX) => {
+    let x = x0, y = y0;
+    for (const off of [0, 6, -6, 12, -12, 18, -18]) {
+      const cx = alongX ? x0 + off : x0, cy = alongX ? y0 : y0 + off;
+      if (clear(cx, cy)) { x = cx; y = cy; break; }
+    }
+    ops.push({ t: "circle", x, y, r: 1.4, w: .15, c: "#555555" });
+    ops.push({ t: "line", x1: x - 2.6, y1: y, x2: x + 2.6, y2: y, w: .15, c: "#555555" });
+    ops.push({ t: "line", x1: x, y1: y - 2.6, x2: x, y2: y + 2.6, w: .15, c: "#555555" });
+  };
+  for (let c = 1; c < L.cols; c++) {
+    const x = c * (L.iw - OVERLAP) + OVERLAP / 2;
+    ops.push({ t: "line", x1: x, y1: 0, x2: x, y2: TH, w: .15, c: "#777777", dash: [2, 1.5] });
+    for (let y = 20; y < TH - 5; y += 45) mark(x, y, false);
+  }
+  for (let r = 1; r < L.rows; r++) {
+    const y = r * (L.ih - OVERLAP) + OVERLAP / 2;
+    ops.push({ t: "line", x1: 0, y1: y, x2: TW, y2: y, w: .15, c: "#777777", dash: [2, 1.5] });
+    for (let x = 20; x < TW - 5; x += 45) mark(x, y, true);
+  }
+  return ops;
+}
+
+// Returns pages: [{w, h, ops, clip:{x,y,w,h}|null, shift:{x,y}, header:[ops]}]
+function buildPages() {
+  const d = design, c = state;
+  const T = templateOps(d, c, view.numbers, report.minCenter);
+  const L = layoutPages(T.TW, T.TH, view.paper);
+  if (L.sheet) return { pages: [{ w: T.TW, h: T.TH, ops: T.ops, clip: null, shift: { x: 0, y: 0 }, header: [] }], L, T };
+  const ops = T.ops.concat(seamOps(L, T.TW, T.TH, d.nails.map(n => ({ x: n.x + MARGIN, y: n.y + MARGIN }))));
+  const pages = [];
+  let n = 0;
+  for (let r = 0; r < L.rows; r++) for (let col = 0; col < L.cols; col++) {
+    n++;
+    const header = [];
+    header.push({ t: "text", x: PM.left, y: 7, s: 2.8, bold: true, str: `Page ${n} of ${L.count}  (row ${r + 1}, column ${col + 1})`, c: "#000000" });
+    header.push({ t: "text", x: PM.left + 62, y: 7, s: 2.4, str: `${c.name || LABEL[c.pattern]} - print at 100% (Actual size)`, c: "#444444" });
+    header.push({ t: "text", x: PM.left, y: L.ph - 3.2, s: 2.2, str: "Trim the right/lower page on the dashed line, lay it on its neighbour and match the (+) marks. Tape, then nail through the marks.", c: "#444444" });
+    for (const o of brandOps(L.pw - PM.right - brandWidth(3, true), L.ph - 3, 3, true)) header.push(o);
+    const cell = 3.2, mx = L.pw - PM.right - L.cols * cell, my = 3;
+    for (let rr = 0; rr < L.rows; rr++) for (let cc = 0; cc < L.cols; cc++) {
+      header.push({ t: "rect", x: mx + cc * cell, y: my + rr * cell * .8, w: cell, h: cell * .8, lw: .15, c: "#666666", fill: rr === r && cc === col ? "#999999" : null });
+    }
+    pages.push({
+      w: L.pw, h: L.ph, ops,
+      clip: { x: PM.left, y: PM.top, w: L.iw, h: L.ih },
+      shift: { x: PM.left - col * (L.iw - OVERLAP), y: PM.top - r * (L.ih - OVERLAP) },
+      header,
+    });
+  }
+  return { pages, L, T };
+}
+
+/* ---------------- SVG renderer ---------------- */
+function escapeXml(s) { return String(s).replace(/[&<>"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])); }
+const n3 = v => { const s = (Math.round(v * 1000) / 1000).toFixed(3).replace(/\.?0+$/, ""); return s === "-0" ? "0" : s; };
+
+function opsToSvg(ops) {
+  let s = "";
+  for (const o of ops) {
+    const dash = o.dash ? ` stroke-dasharray="${o.dash.join(" ")}"` : "";
+    if (o.t === "line") s += `<line x1="${n3(o.x1)}" y1="${n3(o.y1)}" x2="${n3(o.x2)}" y2="${n3(o.y2)}" stroke="${o.c}" stroke-width="${o.w}"${dash}/>`;
+    else if (o.t === "circle") s += `<circle cx="${n3(o.x)}" cy="${n3(o.y)}" r="${n3(o.r)}" fill="none" stroke="${o.c}" stroke-width="${o.w}"${dash}/>`;
+    else if (o.t === "rect") s += `<rect x="${n3(o.x)}" y="${n3(o.y)}" width="${n3(o.w)}" height="${n3(o.h)}" fill="${o.fill || "none"}" stroke="${o.c}" stroke-width="${o.lw}"${dash}/>`;
+    else if (o.t === "text") s += `<text x="${n3(o.x)}" y="${n3(o.y)}" font-size="${n3(o.s)}"${o.anchor === "middle" ? ' text-anchor="middle"' : ""}${o.bold ? ' font-weight="bold"' : ""} fill="${o.c}">${escapeXml(o.str)}</text>`;
+    else if (o.t === "heart") s += `<path d="${heartPath(o.x, o.y, o.s)}" fill="${o.c}"/>`;
+  }
+  return s;
+}
+
+function pageSvg(p) {
+  let s = `<?xml version="1.0" encoding="UTF-8"?>\n<svg xmlns="http://www.w3.org/2000/svg" width="${n3(p.w)}mm" height="${n3(p.h)}mm" viewBox="0 0 ${n3(p.w)} ${n3(p.h)}" font-family="Helvetica, Arial, sans-serif">`;
+  s += `<rect width="100%" height="100%" fill="white"/>`;
+  if (p.clip) {
+    s += `<defs><clipPath id="area"><rect x="${n3(p.clip.x)}" y="${n3(p.clip.y)}" width="${n3(p.clip.w)}" height="${n3(p.clip.h)}"/></clipPath></defs>`;
+    s += `<g clip-path="url(#area)"><g transform="translate(${n3(p.shift.x)} ${n3(p.shift.y)})">${opsToSvg(p.ops)}</g></g>`;
+  } else s += opsToSvg(p.ops);
+  s += opsToSvg(p.header);
+  return s + "</svg>\n";
+}
+
+/* ---------------- PDF writer (vector, no libraries) ---------------- */
+const K = 72 / 25.4;
+const HELV = { digit: .556, upper: .667, lower: .5, space: .278, other: .4 };
+function textWidth(str, size, bold) {
+  let w = 0;
+  for (const ch of str) {
+    if (/[0-9]/.test(ch)) w += HELV.digit; else if (/[A-Z]/.test(ch)) w += HELV.upper;
+    else if (/[a-z]/.test(ch)) w += HELV.lower; else if (ch === " ") w += HELV.space; else w += HELV.other;
+  }
+  return w * size * (bold ? 1.05 : 1);
+}
+const ascii = s => String(s).replace(/×/g, "x").replace(/[–—]/g, "-").replace(/[^\x20-\x7e]/g, "?");
+const pdfStr = s => "(" + ascii(s).replace(/\\/g, "\\\\").replace(/\(/g, "\\(").replace(/\)/g, "\\)") + ")";
+const rgb = hex => { const n = parseInt(hex.slice(1), 16); return [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(v => n3(v / 255)).join(" "); };
+
+function opsToPdf(ops) {
+  const out = [];
+  let stroke = null, width = null, dash = "none";
+  const setStroke = (c, w, d) => {
+    if (c !== stroke) { out.push(rgb(c) + " RG"); stroke = c; }
+    if (w !== width) { out.push(n3(w) + " w"); width = w; }
+    const dk = d ? d.join(" ") : "none";
+    if (dk !== dash) { out.push(d ? `[${d.map(n3).join(" ")}] 0 d` : "[] 0 d"); dash = dk; }
+  };
+  const kap = 0.5522847;
+  for (const o of ops) {
+    if (o.t === "line") { setStroke(o.c, o.w, o.dash); out.push(`${n3(o.x1)} ${n3(o.y1)} m ${n3(o.x2)} ${n3(o.y2)} l S`); }
+    else if (o.t === "circle") {
+      setStroke(o.c, o.w, o.dash);
+      const { x, y, r } = o, k = r * kap;
+      out.push(`${n3(x + r)} ${n3(y)} m ${n3(x + r)} ${n3(y + k)} ${n3(x + k)} ${n3(y + r)} ${n3(x)} ${n3(y + r)} c ` +
+        `${n3(x - k)} ${n3(y + r)} ${n3(x - r)} ${n3(y + k)} ${n3(x - r)} ${n3(y)} c ` +
+        `${n3(x - r)} ${n3(y - k)} ${n3(x - k)} ${n3(y - r)} ${n3(x)} ${n3(y - r)} c ` +
+        `${n3(x + k)} ${n3(y - r)} ${n3(x + r)} ${n3(y - k)} ${n3(x + r)} ${n3(y)} c S`);
+    } else if (o.t === "rect") {
+      setStroke(o.c, o.lw, o.dash);
+      if (o.fill) out.push(`${rgb(o.fill)} rg ${n3(o.x)} ${n3(o.y)} ${n3(o.w)} ${n3(o.h)} re B`);
+      else out.push(`${n3(o.x)} ${n3(o.y)} ${n3(o.w)} ${n3(o.h)} re S`);
+    } else if (o.t === "heart") {
+      const P = (u, v) => `${n3(o.x + u * o.s)} ${n3(o.y + v * o.s)}`;
+      let d = `${rgb(o.c)} rg ${P(HEART[0][0], HEART[0][1])} m`;
+      for (let i = 1; i < HEART.length; i++) { const c = HEART[i]; d += ` ${P(c[0], c[1])} ${P(c[2], c[3])} ${P(c[4], c[5])} c`; }
+      out.push(d + " f");
+    } else if (o.t === "text") {
+      const x = o.anchor === "middle" ? o.x - textWidth(ascii(o.str), o.s, o.bold) / 2 : o.x;
+      out.push(`BT /${o.bold ? "F2" : "F1"} ${n3(o.s)} Tf ${rgb(o.c)} rg 1 0 0 -1 ${n3(x)} ${n3(o.y)} Tm ${pdfStr(o.str)} Tj ET`);
+    }
+  }
+  return out.join("\n");
+}
+
+function buildPdf(pages) {
+  const objs = [null];
+  const alloc = () => { objs.push(null); return objs.length - 1; };
+  const catalog = alloc(), pagesId = alloc(), f1 = alloc(), f2id = alloc();
+  objs[f1] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>";
+  objs[f2id] = "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold /Encoding /WinAnsiEncoding >>";
+  // The drawing is stored once as a Form XObject and placed on every page (tiles only shift and clip it).
+  const body = opsToPdf(pages[0].ops);
+  const form = alloc();
+  const bw = Math.max(...pages.map(p => p.w)) + 2000, fonts = `/Font << /F1 ${f1} 0 R /F2 ${f2id} 0 R >>`;
+  objs[form] = `<< /Type /XObject /Subtype /Form /BBox [-1000 -1000 ${bw} ${bw}] /Resources << ${fonts} >> /Length ${body.length} >>\nstream\n${body}\nendstream`;
+  const kids = [];
+  for (const p of pages) {
+    let s = `q ${n3(K)} 0 0 ${n3(-K)} 0 ${n3(p.h * K)} cm\n`;
+    if (p.clip) s += `q ${n3(p.clip.x)} ${n3(p.clip.y)} ${n3(p.clip.w)} ${n3(p.clip.h)} re W n\n1 0 0 1 ${n3(p.shift.x)} ${n3(p.shift.y)} cm\n`;
+    else s += "q\n";
+    s += "/Art Do\nQ\n" + opsToPdf(p.header) + "\nQ";
+    const content = alloc(), page = alloc();
+    objs[content] = `<< /Length ${s.length} >>\nstream\n${s}\nendstream`;
+    objs[page] = `<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${n3(p.w * K)} ${n3(p.h * K)}] /Resources << ${fonts} /XObject << /Art ${form} 0 R >> >> /Contents ${content} 0 R >>`;
+    kids.push(page);
+  }
+  objs[pagesId] = `<< /Type /Pages /Kids [${kids.map(k => k + " 0 R").join(" ")}] /Count ${kids.length} >>`;
+  objs[catalog] = `<< /Type /Catalog /Pages ${pagesId} 0 R >>`;
+  let pdf = "%PDF-1.4\n";
+  const offsets = [];
+  for (let i = 1; i < objs.length; i++) { offsets[i] = pdf.length; pdf += `${i} 0 obj\n${objs[i]}\nendobj\n`; }
+  const xref = pdf.length;
+  pdf += `xref\n0 ${objs.length}\n0000000000 65535 f \n`;
+  for (let i = 1; i < objs.length; i++) pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+  pdf += `trailer\n<< /Size ${objs.length} /Root ${catalog} 0 R >>\nstartxref\n${xref}\n%%EOF\n`;
+  return pdf;
+}
+
+/* ---------------- ZIP writer (store only) ---------------- */
+const CRC_TABLE = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(bytes) { let c = 0xffffffff; for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; }
+function makeZip(files) {
+  const enc = new TextEncoder();
+  const now = new Date();
+  const time = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+  const date = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+  const parts = [], central = [];
+  let offset = 0;
+  for (const f of files) {
+    const name = enc.encode(f.name), data = typeof f.data === "string" ? enc.encode(f.data) : f.data, crc = crc32(data);
+    const lh = new DataView(new ArrayBuffer(30));
+    lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0x0800, true); lh.setUint16(8, 0, true);
+    lh.setUint16(10, time, true); lh.setUint16(12, date, true); lh.setUint32(14, crc, true);
+    lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true); lh.setUint16(26, name.length, true); lh.setUint16(28, 0, true);
+    parts.push(new Uint8Array(lh.buffer), name, data);
+    const ch = new DataView(new ArrayBuffer(46));
+    ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true); ch.setUint16(8, 0x0800, true); ch.setUint16(10, 0, true);
+    ch.setUint16(12, time, true); ch.setUint16(14, date, true); ch.setUint32(16, crc, true);
+    ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true); ch.setUint16(28, name.length, true);
+    ch.setUint16(30, 0, true); ch.setUint16(32, 0, true); ch.setUint16(34, 0, true); ch.setUint16(36, 0, true); ch.setUint32(38, 0, true);
+    ch.setUint32(42, offset, true);
+    central.push(new Uint8Array(ch.buffer), name);
+    offset += 30 + name.length + data.length;
+  }
+  const cdSize = central.reduce((s, a) => s + a.length, 0);
+  const end = new DataView(new ArrayBuffer(22));
+  end.setUint32(0, 0x06054b50, true); end.setUint16(8, files.length, true); end.setUint16(10, files.length, true);
+  end.setUint32(12, cdSize, true); end.setUint32(16, offset, true);
+  return new Blob([...parts, ...central, new Uint8Array(end.buffer)], { type: "application/zip" });
+}
+
+function slug() {
+  const base = (state.name || LABEL[state.pattern]).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "mandala";
+  return `${base}-${design.nails.length}n-${Math.round(design.w)}mm`;
+}
+
+async function makeExport(kind) {
+  const name = slug();
+  if (kind === "pdf") {
+    const { pages } = buildPages();
+    return new File([buildPdf(pages)], `${name}-template.pdf`, { type: "application/pdf" });
+  }
+  if (kind === "svg") {
+    const { pages, L } = buildPages();
+    if (pages.length === 1) return new File([pageSvg(pages[0])], `${name}-template.svg`, { type: "image/svg+xml" });
+    const files = pages.map((p, i) => ({ name: `${name}-page-${String(i + 1).padStart(2, "0")}-of-${pages.length}.svg`, data: pageSvg(p) }));
+    files.push({ name: "HOW-TO-PRINT.txt", data: `${BRAND.site} - Mandala String Art\r\n\r\nPrint every page at 100% (Actual size), ${L.label} ${L.landscape ? "landscape" : "portrait"}.\r\nPages are numbered row by row (${L.cols} columns x ${L.rows} rows).\r\nTrim the right/lower page on the dashed line, lay it on its neighbour and match the (+) marks.\r\nCheck the 100 mm bar with a ruler before nailing.\r\n` });
+    return new File([makeZip(files)], `${name}-template-${pages.length}-pages.zip`, { type: "application/zip" });
+  }
+  if (kind === "art") {
+    const svg = `<?xml version="1.0" encoding="UTF-8"?>\n<!-- ${BRAND.site} - Mandala String Art -->\n` + artSvg(design, state, { nails: true, size: 1600, brand: true });
+    return new File([svg], `${name}.svg`, { type: "image/svg+xml" });
+  }
+  if (kind === "png") return new File([await pngBlob()], `${name}.png`, { type: "image/png" });
+  if (kind === "csv") {
+    let s = `# ${BRAND.site} - Mandala String Art - ${state.name || LABEL[state.pattern]} - nail positions in mm (origin top-left)\r\nnail,x_mm,y_mm,ring\r\n`;
+    design.nails.forEach((p, i) => { s += `${i},${p.x.toFixed(3)},${p.y.toFixed(3)},${p.g}\r\n`; });
+    return new File([s], `${name}-nails.csv`, { type: "text/csv" });
+  }
+  if (kind === "json") {
+    const settings = { ...state }; delete settings.preset;
+    const data = { format: "woodyouloveit-mandala-design", version: 1, brand: BRAND.site, app: APP.version, saved: new Date().toISOString(), settings };
+    return new File([JSON.stringify(data, null, 2)], `${name}.mandala.json`, { type: "application/json" });
+  }
+}
+
+function pngBlob() {
+  return new Promise((resolve, reject) => {
+    const d = design, c = state, pad = d.w * .035, size = 2000, strip = d.w * .09;
+    const scale = size / (Math.max(d.w, d.h) + 2 * pad);
+    const cv = document.createElement("canvas");
+    cv.width = Math.round((d.w + 2 * pad) * scale); cv.height = Math.round((d.h + 2 * pad + strip) * scale);
+    const g = cv.getContext("2d");
+    g.fillStyle = "#ffffff"; g.fillRect(0, 0, cv.width, cv.height);
+    g.setTransform(scale, 0, 0, scale, pad * scale, pad * scale);
+    g.fillStyle = c.boardColor;
+    g.beginPath();
+    if (d.shape === "circle") g.arc(d.w / 2, d.h / 2, Math.max(d.w, d.h) / 2, 0, TAU); else g.rect(0, 0, d.w, d.h);
+    g.fill();
+    g.strokeStyle = c.stringColor; g.globalAlpha = .88; g.lineWidth = Math.max(d.w / 2500, threadMm()); g.lineCap = "round";
+    g.beginPath();
+    for (const [a, b] of d.chords) { g.moveTo(d.nails[a].x, d.nails[a].y); g.lineTo(d.nails[b].x, d.nails[b].y); }
+    g.stroke();
+    g.globalAlpha = 1;
+    g.fillStyle = luminance(c.boardColor) < .35 ? "#d8d2c4" : "#3d3d3d";
+    const r = Math.max(c.nailSize / 2, d.w / 500);
+    g.beginPath();
+    for (const p of d.nails) { g.moveTo(p.x + r, p.y); g.arc(p.x, p.y, r, 0, TAU); }
+    g.fill();
+    const bs = d.w * .042;   // brand mark in the white band under the board
+    drawBrandCanvas(g, d.w - brandWidth(bs, true), d.h + pad + strip * .62, bs, true);
+    cv.toBlob(b => b ? resolve(b) : reject(new Error("PNG failed")), "image/png");
+  });
+}
+
+function download(file) {
+  const url = URL.createObjectURL(file);
+  const a = document.createElement("a");
+  a.href = url; a.download = file.name;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+function shareMessage() {
+  return `${state.name || LABEL[state.pattern]} – mandala string art by woodyouloveit. ${design.nails.length} nails, ${design.chords.length} strings. Print templates at 100% (Actual size).`;
+}
+
+async function share(file) {
+  const text = shareMessage();
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try { await navigator.share({ files: [file], title: file.name, text }); return; }
+    catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  download(file);
+  $("shareText").textContent = `${file.name} is in your downloads. This browser can't attach files directly, so open WhatsApp or your email and attach it from there.`;
+  $("waLink").href = "https://wa.me/?text=" + encodeURIComponent(text);
+  $("mailLink").href = "mailto:?subject=" + encodeURIComponent(`String art: ${state.name || LABEL[state.pattern]}`) + "&body=" + encodeURIComponent(text + "\n\nThe file is attached.");
+  $("shareDlg").showModal();
+}
+
+function toast(msg) {
+  const t = $("toast");
+  t.textContent = msg; t.classList.add("show");
+  clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove("show"), 2600);
+}
+
+async function onExport(kind, mode) {
+  try {
+    const file = await makeExport(kind);
+    if (mode === "share") await share(file);
+    else { download(file); toast(`Saved ${file.name}`); }
+  } catch (e) {
+    toast("Export failed: " + (e && e.message ? e.message : e));
+  }
+}
+
+/* ---------------- plotter connection (HTTP API of firmware >= 1.1.0) ---------------- */
+const Machine = { base: null, online: false, fails: 0, seq: 0, timer: null, status: null, lastFile: "", lastState: "" };
+const ALARMS = { 1: "Limit switch hit or stepper problem – home again", 5: "Stepper refused a move – home again", 9: "Homing failed – check the switches", 11: "Homing needed after power-up", 12: "Safe mode after repeated resets – check the power wiring, then restart the plotter" };
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+function apiUrl(p) { return (Machine.base || "") + p; }
+async function api(path, opt = {}, timeout = 6000) {
+  const ctl = new AbortController();
+  const t = setTimeout(() => ctl.abort(), timeout);
+  try { return await fetch(apiUrl(path), { ...opt, signal: ctl.signal, cache: "no-store" }); }
+  finally { clearTimeout(t); }
+}
+
+function logLine(text, cls = "") {
+  const box = $("m-log");
+  if (!box) return;
+  for (const l of String(text).split(/\r?\n/)) {
+    if (!l.trim()) continue;
+    const div = document.createElement("div");
+    if (cls) div.className = cls;
+    div.textContent = l;
+    box.appendChild(div);
+  }
+  while (box.childNodes.length > 300) box.removeChild(box.firstChild);
+  box.scrollTop = box.scrollHeight;
+}
+
+async function cmd(line, quiet = false) {
+  if (!Machine.online) throw new Error("plotter not connected");
+  if (!quiet) logLine("> " + line, "in");
+  for (let i = 0; i < 30; i++) {
+    const r = await api("/api/cmd", { method: "POST", headers: { "Content-Type": "text/plain" }, body: line });
+    const t = await r.text();
+    if (r.status === 503) { await sleep(150); continue; }
+    if (!quiet || /error/.test(t)) logLine(t, /error/.test(t) ? "err" : "");
+    if (/^error/m.test(t)) throw new Error(t.replace(/^error:\s*/m, "").trim());
+    return t;
+  }
+  throw new Error("plotter busy, try again");
+}
+
+async function realtime(k) {
+  if (!Machine.online) return toast("Plotter not connected");
+  logLine("> " + k, "in");
+  try { const t = await (await api("/api/rt?k=" + k, { method: "POST" })).text(); logLine(t); }
+  catch (e) { toast("No answer from the plotter"); }
+}
+
+function normalizeAddr(a) {
+  a = (a || "").trim().replace(/\/+$/, "");
+  if (!a) return "";
+  if (!/^https?:\/\//i.test(a)) a = "http://" + a;
+  return a;
+}
+
+async function connectMachine(addr, quiet) {
+  const base = normalizeAddr(addr);
+  if (location.protocol === "https:" && base.startsWith("http:")) {
+    $("m-connhint").textContent = "This page is on https, so the browser blocks the plotter. Open http://192.168.4.1 or the saved file instead.";
+    return false;
+  }
+  Machine.base = base;
+  Machine.seq = 0;
+  try {
+    const r = await api("/api/status?since=0", {}, 3000);
+    if (!r.ok) throw new Error();
+    const s = await r.json();
+    if (!s.state) throw new Error();
+    Machine.seq = s.seq;
+    onStatus(s, true);
+    setOnline(true);
+    try { localStorage.setItem(STORE_KEY + "-addr", addr || ""); } catch (e) { }
+    clearInterval(Machine.timer);
+    Machine.timer = setInterval(pollMachine, 700);
+    if (!quiet) toast(`Connected to plotter ${s.ver}`);
+    refreshFiles();
+    loadSetup(true);
+    return true;
+  } catch (e) {
+    setOnline(false);
+    if (!quiet) toast("No plotter at " + (base || location.host));
+    return false;
+  }
+}
+
+function disconnectMachine() {
+  clearInterval(Machine.timer);
+  Machine.timer = null;
+  setOnline(false);
+}
+
+async function pollMachine() {
+  try {
+    const r = await api("/api/status?since=" + Machine.seq, {}, 2500);
+    const s = await r.json();
+    Machine.fails = 0;
+    if (!Machine.online) setOnline(true);
+    onStatus(s, false);
+  } catch (e) {
+    if (++Machine.fails >= 3 && Machine.online) { setOnline(false); toast("Lost the plotter connection"); }
+  }
+}
+
+function onStatus(s, initial) {
+  const events = s.events || [];
+  if (initial && s.theme && s.theme !== view.theme && THEMES.some(t => t[0] === s.theme)) setTheme(s.theme, true);
+  if (s.xMax && s.yMax && (plot.workW !== s.xMax || plot.workH !== s.yMax)) { plot.workW = s.xMax; plot.workH = s.yMax; schedule(); }
+  if (!initial) for (const e of events) onEvent(e);
+  Machine.seq = s.seq;
+  Machine.status = s;
+  renderMachine();
+  updateHead();
+}
+
+function onEvent(e) {
+  logLine(e, /^ALARM|error/.test(e) ? "err" : "");
+  let m;
+  if ((m = e.match(/^\[MSG:PAUSE (.*)\]$/))) toast("Plotter waiting: " + m[1]);
+  else if ((m = e.match(/^\[MSG:Job complete (.*)\]$/))) { toast("Job finished: " + m[1]); refreshFiles(); }
+  else if (/^ALARM:/.test(e)) toast(e.replace(/^ALARM:\d+\s*/, "Alarm: "));
+  else if (/^\[MSG:Homed\]/.test(e)) toast("Homed");
+}
+
+function setOnline(on) {
+  Machine.online = on;
+  const pill = $("machinePill");
+  pill.classList.toggle("on", on);
+  if (!on) { pill.classList.remove("alarm"); $("machinePillText").textContent = "Plotter offline"; Machine.status = null; Setup.values = null; if ($("m-setup")) renderSetup(); }
+  $("m-connect").textContent = on ? "Disconnect" : "Connect";
+  renderMachine();
+  renderFoot();
+}
+
+function fmtPos(v) { return Number(v).toFixed(2); }
+
+function renderMachine() {
+  const s = Machine.status, on = Machine.online && s;
+  $("m-state").textContent = on ? s.state : "Offline";
+  $("m-pos").textContent = on ? `X ${fmtPos(s.x)}  Y ${fmtPos(s.y)}  Z ${fmtPos(s.z)}  ·  ${s.ip}` : "Connect to the plotter's Wi-Fi, then press Connect.";
+  const hb = $("m-homed");
+  const noSwitches = on && s.homing === 0;
+  hb.className = "badge" + (on ? (s.alarm ? " warn" : (s.homed || noSwitches) ? " ok" : "") : "");
+  hb.textContent = on ? (s.alarm ? `Alarm ${s.alarm}` : noSwitches ? "Ready" : s.homed ? "Homed" : "Not homed") : "–";
+  $("m-job").hidden = !(on && s.job && s.job.active);
+  if (on && s.job && s.job.active) {
+    $("m-bar").style.width = Math.min(100, s.job.pct) + "%";
+    $("m-jobtext").textContent = `${s.job.name} · ${s.job.pct.toFixed(1)}% · thread ${s.job.run + 1}, step ${s.job.step}, nail ${s.job.nail}`;
+  }
+  const msg = on && s.state === "Pause" && s.msg;
+  const btn = $("m-msgbtn");
+  $("m-msg").hidden = !msg;
+  if (msg) { $("m-msgtext").textContent = s.msg; btn.textContent = "Continue"; btn.hidden = false; btn.onclick = () => realtime("resume"); }
+  if (on && s.alarm && !msg) {
+    $("m-msg").hidden = false;
+    $("m-msgtext").textContent = ALARMS[s.alarm] || `Alarm ${s.alarm}`;
+    btn.hidden = s.alarm === 12;   // safe mode: fix power, then restart
+    btn.textContent = "Home";
+    btn.onclick = async () => { try { await cmd("$H"); } catch (e) { toast(e.message); } };
+  }
+  $("m-saved").textContent = on && s.saved ? "Saved progress: " + s.saved.replace(/^\[PROG:|\]$/g, "").replace(/,(\d+),(\d+),(-?\d+)$/, " – thread $1, step $2, nail $3") : "";
+  $("m-resume").disabled = !(on && s.saved);
+  const pill = $("machinePill");
+  if (on) {
+    pill.classList.toggle("alarm", !!s.alarm);
+    $("machinePillText").textContent = s.alarm === 11 ? "Plotter · home first" : s.alarm ? "Plotter alarm" : `Plotter · ${s.state}${s.job && s.job.active ? " " + Math.round(s.job.pct) + "%" : ""}`;
+  }
+  for (const b of document.querySelectorAll("[data-panel=machine] [data-cmd], [data-panel=machine] [data-rt], [data-jog], [data-z], #m-corner, #m-send, #m-files-refresh, #m-setup-load, #m-setup-save, #m-factory"))
+    b.disabled = !on;
+  if (on && Machine.lastState !== s.state) { Machine.lastState = s.state; renderFoot(); }
+}
+
+async function refreshFiles() {
+  if (!Machine.online) return;
+  try {
+    const t = await cmd("$FILES", true);
+    const files = [...t.matchAll(/\[FILE:([^,\]]+),(\d+)\]/g)].map(m => ({ name: m[1], size: +m[2] }));
+    const fs = t.match(/\[FS:(\d+),(\d+)\]/);
+    const box = $("m-files");
+    box.innerHTML = files.length ? "" : '<p class="hint">No jobs stored yet. Make one in step 3.</p>';
+    for (const f of files) {
+      const div = document.createElement("div");
+      div.className = "file";
+      div.innerHTML = `<span>${escapeXml(f.name)} <small>${(f.size / 1024).toFixed(0)} KB</small></span><span style="display:flex;gap:4px"><button class="btn sm primary">Run</button><button class="btn sm" aria-label="Delete ${escapeXml(f.name)}">✕</button></span>`;
+      const [run, del] = div.querySelectorAll("button");
+      run.addEventListener("click", () => startJob(f.name));
+      del.addEventListener("click", async () => { if (confirm(`Delete ${f.name} from the plotter?`)) { try { await cmd("$DEL=" + f.name); refreshFiles(); } catch (e) { toast(e.message); } } });
+      box.appendChild(div);
+    }
+    if (fs) $("m-fs").textContent = `Flash used ${(+fs[1] / 1024).toFixed(0)} of ${(+fs[2] / 1024).toFixed(0)} KB`;
+    if (!Machine.lastFile && files.length) Machine.lastFile = files[files.length - 1].name;
+    renderFoot();
+  } catch (e) { /* shown in console */ }
+}
+
+async function startJob(name) {
+  if (!name) return toast("No job on the plotter yet – make one in step 3");
+  try { await cmd("$RUN=" + name); Machine.lastFile = name; toast("Starting " + name + (Machine.status && !Machine.status.homed ? " (homing first)" : "")); }
+  catch (e) { toast(e.message); }
+}
+
+function uploadJob(name, text, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", apiUrl("/api/upload?name=" + encodeURIComponent(name)));
+    xhr.upload.onprogress = e => { if (e.lengthComputable && onProgress) onProgress(e.loaded / e.total); };
+    xhr.onload = () => {
+      let j = null;
+      try { j = JSON.parse(xhr.responseText); } catch (e) { }
+      if (xhr.status === 200 && j && j.ok) resolve(j); else reject(new Error((j && j.error) || "upload failed"));
+    };
+    xhr.onerror = () => reject(new Error("upload failed – connection lost"));
+    const fd = new FormData();
+    fd.append("file", new Blob([text], { type: "text/plain" }), name);
+    xhr.send(fd);
+  });
+}
+
+// live head position on the preview
+function updateHead() {
+  const dot = document.getElementById("headDot");
+  const s = Machine.status;
+  if (!dot) return;
+  if (!Machine.online || !s || !design || !(s.homed || s.homing === 0 || (s.job && s.job.active))) { dot.setAttribute("visibility", "hidden"); return; }
+  const bx = s.x - plot.offsetX, by = design.h - (s.y - plot.offsetY);
+  const inside = bx > -20 && by > -20 && bx < design.w + 20 && by < design.h + 20;
+  dot.setAttribute("visibility", inside ? "visible" : "hidden");
+  dot.setAttribute("cx", f2(bx)); dot.setAttribute("cy", f2(by));
+}
+/* ---------------- Machine setup: plain-language view of the plotter's $ settings ---------------- */
+const Setup = { values: null, needRestart: false };
+const DRIVES = [["80", "GT2 belt, 20-tooth pulley"], ["100", "GT2 belt, 16-tooth pulley"], ["400", "T8 lead screw (8 mm per turn)"], ["custom", "Other – enter steps per mm"]];
+const SPEEDS = { gentle: [3000, 800, 600], normal: [6000, 1500, 1200], fast: [9000, 2500, 2000] };
+const WIFI_POWER = [["8", "Low"], ["11", "Normal"], ["15", "High"], ["20", "Maximum"]];
+
+const sNum = k => Number(Setup.values[k]);
+const sStr = k => (Setup.values[k] ?? "").trim();
+
+async function loadSetup(quiet) {
+  if (!Machine.online) return;
+  try {
+    const t = await cmd("$$", true);
+    const v = {};
+    for (const m of t.matchAll(/^\$([a-z0-9_]+)=(.*)$/gm)) v[m[1]] = m[2].trim();
+    Setup.values = v;
+    renderSetup();
+    renderAdvanced();
+  } catch (e) { if (!quiet) toast(e.message); }
+}
+
+function segHtml(name, options, current) {
+  return `<div class="seg wide" data-seg="${name}" role="group">${options.map(([v, l]) => `<button type="button" data-v="${v}" aria-pressed="${String(v) === String(current)}">${l}</button>`).join("")}</div>`;
+}
+
+function renderSetup() {
+  const box = $("m-setup");
+  if (!Setup.values) { box.innerHTML = '<p class="hint">Connect to the plotter to see its setup.</p>'; return; }
+  const xs = sNum("x_steps_mm"), ys = sNum("y_steps_mm");
+  const drive = xs === ys && ["80", "100", "400"].includes(String(xs)) ? String(xs) : "custom";
+  const speed = (Object.entries(SPEEDS).find(([, [a, b, c]]) => sNum("max_rate_xy") === a && sNum("accel_xy") === b && sNum("arc_rate") === c) || ["custom"])[0];
+  const mask = sNum("home_dir_mask"), switches = sNum("homing_enable") === 1, zMode = sNum("z_mode");
+  const dbm = sNum("wifi_dbm"), power = WIFI_POWER.reduce((best, [v]) => Math.abs(+v - dbm) < Math.abs(+best - dbm) ? v : best, "11");
+  box.innerHTML = `
+  <div class="setup-group"><h3>Work area</h3>
+    <div class="row">
+      <div class="field"><label for="su-xmax">Width X (mm)</label><input type="number" id="su-xmax" min="10" max="2000" value="${sNum("x_max")}"></div>
+      <div class="field"><label for="su-ymax">Depth Y (mm)</label><input type="number" id="su-ymax" min="10" max="2000" value="${sNum("y_max")}"></div>
+    </div><small>How far the head can travel from home.</small></div>
+
+  <div class="setup-group"><h3>Motors</h3>
+    <div class="field"><label for="su-drive">Drive</label><select id="su-drive">${DRIVES.map(([v, l]) => `<option value="${v}"${v === drive ? " selected" : ""}>${l}</option>`).join("")}</select>
+      <small>With A4988 drivers at 1/16 microstep.</small></div>
+    <div class="row" id="su-custom"${drive === "custom" ? "" : " hidden"}>
+      <div class="field"><label for="su-xsteps">X steps/mm</label><input type="number" id="su-xsteps" step="0.01" value="${xs}"></div>
+      <div class="field"><label for="su-ysteps">Y steps/mm</label><input type="number" id="su-ysteps" step="0.01" value="${ys}"></div>
+    </div>
+    <div class="inline"><label class="check">Reverse X motor <input type="checkbox" id="su-xinv"${sNum("x_dir_inv") ? " checked" : ""}></label><button class="btn sm" data-test="x" type="button">Test X</button></div>
+    <div class="inline"><label class="check">Reverse Y motor <input type="checkbox" id="su-yinv"${sNum("y_dir_inv") ? " checked" : ""}></label><button class="btn sm" data-test="y" type="button">Test Y</button></div>
+    <label class="check">Two Y motors (second driver) <input type="checkbox" id="su-ydual"${sNum("y_dual") ? " checked" : ""}></label>
+    <small>Test moves 10 mm away from home. If it went the wrong way, tick Reverse and save.</small></div>
+
+  <div class="setup-group"><h3>Pen / needle lift</h3>
+    ${segHtml("zmode", [["0", "None"], ["2", "Servo"], ["1", "Stepper"]], zMode)}
+    <div class="row" style="margin-top:8px"${zMode === 2 ? "" : " hidden"} id="su-servo">
+      <div class="field"><label for="su-sup">Up angle (°)</label><input type="number" id="su-sup" min="0" max="180" value="${sNum("servo_up")}"></div>
+      <div class="field"><label for="su-sdown">Down angle (°)</label><input type="number" id="su-sdown" min="0" max="180" value="${sNum("servo_down")}"></div>
+    </div>
+    <div class="field" style="margin-top:8px"${zMode === 1 ? "" : " hidden"} id="su-zstep"><label for="su-zsteps">Z steps/mm</label><input type="number" id="su-zsteps" step="1" value="${sNum("z_steps_mm")}"></div>
+    <div style="margin-top:6px"${zMode === 0 ? " hidden" : ""} id="su-ztest"><button class="btn sm" data-test="z" type="button">Test: down, then up</button></div></div>
+
+  <div class="setup-group"><h3>Limit switches</h3>
+    <label class="check">My machine has limit switches <input type="checkbox" id="su-switch"${switches ? " checked" : ""}></label>
+    <div id="su-switchopts"${switches ? "" : " hidden"}>
+      <div class="field"><span class="label">X switch is at the</span>${segHtml("xside", [["0", "Left"], ["1", "Right"]], mask & 1)}</div>
+      <div class="field"><span class="label">Y switch is at the</span>${segHtml("yside", [["0", "Front"], ["1", "Back"]], (mask >> 1) & 1)}</div>
+    </div>
+    <small>${switches ? "The plotter homes itself before every job." : "Without switches, move the head to the home corner (front left) by hand before switching on."}</small></div>
+
+  <div class="setup-group"><h3>Speed</h3>
+    ${segHtml("speed", [["gentle", "Gentle"], ["normal", "Normal"], ["fast", "Fast"]], speed)}
+    <small>${speed === "custom" ? "Custom values are set in Advanced. Pick a preset to replace them." : "Gentle is best for thin thread and a first run."}</small></div>
+
+  <div class="setup-group"><h3>Wi-Fi and Bluetooth</h3>
+    <div class="field"><label for="su-appass">Plotter hotspot password</label><input type="text" id="su-appass" minlength="8" placeholder="${sStr("ap_pass") ? "unchanged" : "none – open hotspot"} (8+ characters to set)" autocomplete="off"></div>
+    ${sStr("ap_pass") ? '<label class="check">Remove the password (open hotspot) <input type="checkbox" id="su-apopen"></label>' : ""}
+    <small>Forgot it? Hold the <b>BOOT</b> button on the ESP32 for 5 seconds: the plotter restarts as an open hotspot (machine settings are kept).</small>
+    <div class="row">
+      <div class="field"><label for="su-ssid">Home Wi-Fi name</label><input type="text" id="su-ssid" value="${escapeXml(sStr("wifi_ssid"))}" placeholder="optional" autocomplete="off"></div>
+      <div class="field"><label for="su-pass">Home Wi-Fi password</label><input type="text" id="su-pass" placeholder="${sStr("wifi_pass") ? "unchanged" : "optional"}" autocomplete="off"></div>
+    </div>
+    <label class="check">Open the dashboard when a phone joins <input type="checkbox" id="su-captive"${sNum("captive") ? " checked" : ""}></label>
+    <label class="check">Bluetooth (for the app; best with home Wi-Fi) <input type="checkbox" id="su-bt"${sNum("bt_enable") ? " checked" : ""}></label>
+    <div class="field"><span class="label">Wi-Fi strength</span>${segHtml("power", WIFI_POWER, power)}<small>Normal is enough for a workshop and uses less power.</small></div></div>`;
+
+  // live UI behaviour
+  for (const seg of box.querySelectorAll("[data-seg]")) for (const b of seg.querySelectorAll("button")) b.addEventListener("click", () => {
+    for (const x of seg.querySelectorAll("button")) x.setAttribute("aria-pressed", x === b);
+    if (seg.dataset.seg === "zmode") { $("su-servo").hidden = b.dataset.v !== "2"; $("su-zstep").hidden = b.dataset.v !== "1"; $("su-ztest").hidden = b.dataset.v === "0"; }
+    setupDirty();
+  });
+  $("su-drive").addEventListener("change", e => { $("su-custom").hidden = e.target.value !== "custom"; setupDirty(); });
+  $("su-switch").addEventListener("change", e => { $("su-switchopts").hidden = !e.target.checked; setupDirty(); });
+  for (const el of box.querySelectorAll("input")) el.addEventListener("input", setupDirty);
+  for (const b of box.querySelectorAll("[data-test]")) b.addEventListener("click", () => setupTest(b.dataset.test));
+  $("m-setup-save").hidden = true;
+}
+
+function setupDirty() { $("m-setup-save").hidden = false; }
+const segVal = name => { const b = document.querySelector(`#m-setup [data-seg="${name}"] [aria-pressed="true"]`); return b ? b.dataset.v : null; };
+
+function setupChanges() {
+  const want = {};
+  want.x_max = $("su-xmax").value; want.y_max = $("su-ymax").value;
+  const drive = $("su-drive").value;
+  want.x_steps_mm = drive === "custom" ? $("su-xsteps").value : drive;
+  want.y_steps_mm = drive === "custom" ? $("su-ysteps").value : drive;
+  want.x_dir_inv = $("su-xinv").checked ? 1 : 0;
+  want.y_dir_inv = $("su-yinv").checked ? 1 : 0;
+  want.y_dual = $("su-ydual").checked ? 1 : 0;
+  want.z_mode = segVal("zmode");
+  if (want.z_mode === "2") { want.servo_up = $("su-sup").value; want.servo_down = $("su-sdown").value; }
+  if (want.z_mode === "1") want.z_steps_mm = $("su-zsteps").value;
+  const sw = $("su-switch").checked ? 1 : 0;
+  want.homing_enable = sw; want.hard_limits = sw;
+  if (sw) want.home_dir_mask = (sNum("home_dir_mask") & 4) | (segVal("xside") === "1" ? 1 : 0) | (segVal("yside") === "1" ? 2 : 0);
+  const sp = segVal("speed");
+  if (sp && SPEEDS[sp]) [want.max_rate_xy, want.accel_xy, want.arc_rate] = SPEEDS[sp];
+  const ap = $("su-appass").value.trim();
+  if (ap) { if (ap.length < 8) throw new Error("The hotspot password needs at least 8 characters."); want.ap_pass = ap; }
+  const apOpen = $("su-apopen") && $("su-apopen").checked;
+  want.wifi_ssid = $("su-ssid").value.trim();
+  const pw = $("su-pass").value;
+  if (pw) want.wifi_pass = pw;
+  want.captive = $("su-captive").checked ? 1 : 0;
+  want.bt_enable = $("su-bt").checked ? 1 : 0;
+  want.wifi_dbm = segVal("power");
+  // keep only real changes
+  const out = [];
+  if (apOpen && !ap) out.push(["ap_pass", ""]);
+  for (const [k, v] of Object.entries(want)) {
+    if (v === null || v === undefined || v === "") { if (k === "wifi_ssid" && sStr(k)) out.push([k, ""]); continue; }
+    const old = Setup.values[k];
+    const same = k === "wifi_ssid" ? String(v) === sStr(k) : k === "ap_pass" || k === "wifi_pass" ? false : Number(v) === Number(old);
+    if (!same) out.push([k, String(v)]);
+  }
+  return out;
+}
+
+async function saveSetup() {
+  let changes;
+  try { changes = setupChanges(); } catch (e) { return toast(e.message); }
+  if (!changes.length) { toast("Nothing changed"); $("m-setup-save").hidden = true; return; }
+  let restart = false, failed = 0;
+  for (const [k, v] of changes) {
+    try { const r = await cmd(`$${k}=${v}`, true); if (/REBOOT/.test(r)) restart = true; }
+    catch (e) { failed++; toast(`${k}: ${e.message}`); }
+  }
+  if (restart) { Setup.needRestart = true; $("m-reboot").hidden = false; }
+  toast(failed ? `Saved with ${failed} problem${failed > 1 ? "s" : ""}` : restart ? "Saved – restart the plotter to apply" : "Saved");
+  await loadSetup(true);
+  if (restart) $("m-reboot").hidden = false;
+}
+
+async function setupTest(kind) {
+  try {
+    if (kind === "x") await cmd("$J=G91 X10 F1000");
+    else if (kind === "y") await cmd("$J=G91 Y10 F1000");
+    else {
+      const up = $("su-sup"), down = $("su-sdown");
+      if (up && !up.closest("[hidden]")) {   // save angles first so the test uses them
+        if (Number(up.value) !== sNum("servo_up")) await cmd("$servo_up=" + up.value, true);
+        if (Number(down.value) !== sNum("servo_down")) await cmd("$servo_down=" + down.value, true);
+      }
+      await cmd(`$J=G90 Z${plot.zDown} F600`);
+      await sleep(900);
+      await cmd(`$J=G90 Z${plot.zUp} F600`);
+    }
+  } catch (e) { toast(e.message); }
+}
+
+function renderAdvanced() {
+  const box = $("m-settings");
+  box.innerHTML = "";
+  for (const [name, value] of Object.entries(Setup.values || {})) {
+    const row = document.createElement("div");
+    row.className = "setting";
+    row.innerHTML = `<code>${name}</code><input type="text" value="${escapeXml(value)}" aria-label="${name}"><button class="btn sm">Save</button>`;
+    const input = row.querySelector("input");
+    row.querySelector("button").addEventListener("click", async () => {
+      try {
+        const r = await cmd(`$${name}=${input.value.trim()}`);
+        if (/REBOOT/.test(r)) { $("m-reboot").hidden = false; toast(`${name} saved – restart the plotter to apply`); } else toast(`${name} saved`);
+        loadSetup(true);
+      } catch (e) { toast(e.message); }
+    });
+    box.appendChild(row);
+  }
+}
+/* ---------------- simulation: plays the generated G-code on a picture of the machine ---------------- */
+const SIM_SPEEDS = [1, 5, 10, 25, 50, 100, 250, 600, 1000];
+const SIM_WAIT = 2.5;   // simulated seconds shown for each tie-on / tie-off stop
+const Sim = { job: null, segs: [], events: [], total: 0, t: 0, playing: false, speed: 100, last: 0, raf: 0, timer: 0,
+  base: null, ink: null, guide: null, drawn: 0, map: null, cv: null, bounds: null, guideMm: 0, strings: 0 };
+
+function fmtClock(sec) {
+  sec = Math.max(0, Math.round(sec));
+  const h = Math.floor(sec / 3600), m = Math.floor(sec / 60) % 60, s = sec % 60;
+  return (h ? h + ":" + String(m).padStart(2, "0") : m) + ":" + String(s).padStart(2, "0");
+}
+function workArea() {
+  const s = Machine.status;
+  return { w: (s && s.xMax) || plot.workW || 400, h: (s && s.yMax) || plot.workH || 400 };
+}
+
+// G-code -> timed straight pieces in MACHINE coordinates (mm, Y up)
+function buildSim() {
+  const zDown = job.kind === "wind" ? plot.zDown : plot.zMark;
+  const zSplit = (plot.zUp + zDown) / 2, RAPID = 6000;
+  let x = 0, y = 0, z = plot.zUp, feed = 1000, t = 0, mode = 0, strings = 0, guide = 0;
+  const segs = [], events = [];
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  const add = (nx, ny, nz, rate) => {
+    const len = Math.hypot(nx - x, ny - y), dz = Math.abs(nz - z);
+    let dur = (len + dz) / rate * 60;
+    if (dz > 0 && len === 0) dur = Math.max(dur, .2);
+    segs.push({ x0: x, y0: y, x1: nx, y1: ny, t0: t, t1: t + dur, down: Math.max(z, nz) < zSplit, dot: dz > 0 && nz < zSplit });
+    guide += len;
+    if (len > 0) { minX = Math.min(minX, nx); maxX = Math.max(maxX, nx); minY = Math.min(minY, ny); maxY = Math.max(maxY, ny); }
+    t += dur; x = nx; y = ny; z = nz;
+  };
+  for (const raw of job.text.split("\n")) {
+    const semi = raw.indexOf(";");
+    const code = (semi >= 0 ? raw.slice(0, semi) : raw).trim().toUpperCase();
+    const comment = semi >= 0 ? raw.slice(semi + 1).trim() : "";
+    const m = comment.match(/^STEP run=(\d+) step=(\d+) nail=(-?\d+)/);
+    if (m) { if (+m[2] > 0) strings++; events.push({ t, type: "step", run: +m[1], step: +m[2], nail: +m[3], strings }); }
+    if (!code) continue;
+    const w = {};
+    for (const mm of code.matchAll(/([A-Z])(-?\d*\.?\d+)/g)) {
+      if (mm[1] === "G" || mm[1] === "M") (w[mm[1]] = w[mm[1]] || []).push(+mm[2]);
+      else w[mm[1]] = +mm[2];
+    }
+    if (w.F) feed = w.F;
+    if (w.M && (w.M.includes(0) || w.M.includes(1))) { events.push({ t, type: "wait", text: comment || "Paused" }); t += SIM_WAIT; }
+    if (w.G) for (const g of w.G) if (g <= 3) mode = g; else if (g === 4) t += w.P || 0;
+    const hasMove = w.X !== undefined || w.Y !== undefined || w.Z !== undefined;
+    if (!hasMove || (w.G && w.G.includes(4))) continue;
+    const nx = w.X ?? x, ny = w.Y ?? y, nz = w.Z ?? z;
+    if (mode === 0) add(nx, ny, nz, RAPID);
+    else if (mode === 1) add(nx, ny, nz, feed);
+    else {
+      const c = { x: x + (w.I || 0), y: y + (w.J || 0) }, r = Math.hypot(x - c.x, y - c.y);
+      const dir = mode === 2 ? -1 : 1;
+      const sweep = Tangents.sweep(c, { x, y }, { x: nx, y: ny }, dir);
+      const a0 = Math.atan2(y - c.y, x - c.x), n = Math.max(3, Math.ceil(sweep * r / 0.6));
+      for (let k = 1; k <= n; k++) {
+        const a = a0 + dir * sweep * k / n;
+        if (k === n) add(nx, ny, nz, feed); else add(c.x + r * Math.cos(a), c.y + r * Math.sin(a), z, feed);
+      }
+    }
+  }
+  Object.assign(Sim, { job, segs, events, total: t, t: 0, drawn: 0, playing: false, guideMm: guide, strings,
+    bounds: isFinite(minX) ? { minX, maxX, minY, maxY } : null });
+}
+
+function simSetupCanvas() {
+  const box = $("board"), d = job.design || design, A = workArea();
+  box.innerHTML = '<canvas id="simCanvas" aria-label="Simulation of the plotter job"></canvas>';
+  const cv = $("simCanvas"), rect = box.getBoundingClientRect(), dpr = window.devicePixelRatio || 1;
+  const cw = Math.max(200, rect.width - 28), ch = Math.max(200, rect.height - 28);
+  cv.width = Math.round(cw * dpr); cv.height = Math.round(ch * dpr);
+  const pad = Math.max(A.w, A.h) * .07;
+  const s = Math.min(cv.width / (A.w + 2 * pad), cv.height / (A.h + 2 * pad));
+  const ox = (cv.width - A.w * s) / 2, oy = (cv.height - A.h * s) / 2;
+  Sim.map = { s, ox, oy, dpr, A, X: x => ox + x * s, Y: y => oy + (A.h - y) * s };
+  Sim.cv = cv;
+  const mk = () => { const c = document.createElement("canvas"); c.width = cv.width; c.height = cv.height; return c; };
+  Sim.base = mk(); Sim.ink = mk(); Sim.guide = mk();
+  const g = Sim.base.getContext("2d"), M = Sim.map;
+  // machine bed with a 50 mm grid
+  g.fillStyle = "#f4f3ee"; g.fillRect(M.X(0), M.Y(A.h), A.w * s, A.h * s);
+  g.strokeStyle = "rgba(0,0,0,.06)"; g.lineWidth = dpr;
+  g.beginPath();
+  for (let x = 50; x < A.w; x += 50) { g.moveTo(M.X(x), M.Y(0)); g.lineTo(M.X(x), M.Y(A.h)); }
+  for (let y = 50; y < A.h; y += 50) { g.moveTo(M.X(0), M.Y(y)); g.lineTo(M.X(A.w), M.Y(y)); }
+  g.stroke();
+  g.strokeStyle = "#c9c5b8"; g.lineWidth = 1.5 * dpr; g.strokeRect(M.X(0), M.Y(A.h), A.w * s, A.h * s);
+  // board where it sits on the machine
+  const bx = p => M.X(plot.offsetX + p.x), by = p => M.Y(plot.offsetY + (d.h - p.y));
+  g.fillStyle = state.boardColor; g.strokeStyle = "rgba(0,0,0,.25)"; g.lineWidth = dpr;
+  g.beginPath();
+  if (d.shape === "circle") g.arc(bx({ x: d.w / 2 }), by({ y: d.h / 2 }), Math.max(d.w, d.h) / 2 * s, 0, TAU);
+  else g.rect(bx({ x: 0 }), by({ y: d.h }), d.w * s, d.h * s);
+  g.fill(); g.stroke();
+  g.fillStyle = luminance(state.boardColor) < .35 ? "#d8d2c4" : "#3d3d3d";
+  const r = Math.max(state.nailSize / 2 * s, 1.1 * dpr);
+  g.beginPath();
+  for (const p of d.nails) { g.moveTo(bx(p) + r, by(p)); g.arc(bx(p), by(p), r, 0, TAU); }
+  g.fill();
+  // home corner: X / Y axis marks
+  const ax = M.X(0), ay = M.Y(0), L = Math.min(A.w, A.h) * s * .14;
+  g.strokeStyle = "#d4372c"; g.fillStyle = "#d4372c"; g.lineWidth = 1.6 * dpr;
+  g.beginPath(); g.moveTo(ax, ay); g.lineTo(ax + L, ay); g.moveTo(ax, ay); g.lineTo(ax, ay - L); g.stroke();
+  g.font = `bold ${12 * dpr}px Helvetica, Arial, sans-serif`;
+  g.fillText("X", ax + L + 4 * dpr, ay + 4 * dpr); g.fillText("Y", ax - 4 * dpr, ay - L - 6 * dpr);
+  Sim.drawn = 0;
+  simInk(Sim.t);
+  simFrame();
+}
+
+function simInk(t) {
+  const M = Sim.map, segs = Sim.segs, gi = Sim.ink.getContext("2d"), gg = Sim.guide.getContext("2d");
+  gi.strokeStyle = state.stringColor; gi.globalAlpha = .9; gi.lineCap = "round";
+  gi.lineWidth = Math.max(threadMm() * M.s, .6 * M.dpr);
+  gi.fillStyle = "#e0263f";
+  gg.strokeStyle = "rgba(60,90,160,.35)"; gg.lineWidth = .7 * M.dpr;
+  gi.beginPath(); gg.beginPath();
+  while (Sim.drawn < segs.length && segs[Sim.drawn].t1 <= t) {
+    const q = segs[Sim.drawn++];
+    gg.moveTo(M.X(q.x0), M.Y(q.y0)); gg.lineTo(M.X(q.x1), M.Y(q.y1));
+    if (job.kind === "wind" && q.down) { gi.moveTo(M.X(q.x0), M.Y(q.y0)); gi.lineTo(M.X(q.x1), M.Y(q.y1)); }
+    if (job.kind === "mark" && q.dot) { const r = Math.max(1.2 * M.s, 2 * M.dpr); gi.moveTo(M.X(q.x1) + r, M.Y(q.y1)); gi.arc(M.X(q.x1), M.Y(q.y1), r, 0, TAU); }
+  }
+  if (job.kind === "wind") gi.stroke(); else gi.fill();
+  gg.stroke();
+}
+
+function simSegAt(t) {
+  const segs = Sim.segs;
+  let lo = 0, hi = segs.length - 1;
+  while (lo < hi) { const mid = (lo + hi) >> 1; if (segs[mid].t1 < t) lo = mid + 1; else hi = mid; }
+  return segs[lo];
+}
+function simWaitAt(t) {
+  let w = null;
+  for (const e of Sim.events) { if (e.t > t) break; if (e.type === "wait") w = t < e.t + SIM_WAIT ? e : null; }
+  return w;
+}
+function roundRect(g, x, y, w, h, r) {
+  g.beginPath(); g.moveTo(x + r, y); g.arcTo(x + w, y, x + w, y + h, r); g.arcTo(x + w, y + h, x, y + h, r);
+  g.arcTo(x, y + h, x, y, r); g.arcTo(x, y, x + w, y, r); g.closePath();
+}
+
+function simFrame() {
+  if (!Sim.cv || !Sim.cv.isConnected) return;
+  const g = Sim.cv.getContext("2d"), M = Sim.map, dpr = M.dpr, A = M.A;
+  g.setTransform(1, 0, 0, 1, 0, 0);
+  g.clearRect(0, 0, Sim.cv.width, Sim.cv.height);
+  g.drawImage(Sim.base, 0, 0);
+  if (view.simGuide) g.drawImage(Sim.guide, 0, 0);
+  g.drawImage(Sim.ink, 0, 0);
+  const q = Sim.segs.length ? simSegAt(Sim.t) : null;
+  let hx = 0, hy = 0, down = false;
+  if (q) {
+    const f = q.t1 > q.t0 ? Math.min(1, Math.max(0, (Sim.t - q.t0) / (q.t1 - q.t0))) : 1;
+    hx = q.x0 + (q.x1 - q.x0) * f; hy = q.y0 + (q.y1 - q.y0) * f; down = q.down || q.dot;
+    if (job.kind === "wind" && q.down && f > 0) {
+      g.strokeStyle = state.stringColor; g.lineWidth = Math.max(threadMm() * M.s, .6 * dpr); g.lineCap = "round";
+      g.beginPath(); g.moveTo(M.X(q.x0), M.Y(q.y0)); g.lineTo(M.X(hx), M.Y(hy)); g.stroke();
+    }
+  }
+  // gantry: X rail across the bed at the head's Y, with end blocks, and the carriage on it
+  const ry = M.Y(hy), rh = 6 * dpr, px = M.X(hx);
+  g.fillStyle = "rgba(150,148,140,.55)"; g.fillRect(M.X(0) - 4 * dpr, ry - rh / 2, A.w * M.s + 8 * dpr, rh);
+  g.fillStyle = "#6f6d66";
+  g.fillRect(M.X(0) - 9 * dpr, ry - 9 * dpr, 7 * dpr, 18 * dpr);
+  g.fillRect(M.X(A.w) + 2 * dpr, ry - 9 * dpr, 7 * dpr, 18 * dpr);
+  const cs = 18 * dpr;
+  g.fillStyle = "#2b2b2b"; roundRect(g, px - cs / 2, ry - cs / 2, cs, cs, 3 * dpr); g.fill();
+  g.beginPath(); g.arc(px, ry, 6 * dpr, 0, TAU); g.fillStyle = down ? "#e0263f" : "#f2b134"; g.fill();
+  g.strokeStyle = "#2b2b2b"; g.lineWidth = 1.2 * dpr;
+  g.beginPath(); g.moveTo(px - 6 * dpr, ry); g.lineTo(px + 6 * dpr, ry); g.moveTo(px, ry - 6 * dpr); g.lineTo(px, ry + 6 * dpr); g.stroke();
+  // pause bubble
+  const w = simWaitAt(Sim.t);
+  if (w) {
+    const l1 = "❚❚ Pause: " + w.text.replace(/^./, ch => ch.toUpperCase()), l2 = "Tie the thread, then press Continue";
+    g.font = `600 ${12.5 * dpr}px Helvetica, Arial, sans-serif`;
+    const bw = Math.max(g.measureText(l1).width, g.measureText(l2).width) + 28 * dpr, bh = 46 * dpr;
+    const bxx = Sim.cv.width / 2 - bw / 2, byy = M.Y(A.h) + 10 * dpr;
+    g.fillStyle = "rgba(29,33,31,.92)"; roundRect(g, bxx, byy, bw, bh, bh / 2); g.fill();
+    g.fillStyle = "#ffffff"; g.textAlign = "center";
+    g.fillText(l1, Sim.cv.width / 2, byy + 19 * dpr);
+    g.font = `${11.5 * dpr}px Helvetica, Arial, sans-serif`;
+    g.fillText(l2, Sim.cv.width / 2, byy + 36 * dpr);
+    g.textAlign = "left";
+  }
+  simStatus();
+}
+
+function simStatus() {
+  if ($("player").hidden) return;
+  $("simTime").textContent = `${fmtClock(Sim.t)} / ${fmtClock(Sim.total)}`;
+  if (document.activeElement !== $("simSeek")) $("simSeek").value = Sim.total ? Math.round(Sim.t / Sim.total * 1000) : 0;
+  $("simPlay").textContent = Sim.playing ? "❚❚ Pause" : "▶ Simulate";
+  let step = null;
+  for (const e of Sim.events) { if (e.t > Sim.t) break; if (e.type === "step") step = e; }
+  const now = $("simNow"), wait = simWaitAt(Sim.t);
+  if (Sim.total && Sim.t >= Sim.total) { now.className = "now"; now.textContent = job.kind === "wind" ? `Finished – ${Sim.strings.toLocaleString()} strings, ${job.stats.runs} threads.` : `Finished – ${job.order.length} nails marked.`; }
+  else if (wait) { now.className = "now wait"; now.textContent = "The plotter waits for you here: " + wait.text; }
+  else if (step) {
+    now.className = "now";
+    now.textContent = job.kind === "wind"
+      ? `String ${step.strings.toLocaleString()} of ${Sim.strings.toLocaleString()} · thread ${step.run + 1} of ${job.stats.runs} · nail ${step.nail}`
+      : `Nail ${step.step + 1} of ${job.order.length} · nail ${step.nail}`;
+  } else { now.className = "now"; now.textContent = "Press Simulate to watch the plotter."; }
+  const b = Sim.bounds;
+  $("simStats").textContent = b
+    ? `${job.lineCount.toLocaleString()} G-code lines · ~${fmtDur(job.minutes)} run time · ${(Sim.guideMm / 1000).toFixed(1)} m guide path · X ${Math.round(b.minX)} to ${Math.round(b.maxX)}, Y ${Math.round(b.minY)} to ${Math.round(b.maxY)} mm`
+    : "";
+}
+
+// Animation step: driven by animation frames, with a timer fallback when frames are throttled.
+function simStep() {
+  cancelAnimationFrame(Sim.raf); clearTimeout(Sim.timer);
+  if (!Sim.playing) return;
+  const now = performance.now();
+  const dt = Sim.last ? Math.min(0.5, (now - Sim.last) / 1000) : 0;
+  Sim.last = now;
+  Sim.t = Math.min(Sim.total, Sim.t + dt * Sim.speed);
+  simInk(Sim.t);
+  simFrame();
+  if (Sim.t >= Sim.total) { Sim.playing = false; job.simulated = true; simStatus(); renderFoot(); return; }
+  Sim.raf = requestAnimationFrame(simStep);
+  Sim.timer = setTimeout(simStep, 40);
+}
+function simPlay(on = !Sim.playing) {
+  if (on && Sim.t >= Sim.total) simSeek(0);
+  Sim.playing = on;
+  Sim.last = 0;
+  cancelAnimationFrame(Sim.raf); clearTimeout(Sim.timer);
+  if (on) { job.simulated = true; renderFoot(); simStep(); }
+  simStatus();
+}
+function simStop() { Sim.playing = false; cancelAnimationFrame(Sim.raf); clearTimeout(Sim.timer); }
+function simSeek(t) {
+  Sim.t = Math.max(0, Math.min(Sim.total, t));
+  if (Sim.ink) {
+    for (const c of [Sim.ink, Sim.guide]) c.getContext("2d").clearRect(0, 0, c.width, c.height);
+    Sim.drawn = 0;
+    simInk(Sim.t);
+    simFrame();
+  }
+}
+
+function initSimControls() {
+  const sel = $("simSpeed");
+  for (const v of SIM_SPEEDS) sel.appendChild(new Option(v + "×", v));
+  sel.addEventListener("change", () => { Sim.speed = Number(sel.value); view.simSpeed = Sim.speed; save(); });
+  $("simPlay").addEventListener("click", () => { if (view.preview !== "sim") return startSimulation(); simPlay(); });
+  $("simSeek").addEventListener("input", e => simSeek(Number(e.target.value) / 1000 * Sim.total));
+  $("simGuide").addEventListener("change", e => { view.simGuide = e.target.checked; save(); simFrame(); });
+  let rt = 0;
+  window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(() => { if (view.preview === "sim" && job) simSetupCanvas(); }, 150); });
+}
+function syncSimSpeed() {
+  Sim.speed = view.simSpeed || 100;
+  $("simSpeed").value = String(Sim.speed);
+  $("simGuide").checked = !!view.simGuide;
+}
+/* ---------------- state ---------------- */
+const $ = id => document.getElementById(id);
+const STORE_KEY = "woodyouloveit-mandala";
+let state = { ...DEFAULTS, name: "" };
+let view = { showNails: true, showNumbers: false, showGuides: true, showBlocked: false, paper: "a4", numbers: "all",
+  needle: 1.2, clearance: 0.3, units: "mm", theme: "light", tab: "design", preview: "design", jogStep: 10, simSpeed: 100,
+  simGuide: false, threadMm: 0.4, activeJob: "wind" };
+// Machine defaults match a 400 × 400 mm plotter with the board centred (firmware defaults x_max = y_max = 400).
+const PLOT_DEFAULTS = { workW: 400, workH: 400, center: true, wrapRadius: 2.0, offsetX: 50, offsetY: 50, zUp: 5, zDown: 0, zMark: 0, feed: 3000,
+  anchorTurns: 2, markDwell: 0.3, pauseBetweenRuns: true, autoFix: true, connectorMaxLength: 10 };
+let plot = { ...PLOT_DEFAULTS };
+let design = null, report = null, job = null, jobs = null;   // jobs = { mark, wind }; job = the one shown
+function threadMm() { return (view && view.threadMm) || 0.4; }
+function fmtDur(min) { min = Math.max(1, Math.round(min)); return min < 60 ? `${min} min` : `${Math.floor(min / 60)} h ${min % 60} min`; }
+
+function clampState(s) {
+  const out = { ...DEFAULTS };
+  for (const k of Object.keys(DEFAULTS)) if (s[k] !== undefined) out[k] = s[k];
+  if (!LABEL[out.pattern]) out.pattern = DEFAULTS.pattern;
+  if (!["circle", "square", "portrait"].includes(out.frame)) out.frame = "square";
+  for (const sl of SLIDERS) out[sl.key] = Math.min(sl.max, Math.max(sl.min, Number(out[sl.key]) || DEFAULTS[sl.key]));
+  if (!/^#[0-9a-f]{6}$/i.test(out.stringColor)) out.stringColor = DEFAULTS.stringColor;
+  if (!/^#[0-9a-f]{6}$/i.test(out.boardColor)) out.boardColor = DEFAULTS.boardColor;
+  out.name = typeof s.name === "string" ? s.name.slice(0, 40) : "";
+  return out;
+}
+function save() { try { localStorage.setItem(STORE_KEY, JSON.stringify({ state, view, plot })); } catch (e) { } }
+function load() {
+  try {
+    const d = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
+    if (!d) return;
+    state = clampState(d.state || {});
+    view = { ...view, ...(d.view || {}) };
+    plot = { ...PLOT_DEFAULTS, ...(d.plot || {}) };
+    delete plot.jobType;
+  } catch (e) { }
+}
+
+/* ---------------- units ---------------- */
+function fmt(v) { return Number.isInteger(v) ? String(v) : v.toFixed(1); }
+function fmtLen(mm, digits) {
+  if (view.units === "cm") return (mm / 10).toFixed(digits ?? (mm < 10 ? 2 : 1)) + " cm";
+  if (view.units === "in") return (mm / 25.4).toFixed(digits ?? 2) + " in";
+  return (Number.isInteger(mm) ? String(mm) : mm.toFixed(digits ?? 1)) + " mm";
+}
+
+/* ---------------- design controls ---------------- */
+function buildSliders() {
+  const box = $("sliders");
+  for (const sl of SLIDERS) {
+    const f = document.createElement("div");
+    f.className = "field"; f.dataset.key = sl.key;
+    f.innerHTML = `<div class="field-head"><label for="sl-${sl.key}"></label><output id="out-${sl.key}"></output></div>
+      <input type="range" id="sl-${sl.key}" min="${sl.min}" max="${sl.max}" step="${sl.step}">${sl.help ? `<small>${sl.help}</small>` : ""}`;
+    box.appendChild(f);
+    f.querySelector("input").addEventListener("input", e => { state[sl.key] = Number(e.target.value); schedule(); });
+  }
+}
+function colorRow(id, colors, key, pickId) {
+  const box = $(id);
+  for (const [name, hex] of colors) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "swatch"; b.dataset.v = hex; b.style.background = hex; b.title = name; b.setAttribute("aria-label", name);
+    b.addEventListener("click", () => { state[key] = hex; schedule(); });
+    box.appendChild(b);
+  }
+  const pick = document.createElement("input");
+  pick.type = "color"; pick.id = pickId; pick.setAttribute("aria-label", "Custom colour");
+  pick.addEventListener("input", e => { state[key] = e.target.value; schedule(); });
+  box.appendChild(pick);
+}
+// One tile per pattern; each starts from its reference settings (the V1.2 presets, plus two for Classic and Spiral).
+const EXTRA_TILES = {
+  classic: { pattern: "classic", nails: 120, rings: 3, ringGap: 22, step: 9, stringColor: "#12c7d8", innerWeave: 2 },
+  spiral: { pattern: "spiral", nails: 144, rings: 4, ringGap: 18, step: 8, stringColor: "#e3a21a", innerWeave: 2 },
+};
+function tileConfig(pattern) { const p = PRESETS.find(x => x[1].pattern === pattern); return p ? p[1] : EXTRA_TILES[pattern]; }
+function loadTile(pattern) { state = clampState({ ...DEFAULTS, boardColor: state.boardColor, name: state.name, ...tileConfig(pattern) }); schedule(); }
+function buildGallery() {
+  for (const [k, label, structured] of PATTERNS) {
+    const c = clampState({ ...DEFAULTS, boardColor: "#17191e", ...tileConfig(k) });
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "preset"; b.dataset.pattern = k;
+    b.innerHTML = artSvg(generate(c), c, { size: 54 }) + `<span>${label}</span>`;
+    b.addEventListener("click", () => loadTile(k));
+    $(structured ? "galleryShapes" : "galleryRings").appendChild(b);
+  }
+}
+const LENGTH_KEYS = { diameter: 1, ringGap: 1, nailSize: 1 };
+function syncControls() {
+  $("adjustTitle").textContent = "Adjust " + LABEL[state.pattern];
+  $("frameField").hidden = !STRUCTURED[state.pattern];
+  for (const b of $("frame").querySelectorAll("button")) b.setAttribute("aria-pressed", b.dataset.v === state.frame);
+  for (const sl of SLIDERS) {
+    const f = document.querySelector(`.field[data-key="${sl.key}"]`);
+    f.hidden = !uses(sl.key, state);
+    f.querySelector("label").textContent = sl.label(state);
+    f.querySelector("input").value = state[sl.key];
+    $("out-" + sl.key).textContent = LENGTH_KEYS[sl.key] ? fmtLen(state[sl.key]) : fmt(state[sl.key]) + (sl.unit === "°" ? "°" : "");
+  }
+  for (const s of document.querySelectorAll("#threadColors .swatch")) s.setAttribute("aria-pressed", s.dataset.v.toLowerCase() === state.stringColor.toLowerCase());
+  for (const s of document.querySelectorAll("#boardColors .swatch")) s.setAttribute("aria-pressed", s.dataset.v.toLowerCase() === state.boardColor.toLowerCase());
+  $("threadPick").value = state.stringColor; $("boardPick").value = state.boardColor;
+  $("threadMm").value = threadMm(); $("threadMmOut").textContent = fmtLen(threadMm(), 2);
+  if (document.activeElement !== $("designName")) $("designName").value = state.name;
+  for (const id of ["showNails", "showNumbers", "showGuides", "showBlocked"]) $(id).checked = view[id];
+  $("paper").value = view.paper; $("numbers").value = view.numbers;
+  for (const b of document.querySelectorAll(".preset")) b.setAttribute("aria-pressed", b.dataset.pattern === state.pattern);
+  for (const b of $("units").querySelectorAll("button")) b.setAttribute("aria-pressed", b.dataset.v === view.units);
+  syncPlotControls();
+}
+
+/* ---------------- plotter controls ---------------- */
+const PLOT_FIELDS = { "p-workw": "workW", "p-workh": "workH", "p-wrap": "wrapRadius", "p-offx": "offsetX", "p-offy": "offsetY", "p-zup": "zUp", "p-zdown": "zDown", "p-zmark": "zMark", "p-feed": "feed", "p-turns": "anchorTurns", "p-dwell": "markDwell" };
+function syncPlotControls() {
+  for (const [id, k] of Object.entries(PLOT_FIELDS)) if (document.activeElement !== $(id)) $(id).value = plot[k];
+  if (document.activeElement !== $("p-needle")) $("p-needle").value = view.needle;
+  if (document.activeElement !== $("p-clear")) $("p-clear").value = view.clearance;
+  $("p-nail").value = fmtLen(state.nailSize);
+  $("p-pause").checked = plot.pauseBetweenRuns; $("p-fix").checked = plot.autoFix;
+  $("p-conn").value = plot.connectorMaxLength;
+  $("p-conn-out").textContent = plot.connectorMaxLength ? fmtLen(plot.connectorMaxLength, 0) : "off";
+  $("p-center").checked = plot.center;
+  for (const id of ["p-offx", "p-offy"]) $(id).disabled = plot.center;
+  $("p-centerhint").textContent = plot.center
+    ? `Board corner at X ${fmt(plot.offsetX)}, Y ${fmt(plot.offsetY)} mm from home.`
+    : "Offsets: where the board's bottom-left corner sits, measured from home.";
+}
+
+/* ---------------- preview ---------------- */
+let pending = false;
+// Redraw on the next animation frame, or after 60 ms if frames are throttled
+// (some phone web views and the captive-portal sign-in window slow them down).
+function schedule() {
+  if (pending) return;
+  pending = true;
+  const run = () => { if (!pending) return; pending = false; refresh(); };
+  requestAnimationFrame(run);
+  setTimeout(run, 60);
+}
+
+function headDot(d) { return `<circle id="headDot" r="${f2(Math.max(2.2, d.w / 110))}" fill="#e0263f" stroke="#ffffff" stroke-width="${f2(d.w / 400)}" visibility="hidden"/>`; }
+function withHead(svg, d) { return svg.replace(/<\/svg>$/, headDot(d) + "</svg>"); }
+
+function templateSvg() {
+  const T = templateOps(design, state, view.numbers, report.minCenter);
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${n3(T.TW)} ${n3(T.TH)}" font-family="Helvetica, Arial, sans-serif"><rect width="100%" height="100%" fill="#ffffff"/>${opsToSvg(T.ops)}</svg>`;
+}
+
+function pathSvg() {
+  const d = job.design || design, c = state, pad = d.w * .035;
+  const dark = luminance(c.boardColor) < .35;
+  let s = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${f2(-pad)} ${f2(-pad)} ${f2(d.w + 2 * pad)} ${f2(d.h + 2 * pad)}">`;
+  s += boardShape(d, c.boardColor, dark ? "#3a3d44" : "#c9c3b5", d.w / 300);
+  const sw = f2(Math.max(.35, d.w / 600));
+  if (job.kind === "wind") {
+    const n = job.runs.length;
+    job.runs.forEach((run, i) => {
+      const col = `hsl(${Math.round(i * 137.508) % 360} 80% ${dark ? 62 : 42}%)`;  // golden angle: neighbours differ
+      const pts = run.steps.map(st => `${f2(d.nails[st.nail].x)},${f2(d.nails[st.nail].y)}`).join(" ");
+      s += `<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="${sw}" stroke-opacity=".9" stroke-linejoin="round"/>`;
+    });
+    if (job.removed.length) s += `<path d="${chordPath(design, job.removed)}" fill="none" stroke="#ff3b1f" stroke-width="${sw}" stroke-dasharray="${f2(d.w / 120)} ${f2(d.w / 160)}" stroke-opacity=".75"/>`;
+  } else {
+    const pts = job.order.map(i => `${f2(d.nails[i].x)},${f2(d.nails[i].y)}`).join(" ");
+    s += `<polyline points="${pts}" fill="none" stroke="${dark ? "#f2a91e" : "#c98400"}" stroke-width="${sw}" stroke-opacity=".8"/>`;
+  }
+  s += `<path d="${nailPath(d, f2(Math.max(c.nailSize / 2, d.w / 500)))}" fill="${dark ? "#d8d2c4" : "#3d3d3d"}"/>`;
+  return s + "</svg>";
+}
+
+function renderPreview() {
+  const b = $("board");
+  const canPath = !!job;
+  $("views").querySelector('[data-v="path"]').disabled = !canPath;
+  $("views").querySelector('[data-v="sim"]').disabled = !canPath || job.stale;
+  if ((view.preview === "path" && !canPath) || (view.preview === "sim" && (!canPath || job.stale))) view.preview = canPath ? "path" : "design";
+  for (const x of $("views").querySelectorAll("button")) x.setAttribute("aria-pressed", x.dataset.v === view.preview);
+  $("player").hidden = view.preview !== "sim";
+  document.querySelector(".canvas").classList.toggle("sim-view", view.preview === "sim");
+  if ($("simNow")) $("simNow").hidden = view.preview !== "sim";
+  if (view.preview !== "sim") simStop();
+  if (view.preview === "sim") {
+    if (Sim.job !== job) buildSim();
+    simSetupCanvas();
+    b.setAttribute("aria-label", "Simulation of the plotter job");
+    return;
+  }
+  if (view.preview === "template") b.innerHTML = templateSvg();
+  else if (view.preview === "path") b.innerHTML = withHead(pathSvg(), job.design || design);
+  else b.innerHTML = withHead(artSvg(design, state, { guides: view.showGuides, nails: view.showNails, numbers: view.showNumbers,
+    blocked: view.showBlocked ? report.blocked : null, minCenter: report.minCenter }), design);
+  b.setAttribute("aria-label", `${LABEL[state.pattern]}: ${design.nails.length} nails, ${design.chords.length} strings`);
+  updateHead();
+}
+
+function renderNotes() {
+  const d = design, r = report, notes = [];
+  let facts;
+  if ((view.preview === "path" || view.preview === "sim") && job) {
+    facts = job.kind === "wind"
+      ? `${job.stats.runs} ${job.stats.runs === 1 ? "thread" : "threads"}, ${job.stats.wraps} wraps, about ${Math.ceil(job.stats.threadLengthM * 1.1)} m of thread and ${Math.ceil(job.minutes)} min on the plotter.${view.preview === "path" ? " Each colour is one thread." : ""}`
+      : `Marks ${d.nails.length} nails in about ${Math.ceil(job.minutes)} min, following the line shown.`;
+    if (job.stale) notes.push(["warn", "The design or plotter settings changed after this job was made. Generate it again."]);
+  } else {
+    const gap = Math.max(0, r.minCenter - state.nailSize);
+    facts = d.chords.length
+      ? `${d.chords.length} strings on ${d.nails.length} nails, about ${Math.ceil(r.threadM * 1.1)} m of thread. The closest nails are ${fmtLen(gap)} apart.`
+      : "This setting makes no strings. Try a bigger board or fewer rings.";
+    if (r.tooClose) notes.push(["warn", `${r.tooClose} ${r.tooClose === 1 ? "pair" : "pairs"} of nails are closer than ${fmtLen(r.pass)}, so the needle can't pass between them. Use fewer nails, fewer rings or a bigger board.`]);
+    if (r.blocked.length) notes.push(["warn", `${r.blocked.length} ${r.blocked.length === 1 ? "string passes" : "strings pass"} very close to another nail and may not be windable. The Plotter step checks each one exactly and leaves out only those that can't be wound.`, view.showBlocked ? "Hide red" : "Show in red"]);
+    if (r.unused) notes.push(["", `${r.unused} ${r.unused === 1 ? "nail has" : "nails have"} no string and can be left out.`]);
+    if (d.chords.length && !r.tooClose && !r.blocked.length) notes.push(["good", "Every string can be wound by the machine."]);
+  }
+  $("facts").textContent = facts;
+  $("notes").innerHTML = notes.map(([cls, t, btn]) => `<li class="${cls}"><span>${escapeXml(t)}</span>${btn ? `<button type="button" class="note-btn" data-toggle-blocked>${btn}</button>` : ""}</li>`).join("");
+  const tb = document.querySelector("[data-toggle-blocked]");
+  if (tb) tb.addEventListener("click", () => { view.showBlocked = !view.showBlocked; view.preview = "design"; schedule(); });
+}
+
+function renderPaperNote() {
+  const T = { TW: design.w + 2 * MARGIN, TH: design.h + 2 * MARGIN + BOTTOM };
+  const L = layoutPages(T.TW, T.TH, view.paper);
+  $("paperNote").textContent = L.sheet
+    ? `One sheet of ${fmtLen(Math.round(T.TW), 0)} × ${fmtLen(Math.round(T.TH), 0)}. Use a large-format printer or a print shop.`
+    : `Fits on ${L.count} ${L.label} ${L.count === 1 ? "page" : "pages"} (${L.cols} × ${L.rows}, ${L.landscape ? "landscape" : "portrait"}) with alignment marks. Print at 100% (Actual size).`;
+}
+
+function jobKey() { return JSON.stringify([state, plot, view.needle, view.clearance]); }
+
+function refresh() {
+  design = generate(state);
+  design.color = state.stringColor;
+  if (plot.center) {   // centre the board on the machine's work area
+    plot.offsetX = Math.round((plot.workW - design.w) / 2 * 10) / 10;
+    plot.offsetY = Math.round((plot.workH - design.h) / 2 * 10) / 10;
+  }
+  report = analyse(design, state.nailSize, view.needle, view.clearance);
+  if (jobs) { const k = jobKey(); for (const j of Object.values(jobs)) j.stale = j.key !== k; }
+  job = jobs ? jobs[view.activeJob] : null;
+  syncControls();
+  renderPreview();
+  renderNotes();
+  renderPaperNote();
+  renderJobResult();
+  renderJobCards();
+  renderFoot();
+  save();
+}
+
+/* ---------------- tabs, views, footer ---------------- */
+function setTab(t) {
+  view.tab = t;
+  for (const b of document.querySelectorAll(".step")) b.setAttribute("aria-selected", b.dataset.tab === t);
+  for (const p of document.querySelectorAll("[data-panel]")) p.hidden = p.dataset.panel !== t;
+  view.preview = t === "design" ? "design" : t === "template" ? "template" : job ? (view.preview === "sim" ? "sim" : "path") : "design";
+  if (t === "machine" && Machine.online) refreshFiles();
+  document.querySelector(".side-scroll").scrollTop = 0;
+  schedule();
+}
+
+function footButton(label, cls, onClick, disabled, title) {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "btn " + cls; b.textContent = label; b.disabled = !!disabled;
+  if (title) b.title = title;
+  if (onClick) b.addEventListener("click", onClick);
+  return b;
+}
+function renderFoot() {
+  const f = $("foot");
+  if (!f) return;
+  f.innerHTML = "";
+  const t = view.tab, s = Machine.status, on = Machine.online && s;
+  if (t === "design") {
+    f.append(footButton("Next: Template", "primary", () => setTab("template")), footButton("Reset", "", resetDesign, false, "Back to this pattern's starting settings"));
+  } else if (t === "template") {
+    f.append(footButton("Next: Plotter", "primary", () => setTab("plotter")), footButton("Save PDF", "", () => onExport("pdf", "download")));
+  } else if (t === "plotter") {
+    // Flow: Generate -> Simulate -> Send (or go to Machine to connect)
+    if (!job || job.stale) f.append(footButton("Generate jobs", "primary", generateJob), footButton("Simulate", "", null, true, "Generate the jobs first"));
+    else if (!job.simulated) f.append(footButton("Simulate", "primary", startSimulation), footButton("Generate again", "", generateJob));
+    else if (Machine.online) f.append(footButton(job.kind === "mark" ? "Send Job 1 to plotter" : "Send Job 2 to plotter", "primary", () => sendJob()), footButton("Simulate again", "", startSimulation));
+    else f.append(footButton("Next: run on the machine →", "primary", () => setTab("machine")), footButton("Simulate again", "", startSimulation));
+  } else {
+    const st = on ? s.state : "";
+    const ready = job && !job.stale && job.simulated && !job.uploaded;
+    let label = "Start job", action = () => startJob(Machine.lastFile);
+    if (on && ready && !(s.job && s.job.active) && st !== "Hold" && st !== "Pause") { label = job.kind === "mark" ? "Send Job 1 to plotter" : "Send Job 2 to plotter"; action = () => sendJob(); }
+    if (st === "Run" || st === "Home") { label = "Pause"; action = () => realtime("hold"); }
+    else if (st === "Hold" || st === "Pause") { label = "Continue"; action = () => realtime("resume"); }
+    f.append(footButton(label, "primary", action, !on, Machine.lastFile && label === "Start job" ? Machine.lastFile : ""),
+      footButton("Stop", "danger", () => realtime("stop"), !on));
+  }
+}
+
+function resetDesign() { loadTile(state.pattern); }
+function startSimulation() {
+  if (!job || job.stale) return toast("Generate the jobs first");
+  if (view.tab !== "plotter" && view.tab !== "machine") setTab("plotter");
+  view.preview = "sim";
+  refresh();
+  simSeek(0);
+  simPlay(true);
+}
+
+/* ---------------- plotter jobs ---------------- */
+function jobFileName(kind) {
+  const base = (state.name || LABEL[state.pattern]).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "mandala";
+  const tail = `-${design.nails.length}n-${kind}.gcode`;
+  return base.slice(0, 31 - tail.length).replace(/-$/, "") + tail;
+}
+
+function generateJob() {
+  const res = $("jobResult");
+  res.innerHTML = '<p class="hint" style="margin:0">Working…</p>';
+  setTimeout(() => {
+    try {
+      const spec = machineSpec({ nailDiameter: state.nailSize, needleDiameter: view.needle, wrapRadius: plot.wrapRadius, clearance: view.clearance });
+      const cfg = { offsetX: plot.offsetX, offsetY: plot.offsetY, feed: plot.feed, rapidFeedForEstimate: 6000, zUp: plot.zUp, zDown: plot.zDown,
+        zMark: plot.zMark, zFeed: 1000, anchorTurns: plot.anchorTurns, pauseBetweenRuns: plot.pauseBetweenRuns, markDwell: plot.markDwell };
+      const title = state.name || LABEL[state.pattern], key = jobKey();
+      if (spec.wrapRadius < spec.needleClear) throw new Error(`Wrap radius must be at least ${spec.needleClear.toFixed(2)} mm (nail + needle + clearance).`);
+      // Job 1: mark every nail.  Job 2: wind the thread.
+      const m = markGcode(design, cfg, title);
+      const r = buildWindJob(design, spec, { name: title, autoFix: plot.autoFix, connectorMaxLength: plot.connectorMaxLength });
+      const g = windGcode(r.job, spec, cfg);
+      jobs = {
+        mark: { kind: "mark", file: jobFileName("mark"), text: m.text, lineCount: m.lineCount, order: m.order, minutes: m.estMinutes, key, design },
+        wind: { kind: "wind", file: jobFileName("wind"), text: g.text, lineCount: g.lineCount, runs: r.job.runs, stats: r.job.stats, minutes: g.estMinutes,
+          removed: r.removed, connectors: r.connectors, errors: r.check.errors, counts: r.check.counts, design: r.design, key,
+          pauses: (g.text.match(/^M0 /gm) || []).length },
+      };
+      job = jobs[view.activeJob];
+      Sim.job = null;
+      view.preview = "path";
+      schedule();
+    } catch (e) {
+      jobs = job = null;
+      res.innerHTML = `<p class="warnline" style="margin:0">${escapeXml(e.message)}</p>`;
+    }
+  }, 30);
+}
+
+function setActiveJob(kind) {
+  view.activeJob = kind;
+  if (jobs) job = jobs[kind];
+  simStop();
+  schedule();
+}
+
+// summary cards above the preview (as in the String Art Generator)
+function renderJobCards() {
+  const area = $("jobsArea");
+  const show = !!jobs && (view.tab === "plotter" || view.tab === "machine");
+  area.hidden = !show;
+  if (!show) return;
+  const m = jobs.mark, w = jobs.wind;
+  const card = (k, v, sub, hl) => `<div class="cardx${hl ? " hl" : ""}"><div class="k">${k}</div><div class="v">${v}</div><div class="s">${sub}</div></div>`;
+  $("jobCards").innerHTML =
+    card("Job 1 · nails", `~${fmtDur(m.minutes)}`, `${m.order.length} nails`) +
+    card("Job 2 · winding", `~${fmtDur(w.minutes)}`, `${w.stats.chords.toLocaleString()} strings · ${w.pauses} pauses`) +
+    card("Machine time", `~${fmtDur(m.minutes + w.minutes)}`, `plus your time at ${w.pauses} pauses`, true) +
+    card("Thread needed", `~${w.stats.threadLengthM.toFixed(1)} m`, `buy ${(w.stats.threadLengthM * 1.15).toFixed(1)} m (15% spare)`);
+  for (const b of $("jobToggle").querySelectorAll("button")) b.setAttribute("aria-pressed", b.dataset.v === view.activeJob);
+  $("simNow").hidden = view.preview !== "sim";
+}
+
+function renderJobResult() {
+  const res = $("jobResult");
+  if (!jobs) { if (!/Working|warnline/.test(res.innerHTML)) res.innerHTML = '<p class="hint" style="margin:0">Press <b>Generate jobs</b>.</p>'; return; }
+  const m = jobs.mark, w = jobs.wind;
+  const rows = [["Nails to mark (Job 1)", m.order.length], ["Threads to tie (Job 2)", w.stats.runs], ["Strings", w.stats.chords.toLocaleString()],
+    ["Strings left out", w.removed.length], ["Joining strings added", w.connectors.length]];
+  const warns = [];
+  if (w.stale) warns.push("Settings changed – generate again.");
+  if (w.errors) warns.push(`${w.errors} ${w.errors === 1 ? "place is" : "places are"} still very tight (nails close together). Check them in Simulation or use a bigger board.`);
+  if (plot.offsetX < 0 || plot.offsetY < 0 || plot.offsetX + design.w > plot.workW || plot.offsetY + design.h > plot.workH)
+    warns.push(`The board (${fmtLen(design.w, 0)} × ${fmtLen(Math.round(design.h), 0)}) doesn't fit on the machine (${fmtLen(plot.workW, 0)} × ${fmtLen(plot.workH, 0)}) at this position.`);
+  res.innerHTML = `<dl>${rows.map(([k, v]) => `<dt>${k}</dt><dd>${escapeXml(String(v))}</dd>`).join("")}</dl>
+    ${warns.map(x => `<p class="warnline">${escapeXml(x)}</p>`).join("")}
+    <div class="progress" id="upProgress" hidden><div></div></div>
+    <div class="actions"><button class="btn sm" data-save="mark">Download nail G-code</button><button class="btn sm" data-save="wind">Download winding G-code</button><button class="btn sm" data-share="1">Share</button></div>`;
+  for (const b of res.querySelectorAll("[data-save]")) b.addEventListener("click", () => { const f = jobFile(jobs[b.dataset.save]); download(f); toast("Saved " + f.name); });
+  res.querySelector("[data-share]").addEventListener("click", () => share(jobFile(job)));
+}
+function jobFile(j) { return new File([j.text], j.file, { type: "text/plain" }); }
+
+async function sendJob() {
+  if (!job || job.stale) return toast("Generate the jobs first");
+  if (!Machine.online) return toast("Connect to the plotter in step 4");
+  const s = Machine.status;
+  if (s && s.job && s.job.active) return toast("The plotter is running a job");
+  const bar = $("upProgress");
+  if (bar) bar.hidden = false;
+  try {
+    const r = await uploadJob(job.file, job.text, p => { if (bar) bar.firstElementChild.style.width = Math.round(p * 100) + "%"; });
+    Machine.lastFile = r.name;
+    job.uploaded = true;
+    logLine(`uploaded ${r.name} (${r.bytes} bytes)`);
+    toast(`Sent ${job.kind === "mark" ? "Job 1 (nails)" : "Job 2 (winding)"} – press Start job`);
+    setTab("machine");
+  } catch (e) { toast(e.message); }
+  finally { if (bar) bar.hidden = true; }
+}
+
+function openDesign(file) {
+  const r = new FileReader();
+  r.onload = () => {
+    try {
+      const data = JSON.parse(r.result);
+      if (data.format !== "woodyouloveit-mandala-design" || !data.settings) throw new Error();
+      state = clampState(data.settings); job = null;
+      schedule(); toast("Opened " + file.name);
+    } catch (e) { toast("This isn't a design file from this page."); }
+  };
+  r.readAsText(file);
+}
+function renderChanges() {
+  $("changesList").innerHTML = CHANGELOG.map(e => `<div class="ver">Version ${e.v} <span class="date">– ${e.date}</span></div><ul>${e.items.map(i => `<li>${escapeXml(i)}</li>`).join("")}</ul>`).join("");
+}
+const THEMES = [["light", "Woody", "#ecebe4", "#f2a91e"], ["dark", "Night", "#1a1c1b", "#f2a91e"], ["walnut", "Walnut", "#e9dfd2", "#b5652b"],
+  ["ocean", "Ocean", "#e3edf3", "#1f8bc4"], ["forest", "Forest", "#e4ebe2", "#3f8f4f"], ["rose", "Rose", "#f3e6ea", "#d0466f"], ["contrast", "High contrast", "#ffffff", "#ffd400"]];
+function applyTheme() {
+  if (!THEMES.some(t => t[0] === view.theme)) view.theme = "light";
+  document.documentElement.dataset.theme = view.theme;
+  const head = getComputedStyle(document.documentElement).getPropertyValue("--head").trim() || "#ffffff";
+  document.querySelector('meta[name="theme-color"]').content = head;
+  for (const b of document.querySelectorAll("#themeMenu button")) b.setAttribute("aria-checked", b.dataset.v === view.theme);
+}
+// Theme is kept in this browser and, when connected, on the plotter, so every phone or PC opens with it.
+function setTheme(name, fromPlotter) {
+  view.theme = name;
+  applyTheme();
+  save();
+  if (!fromPlotter && Machine.online) cmd("$ui_theme=" + name, true).catch(() => { });
+}
+function buildThemeMenu() {
+  const menu = $("themeMenu"), btn = $("themeBtn");
+  for (const [k, label, bg, ac] of THEMES) {
+    const b = document.createElement("button");
+    b.type = "button"; b.setAttribute("role", "menuitemradio"); b.dataset.v = k;
+    b.innerHTML = `<span class="theme-chip" style="background:linear-gradient(135deg, ${bg} 50%, ${ac} 50%)"></span>${label}`;
+    b.addEventListener("click", () => { setTheme(k); close(); });
+    menu.appendChild(b);
+  }
+  const close = () => { menu.hidden = true; btn.setAttribute("aria-expanded", "false"); };
+  btn.addEventListener("click", e => { e.stopPropagation(); menu.hidden = !menu.hidden; btn.setAttribute("aria-expanded", String(!menu.hidden)); });
+  document.addEventListener("click", e => { if (!menu.hidden && !menu.contains(e.target)) close(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+}
+
+/* ---------------- init ---------------- */
+function init() {
+  load();
+  applyTheme();
+  for (const b of $("frame").querySelectorAll("button")) b.addEventListener("click", () => { state.frame = b.dataset.v; schedule(); });
+  buildSliders();
+  colorRow("threadColors", [["Cyan", "#12c7d8"], ["Saffron", "#e3a21a"], ["Red", "#c0262d"], ["Magenta", "#db2777"], ["Violet", "#7c3aed"], ["Green", "#2fae4e"], ["White", "#f5f5f0"], ["Gold", "#d4a32f"]], "stringColor", "threadPick");
+  colorRow("boardColors", [["Black", "#17191e"], ["Navy", "#1c2a4a"], ["Walnut", "#5a3a22"], ["Teak", "#a0703f"], ["White", "#f4f1ea"]], "boardColor", "boardPick");
+  buildGallery();
+  buildThemeMenu();
+  initSimControls();
+  syncSimSpeed();
+  applyTheme();
+  for (const id of ["showNails", "showNumbers", "showGuides", "showBlocked"]) $(id).addEventListener("change", e => { view[id] = e.target.checked; view.preview = "design"; schedule(); });
+  $("paper").addEventListener("change", e => { view.paper = e.target.value; schedule(); });
+  $("numbers").addEventListener("change", e => { view.numbers = e.target.value; schedule(); });
+  $("designName").addEventListener("input", e => { state.name = e.target.value.slice(0, 40); if (job) job.stale = true; save(); });
+  for (const b of document.querySelectorAll("[data-export]")) b.addEventListener("click", () => onExport(b.dataset.export, b.dataset.mode));
+  $("openDesign").addEventListener("click", () => $("designFile").click());
+  $("designFile").addEventListener("change", e => { if (e.target.files[0]) openDesign(e.target.files[0]); e.target.value = ""; });
+
+  // plotter fields
+  const num = (el, lo, hi, fb) => { const v = Number(el.value); return Number.isFinite(v) ? Math.min(hi, Math.max(lo, v)) : fb; };
+  for (const [id, k] of Object.entries(PLOT_FIELDS)) $(id).addEventListener("change", e => { plot[k] = num(e.target, -1000, 100000, PLOT_DEFAULTS[k]); schedule(); });
+  $("p-needle").addEventListener("change", e => { view.needle = num(e.target, .3, 5, 1.2); schedule(); });
+  $("p-clear").addEventListener("change", e => { view.clearance = num(e.target, 0, 3, .3); schedule(); });
+  $("p-pause").addEventListener("change", e => { plot.pauseBetweenRuns = e.target.checked; schedule(); });
+  $("p-fix").addEventListener("change", e => { plot.autoFix = e.target.checked; schedule(); });
+  $("p-conn").addEventListener("input", e => { plot.connectorMaxLength = Number(e.target.value); schedule(); });
+  $("p-center").addEventListener("change", e => { plot.center = e.target.checked; schedule(); });
+  $("threadMm").addEventListener("input", e => { view.threadMm = Number(e.target.value); schedule(); });
+  for (const b of $("jobToggle").querySelectorAll("button")) b.addEventListener("click", () => setActiveJob(b.dataset.v));
+
+  // header
+  for (const b of $("units").querySelectorAll("button")) b.addEventListener("click", () => { view.units = b.dataset.v; schedule(); });
+  for (const b of document.querySelectorAll(".step")) b.addEventListener("click", () => setTab(b.dataset.tab));
+  for (const b of $("views").querySelectorAll("button")) b.addEventListener("click", () => { if (b.dataset.v === "sim") return startSimulation(); view.preview = b.dataset.v; schedule(); });
+  $("machinePill").addEventListener("click", () => setTab("machine"));
+  $("changesBtn").addEventListener("click", () => { renderChanges(); $("changesDlg").showModal(); });
+  for (const b of document.querySelectorAll("[data-close]")) b.addEventListener("click", () => b.closest("dialog").close());
+
+  // machine
+  let storedAddr = null;
+  try { storedAddr = localStorage.getItem(STORE_KEY + "-addr"); } catch (e) { }
+  const servedByPlotter = location.protocol === "http:";
+  $("m-addr").value = servedByPlotter ? location.host : (storedAddr || "192.168.4.1");
+  $("m-connhint").textContent = servedByPlotter ? "Opened from the plotter." : "Join the plotter's Wi-Fi (MandalaPlotter-…), then Connect.";
+  $("m-connect").addEventListener("click", () => Machine.online ? disconnectMachine() : connectMachine($("m-addr").value));
+  for (const b of document.querySelectorAll("[data-panel=machine] [data-cmd]")) b.addEventListener("click", async () => { try { await cmd(b.dataset.cmd); } catch (e) { toast(e.message); } });
+  for (const b of document.querySelectorAll("[data-rt]")) b.addEventListener("click", () => realtime(b.dataset.rt));
+  $("m-resume").addEventListener("click", async () => { try { await cmd("$RESUME"); } catch (e) { toast(e.message); } });
+  for (const b of $("m-step").querySelectorAll(".chip")) b.addEventListener("click", () => { view.jogStep = Number(b.dataset.v); for (const x of $("m-step").querySelectorAll(".chip")) x.setAttribute("aria-pressed", x === b); save(); });
+  for (const x of $("m-step").querySelectorAll(".chip")) x.setAttribute("aria-pressed", Number(x.dataset.v) === view.jogStep);
+  for (const b of document.querySelectorAll("[data-jog]")) b.addEventListener("click", async () => {
+    const [dx, dy] = b.dataset.jog.split(",").map(Number), st = view.jogStep, feed = st >= 10 ? 3000 : 800;
+    try { await cmd(`$J=G91 X${dx * st} Y${dy * st} F${feed}`); } catch (e) { toast(e.message); }
+  });
+  for (const b of document.querySelectorAll("[data-z]")) b.addEventListener("click", async () => {
+    try { await cmd(`$J=G90 Z${b.dataset.z === "up" ? plot.zUp : plot.zDown} F600`); } catch (e) { toast(e.message); }
+  });
+  $("m-corner").addEventListener("click", async () => { try { await cmd(`$J=G90 X${plot.offsetX} Y${plot.offsetY} F3000`); } catch (e) { toast(e.message); } });
+  $("m-files-refresh").addEventListener("click", refreshFiles);
+  $("m-setup-load").addEventListener("click", () => loadSetup());
+  $("m-setup-save").addEventListener("click", saveSetup);
+  $("m-factory").addEventListener("click", async () => {
+    if (!confirm("Reset every plotter setting to the factory defaults?")) return;
+    try { await cmd("$RST=$"); $("m-reboot").hidden = false; toast("Defaults restored – restart the plotter"); loadSetup(true); } catch (e) { toast(e.message); }
+  });
+  $("m-reboot").addEventListener("click", async () => { if (confirm("Restart the plotter now?")) { try { await cmd("$REBOOT"); } catch (e) { } $("m-reboot").hidden = true; setTimeout(() => connectMachine($("m-addr").value, true), 7000); } });
+  const send = async () => { const l = $("m-line").value.trim(); if (!l) return; $("m-line").value = ""; try { await cmd(l); } catch (e) { } };
+  $("m-send").addEventListener("click", send);
+  $("m-line").addEventListener("keydown", e => { if (e.key === "Enter") send(); });
+
+  setTab(view.tab || "design");
+  setOnline(false);
+  if (servedByPlotter) connectMachine("", true).then(ok => { if (!ok && storedAddr) connectMachine(storedAddr, true); });
+  else if (storedAddr) connectMachine(storedAddr, true);
+}
+
+window.MandalaDashboard = { buildSim, Sim, generate, analyse, buildWindJob, windGcode, markGcode, machineSpec, templateOps, layoutPages, buildPdf, makeZip, PRESETS, DEFAULTS, clampState };
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
+</script>
+</body>
+</html>
