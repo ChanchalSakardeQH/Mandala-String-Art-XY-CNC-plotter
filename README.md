@@ -35,8 +35,8 @@ mandala-string-art/
 
 | Part | Version | Tested with |
 |---|---|---|
-| Web dashboard | 2.3.0 | Chrome desktop and mobile; end-to-end against a simulated plotter; G-code identical to the Kotlin core |
-| Firmware | 1.3.0 | compiles on ESP32 core 2.0.17 and 3.3.12; boots and answers on your board (1.0.1); dashboard not yet tried on hardware |
+| Web dashboard | 2.3.1 | Chrome desktop and mobile; end-to-end against a simulated plotter; G-code identical to the Kotlin core |
+| Firmware | 1.3.1 | compiles on ESP32 core 2.0.17 and 3.3.12; boots and answers on your board (1.0.1); dashboard not yet tried on hardware |
 | stringart-core | 0.4.0 | 21 unit tests |
 | Android app | – | not started |
 

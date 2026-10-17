@@ -4,7 +4,7 @@
 #pragma once
 
 #define FW_NAME    "MandalaPlotter"
-#define FW_VERSION "1.3.0"
+#define FW_VERSION "1.3.1"
 
 // ---------------- Stepper drivers (A4988) ----------------
 #define PIN_X_STEP   26

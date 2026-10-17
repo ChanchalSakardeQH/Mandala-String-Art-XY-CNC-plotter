@@ -27,6 +27,7 @@ float vZ = 0;                    // Z when there is no Z stepper (servo / none)
 MachState st = M_IDLE;
 MachState stBeforeHold = M_RUN;
 bool stopping = false;           // abort in progress (decelerating)
+bool resumePending = false;      // Resume pressed while still slowing down for a pause
 bool isHomed = false;
 bool safe = false;
 int alarmNo = 0;
@@ -355,6 +356,8 @@ void service() {
     }
     return;
   }
+  // Resume pressed during the slow-down of a pause: carry it out as soon as the motors have stopped.
+  if (st == M_HOLD && resumePending && !anyRunning()) { resumePending = false; cycleStart(); }
   if (st == M_ALARM || st == M_HOLD || st == M_PAUSE) return;
 
   feedArc();
@@ -443,6 +446,7 @@ void actual(float& x, float& y, float& z) {
 
 void feedHold() {
   if (st != M_RUN) return;
+  resumePending = false;
   if (onlyJogging()) { abort(); return; }   // '!' cancels a jog
   if (stage == S_MOVING) stopAll(false);
   stBeforeHold = st;
@@ -452,7 +456,7 @@ void feedHold() {
 
 void cycleStart() {
   if (st == M_HOLD) {
-    if (anyRunning()) return;  // still decelerating; press again
+    if (anyRunning()) { resumePending = true; return; }  // still slowing down: resume when stopped
     st = M_RUN;
     if (stage == S_MOVING) issueMove(cur);          // continue the same straight line
     else if (stage == S_DWELL) waitUntil = millis() + cur.dwellMs;
@@ -464,6 +468,7 @@ void cycleStart() {
 }
 
 void abort() {
+  resumePending = false;
   if (st == M_HOMING) { stopAll(true); hs = H_OFF; isHomed = false; st = M_IDLE; }
   qCount = 0; qHead = 0;
   arc.active = false;
@@ -493,6 +498,7 @@ void homeAll() {
 }
 
 void alarm(int code, const char* msg) {
+  resumePending = false;
   qCount = 0; qHead = 0; arc.active = false; stage = S_NONE;
   stopAll(true);
   alarmNo = code;

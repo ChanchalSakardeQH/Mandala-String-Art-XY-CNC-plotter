@@ -5,8 +5,8 @@ Each part has its own version number:
 
 | Part | Folder | Current version |
 |---|---|---|
-| Web dashboard | `web/` | 2.3.0 |
-| ESP32 firmware | `firmware/` | 1.3.0 |
+| Web dashboard | `web/` | 2.3.1 |
+| ESP32 firmware | `firmware/` | 1.3.1 |
 | Design core (Kotlin, used by the Android app) | `stringart-core/` | 0.4.0 |
 | Android app | `android/` | not started |
 
@@ -26,6 +26,28 @@ The web page shows its own entries under "What's new"; keep that list (`CHANGELO
 ---
 
 ## Web dashboard (was: web template designer)
+
+### 2.3.1 – 2026-10-18
+**Fixed**
+- During winding, Pause / Resume / Stop could be greyed out while the red Stop in the footer was still active. The dashboard treated three slow status checks (the plotter is busy while it runs) as "disconnected" and switched those buttons off.
+  - It now waits about 6 seconds before calling the plotter disconnected, and shows "reconnecting…" meanwhile.
+  - Pause, Resume and Stop are sent even if a status check was late, with up to 3 tries.
+
+**Changed**
+- **One Pause / Resume / Stop bar** in the Machine status card follows the machine state, and the footer shows the same:
+
+  | Machine | Pause | Resume | Stop |
+  |---|---|---|---|
+  | running | on | off | on |
+  | paused (or waiting for tie-on) | off | on | on |
+  | homing | off | off | on |
+  | idle | off | off | off |
+
+  The buttons switch at once when pressed; the next status check confirms.
+- Stop is solid red in both places.
+- Home and Unlock are off while a job is active.
+- "Resume" for a job stopped earlier or cut by power loss is now called **Resume last job**, so it isn't confused with Resume after Pause.
+
 
 ### 2.3.0 – 2026-10-09
 **Added**
@@ -144,6 +166,11 @@ The web page shows its own entries under "What's new"; keep that list (`CHANGELO
 ---
 
 ## ESP32 firmware
+
+### 1.3.1 – 2026-10-18
+**Fixed**
+- Resume pressed while the machine was still slowing down for a Pause was ignored ("press again"). It is now remembered and carried out as soon as the motors stop. This covers the dashboard, `~` and the Start button on the machine.
+
 
 ### 1.3.0 – 2026-10-09
 **Changed**

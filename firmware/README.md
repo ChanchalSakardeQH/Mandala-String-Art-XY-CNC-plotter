@@ -1,4 +1,4 @@
-# Mandala String Art XY Plotter — ESP32 firmware v1.3.0
+# Mandala String Art XY Plotter — ESP32 firmware v1.3.1
 
 The firmware marks nail positions and winds thread from G-code jobs stored on the ESP32. You control it from the Android app over Bluetooth or Wi-Fi, from the three buttons on the machine, or from a PC over USB.
 

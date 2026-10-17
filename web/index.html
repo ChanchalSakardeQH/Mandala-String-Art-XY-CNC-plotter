@@ -153,6 +153,8 @@ input[type="color"] { width: 40px; height: 30px; padding: 0; border: 1px solid v
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
 .btn.primary:hover:not(:disabled) { background: #f6b737; border-color: #f6b737; }
 .btn.danger { color: var(--danger); border-color: var(--danger); }
+.btn.stop { background: #d23a1e; border-color: #d23a1e; color: #fff; }
+.btn.stop:hover:not(:disabled) { background: #b52f16; border-color: #b52f16; }
 .btn:disabled { opacity: .45; cursor: not-allowed; }
 .btn.sm { padding: 5px 10px; font-size: 13px; border-radius: 8px; }
 
@@ -183,6 +185,11 @@ input[type="color"] { width: 40px; height: 30px; padding: 0; border: 1px solid v
 [data-theme="dark"] .msgbox { color: #f6dfa8; }
 .grid-btns { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
 .grid-btns .btn { min-width: 0; padding: 6px 4px; overflow: hidden; text-overflow: ellipsis; }
+.jobctl { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-top: 12px; }
+.jobctl .btn { padding: 11px 4px; font-size: 14.5px; min-width: 0; }
+.jobctl .btn.stop { background: #d23a1e; border-color: #d23a1e; color: #fff; }
+.jobctl .btn.stop:hover:not(:disabled) { background: #b52f16; border-color: #b52f16; }
+.jobctl .btn:disabled { opacity: .35; }
 .jog { display: grid; grid-template-columns: repeat(3, 52px) 18px 52px; grid-template-rows: repeat(3, 44px); gap: 6px; justify-content: center; margin-top: 8px; }
 .jog .btn { padding: 0; display: grid; place-items: center; font-size: 13px; }
 .chips { display: flex; gap: 5px; flex-wrap: wrap; }
@@ -430,18 +437,20 @@ dialog::backdrop { background: rgba(20, 20, 15, .5); }
             <div class="status-top"><div class="state" id="m-state">Offline</div><span class="badge" id="m-homed">–</span></div>
             <div class="pos" id="m-pos">X – Y – Z –</div>
             <div id="m-job" hidden><div class="progress"><div id="m-bar"></div></div><div class="pos" id="m-jobtext"></div></div>
-            <div class="msgbox" id="m-msg" hidden><span id="m-msgtext"></span><button class="btn sm primary" id="m-msgbtn" type="button">Continue</button></div>
+            <div class="msgbox" id="m-msg" hidden><span id="m-msgtext"></span><button class="btn sm primary" id="m-msgbtn" type="button">Resume</button></div>
+            <div class="jobctl" role="group" aria-label="Job control">
+              <button class="btn" id="m-pause" type="button">❚❚ Pause</button>
+              <button class="btn primary" id="m-resume-run" type="button">▶ Resume</button>
+              <button class="btn stop" id="m-stop" type="button">■ Stop</button>
+            </div>
           </div>
         </section>
         <section>
           <h2>Control</h2>
           <div class="grid-btns">
-            <button class="btn sm" data-cmd="$H">Home</button>
-            <button class="btn sm" data-rt="hold">Pause</button>
-            <button class="btn sm" data-rt="resume">Continue</button>
-            <button class="btn sm" data-cmd="$X">Unlock</button>
-            <button class="btn sm" id="m-resume" title="Continue the last stopped job from its saved nail">Resume</button>
-            <button class="btn sm danger" data-rt="stop">Stop</button>
+            <button class="btn sm" data-cmd="$H" id="m-home">Home</button>
+            <button class="btn sm" data-cmd="$X" id="m-unlock">Unlock</button>
+            <button class="btn sm" id="m-resume" title="Continue the last stopped job from its saved nail (after Stop or a power cut)">Resume last job</button>
           </div>
           <p class="hint" id="m-saved" style="margin:8px 0 0"></p>
         </section>
@@ -537,9 +546,14 @@ dialog::backdrop { background: rgba(20, 20, 15, .5); }
    Geometry, routing and G-code are 1:1 ports of stringart-core (Kotlin),
    so nail numbers and jobs match the Android app exactly.
    ===================================================================== */
-const APP = { name: "Mandala String Art", version: "2.3.0" };
+const APP = { name: "Mandala String Art", version: "2.3.1" };
 
 const CHANGELOG = [
+  { v: "2.3.1", date: "2026-10-18", items: [
+    "Machine step: one Pause / Resume / Stop bar that follows the machine – while running Pause and Stop are on; after Pause, Resume and Stop are on. The buttons react at once.",
+    "These buttons are never switched off by a slow status check during a job; the plotter only counts as disconnected after about 6 seconds without answer.",
+    "'Resume' after a stop or power cut is now called 'Resume last job'.",
+  ] },
   { v: "2.3.0", date: "2026-10-09", items: [
     "Plotter step makes both jobs at once – Job 1 marks the nails, Job 2 winds the thread – with summary cards: time for each job, total machine time, pauses, and thread to buy (15% spare).",
     "New simulation: the whole machine bed with the board on it, the X rail and carriage moving with the needle, home axes, a pause bubble at every tie-on/tie-off, an optional guide path, speeds up to 1000×, and 'String 105 of 419' progress with the travel range.",
@@ -1690,6 +1704,7 @@ async function onExport(kind, mode) {
 
 /* ---------------- plotter connection (HTTP API of firmware >= 1.1.0) ---------------- */
 const Machine = { base: null, online: false, fails: 0, seq: 0, timer: null, status: null, lastFile: "", lastState: "" };
+const OFFLINE_AFTER = 6;   // missed status checks (~6 s) before the plotter counts as disconnected
 const ALARMS = { 1: "Limit switch hit or stepper problem – home again", 5: "Stepper refused a move – home again", 9: "Homing failed – check the switches", 11: "Homing needed after power-up", 12: "Safe mode after repeated resets – check the power wiring, then restart the plotter" };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
@@ -1729,11 +1744,27 @@ async function cmd(line, quiet = false) {
   throw new Error("plotter busy, try again");
 }
 
+// Pause / resume / stop: sent even if the last status check was late (never blocked by a slow poll).
 async function realtime(k) {
-  if (!Machine.online) return toast("Plotter not connected");
+  if (Machine.base === null) return toast("Plotter not connected");
   logLine("> " + k, "in");
-  try { const t = await (await api("/api/rt?k=" + k, { method: "POST" })).text(); logLine(t); }
-  catch (e) { toast("No answer from the plotter"); }
+  const s = Machine.status;
+  if (s) {   // show the result at once; the next status check confirms it
+    if (k === "hold" && s.state === "Run") s.state = "Hold";
+    else if (k === "resume" && (s.state === "Hold" || s.state === "Pause")) { s.state = "Run"; s.msg = ""; }
+    else if (k === "stop") s.state = "Idle";
+    renderMachine(); renderFoot();
+  }
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const t = await (await api("/api/rt?k=" + k, { method: "POST" }, 3000)).text();
+      logLine(t);
+      setTimeout(pollMachine, 150);
+      return;
+    } catch (e) { await sleep(300); }
+  }
+  toast("No answer from the plotter – use the buttons on the machine if needed");
+  pollMachine();
 }
 
 function normalizeAddr(a) {
@@ -1787,7 +1818,9 @@ async function pollMachine() {
     if (!Machine.online) setOnline(true);
     onStatus(s, false);
   } catch (e) {
-    if (++Machine.fails >= 3 && Machine.online) { setOnline(false); toast("Lost the plotter connection"); }
+    Machine.fails++;
+    if (Machine.fails === 2 && Machine.online) $("machinePillText").textContent = "Plotter · reconnecting…";
+    if (Machine.fails >= OFFLINE_AFTER && Machine.online) { setOnline(false); toast("Lost the plotter connection"); }
   }
 }
 
@@ -1839,7 +1872,7 @@ function renderMachine() {
   const msg = on && s.state === "Pause" && s.msg;
   const btn = $("m-msgbtn");
   $("m-msg").hidden = !msg;
-  if (msg) { $("m-msgtext").textContent = s.msg; btn.textContent = "Continue"; btn.hidden = false; btn.onclick = () => realtime("resume"); }
+  if (msg) { $("m-msgtext").textContent = s.msg; btn.textContent = "Resume"; btn.hidden = false; btn.onclick = () => realtime("resume"); }
   if (on && s.alarm && !msg) {
     $("m-msg").hidden = false;
     $("m-msgtext").textContent = ALARMS[s.alarm] || `Alarm ${s.alarm}`;
@@ -1848,14 +1881,20 @@ function renderMachine() {
     btn.onclick = async () => { try { await cmd("$H"); } catch (e) { toast(e.message); } };
   }
   $("m-saved").textContent = on && s.saved ? "Saved progress: " + s.saved.replace(/^\[PROG:|\]$/g, "").replace(/,(\d+),(\d+),(-?\d+)$/, " – thread $1, step $2, nail $3") : "";
-  $("m-resume").disabled = !(on && s.saved);
   const pill = $("machinePill");
   if (on) {
     pill.classList.toggle("alarm", !!s.alarm);
     $("machinePillText").textContent = s.alarm === 11 ? "Plotter · home first" : s.alarm ? "Plotter alarm" : `Plotter · ${s.state}${s.job && s.job.active ? " " + Math.round(s.job.pct) + "%" : ""}`;
   }
-  for (const b of document.querySelectorAll("[data-panel=machine] [data-cmd], [data-panel=machine] [data-rt], [data-jog], [data-z], #m-corner, #m-send, #m-files-refresh, #m-setup-load, #m-setup-save, #m-factory"))
+  for (const b of document.querySelectorAll("[data-panel=machine] [data-cmd], [data-jog], [data-z], #m-corner, #m-send, #m-files-refresh, #m-setup-load, #m-setup-save, #m-factory"))
     b.disabled = !on;
+  // Job control follows the machine: running -> Pause + Stop; paused -> Resume + Stop.
+  const st = on ? s.state : "", running = st === "Run", paused = st === "Hold" || st === "Pause", busy = running || paused || st === "Home";
+  $("m-pause").disabled = !running;
+  $("m-resume-run").disabled = !paused;
+  $("m-stop").disabled = !(on && (busy || s.alarm));
+  for (const id of ["m-home", "m-unlock"]) $(id).disabled = !on || busy;
+  $("m-resume").disabled = !(on && s.saved && !busy);
   if (on && Machine.lastState !== s.state) { Machine.lastState = s.state; renderFoot(); }
 }
 
@@ -2654,10 +2693,12 @@ function renderFoot() {
     const ready = job && !job.stale && job.simulated && !job.uploaded;
     let label = "Start job", action = () => startJob(Machine.lastFile);
     if (on && ready && !(s.job && s.job.active) && st !== "Hold" && st !== "Pause") { label = job.kind === "mark" ? "Send Job 1 to plotter" : "Send Job 2 to plotter"; action = () => sendJob(); }
-    if (st === "Run" || st === "Home") { label = "Pause"; action = () => realtime("hold"); }
-    else if (st === "Hold" || st === "Pause") { label = "Continue"; action = () => realtime("resume"); }
-    f.append(footButton(label, "primary", action, !on, Machine.lastFile && label === "Start job" ? Machine.lastFile : ""),
-      footButton("Stop", "danger", () => realtime("stop"), !on));
+    if (st === "Run") { label = "❚❚ Pause"; action = () => realtime("hold"); }
+    else if (st === "Home") { label = "Homing…"; action = null; }
+    else if (st === "Hold" || st === "Pause") { label = "▶ Resume"; action = () => realtime("resume"); }
+    const busy = ["Run", "Hold", "Pause", "Home"].includes(st);
+    f.append(footButton(label, "primary", action, !on || !action, Machine.lastFile && label === "Start job" ? Machine.lastFile : ""),
+      footButton("■ Stop", "stop", () => realtime("stop"), !(on && (busy || s.alarm))));
   }
 }
 
@@ -2866,7 +2907,9 @@ function init() {
   $("m-connhint").textContent = servedByPlotter ? "Opened from the plotter." : "Join the plotter's Wi-Fi (MandalaPlotter-…), then Connect.";
   $("m-connect").addEventListener("click", () => Machine.online ? disconnectMachine() : connectMachine($("m-addr").value));
   for (const b of document.querySelectorAll("[data-panel=machine] [data-cmd]")) b.addEventListener("click", async () => { try { await cmd(b.dataset.cmd); } catch (e) { toast(e.message); } });
-  for (const b of document.querySelectorAll("[data-rt]")) b.addEventListener("click", () => realtime(b.dataset.rt));
+  $("m-pause").addEventListener("click", () => realtime("hold"));
+  $("m-resume-run").addEventListener("click", () => realtime("resume"));
+  $("m-stop").addEventListener("click", () => realtime("stop"));
   $("m-resume").addEventListener("click", async () => { try { await cmd("$RESUME"); } catch (e) { toast(e.message); } });
   for (const b of $("m-step").querySelectorAll(".chip")) b.addEventListener("click", () => { view.jogStep = Number(b.dataset.v); for (const x of $("m-step").querySelectorAll(".chip")) x.setAttribute("aria-pressed", x === b); save(); });
   for (const x of $("m-step").querySelectorAll(".chip")) x.setAttribute("aria-pressed", Number(x.dataset.v) === view.jogStep);
